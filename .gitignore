@@ -1,0 +1,9 @@
+*/Output
+*/.exe
+*/*.o
+*/condor.err
+*/condor.log
+*/condor.out
+*/vecDot
+*/poisson3d
+*/potential_L*.dat

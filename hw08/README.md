@@ -11,6 +11,9 @@ Write a CUDA C/C++ code for simulation of 2D Ising model on the torus with
 multi-GPUs. Test your code with one and two GPUs, by comparing GPU and CPU
 results.
 3. Repeat 1. for the MC simulation with 2 GPUs
+
+## Submission Guidelines
+
 As usual, your homework report should include your source codes, results, and
 discussions. The discussion file should be prepared with a typesetting system, e.g.,
 LaTeX, Word, etc., and it is converted to a PDF file. All files should be zipped into one

@@ -69,7 +69,7 @@ void setupGPUs(int gpu0, int gpu1) {
     int can_access_peer_0_1, can_access_peer_1_0;
     cudaDeviceCanAccessPeer(&can_access_peer_0_1, gpu0, gpu1);
     cudaDeviceCanAccessPeer(&can_access_peer_1_0, gpu1, gpu0);
-    
+
     if (!can_access_peer_0_1 || !can_access_peer_1_0) {
         printf("P2P access not available between GPU %d and GPU %d\n", gpu0, gpu1);
         exit(1);
@@ -212,33 +212,41 @@ void findOptimalConfiguration(int N) {
     // CPU Reference computation
     double cpu_time;
     double cpu_result = computeCPUReference(h_A, h_B, N, cpu_time);
-    printf("\n=== 2-GPU Vector Dot Product (N=%d) ===\n", N);
-    printf("CPU Reference: Time=%.3f ms, GFLOPS=%.2f\n", 
+    printf("\n=== 2-GPU Vector Dot Product ===\n");
+    printf("Vector Size: %d (%.1fM elements)\n", N, N/1000000.0);
+    printf("CPU Reference: Time=%.3f ms, GFLOPS=%.2f\n",
            cpu_time, (2.0 * N) / (cpu_time * 1000000.0));
-    printf("\nBlock  Grid   KTime(ms)   TTime(ms)   GFLOPS    Error\n");
-    printf("--------------------------------------------------------\n");
+    printf("\nBlock   Grid   KTime(ms)   TTime(ms)   GFLOPS    RelError\n");
+    printf("----------------------------------------------------------\n");
 
     // Test different block sizes (powers of 2)
     int block_sizes[] = {32, 64, 128, 256, 512, 1024};
 
     // Test different grid sizes for each block size
     int max_blocks = std::min(65535, (N/2 + 31) / 32);  // N/2 because work is split between 2 GPUs
-    int grid_sizes[] = {
-        max_blocks,
-        max_blocks / 2,
-        max_blocks / 4,
-        max_blocks / 8,
-        max_blocks / 16
-    };
 
     for (int block_size : block_sizes) {
+        // For dual GPU, each GPU processes N/2 elements
+        // Aim for ~256 elements per block for good occupancy
+        int elements_per_block = block_size * 256;
+        int optimal_blocks = (N/2 + elements_per_block - 1) / elements_per_block;
+        optimal_blocks = std::min(1024, optimal_blocks); // Limit max blocks for efficiency
+
+        int grid_sizes[] = {
+            optimal_blocks,
+            optimal_blocks / 2,
+            optimal_blocks / 4,
+            optimal_blocks / 8,
+            optimal_blocks / 16
+        };
+
         for (int grid_size : grid_sizes) {
             if (grid_size < 1) continue;
 
             TestResult result = runTest(N, block_size, grid_size, cpu_result);
             results.push_back(result);
 
-            printf("%4d   %4d   %8.3f    %8.3f    %6.2f    %.2e\n",
+            printf("%5d   %4d   %8.3f    %8.3f    %6.2f    %.2e\n",
                    block_size, grid_size,
                    result.kernelTime, result.totalTime,
                    result.gflops, result.relativeError);
@@ -252,7 +260,7 @@ void findOptimalConfiguration(int N) {
         });
 
     printf("\n=== Best Configuration ===\n");
-    printf("Block: %d, Grid: %d, KTime: %.3f ms, GFLOPS: %.2f\n", 
+    printf("Block: %d, Grid: %d, KTime: %.3f ms, GFLOPS: %.2f\n",
            best->blockSize, best->gridSize, best->kernelTime, best->gflops);
     printf("Total: %.3f ms, Error: %.2e, Speedup: %.2fx\n",
            best->totalTime, best->relativeError, cpu_time / best->totalTime);
@@ -261,7 +269,7 @@ void findOptimalConfiguration(int N) {
 int main() {
     // Fixed vector size for hw04
     const int N = 40960000;
-    
+
     // Get GPU IDs
     int gpu0, gpu1;
     std::cout << "Enter two GPU IDs (space separated): ";
