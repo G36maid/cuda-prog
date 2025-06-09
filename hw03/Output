@@ -1,26 +1,113 @@
 Enter the GPU ID: Set GPU with device ID = 0
-Enter the size of the cube (L): Enter maximum iterations: Enter convergence tolerance: 
+Enter maximum iterations: Enter convergence tolerance: 
 Testing different configurations for L=8:
 ----------------------------------
 
 Config: 2x2x2 threads/block, 4x4x4 blocks
-Kernel time: 0.108355 ms
-Total time: 0.108355 ms
-Max Error vs Analytical: 8.708920e-02
+Kernel time: 2.175395 ms
+Total time: 2.175395 ms
+Max Error vs Analytical: 7.957678e-02
 
 Config: 4x4x4 threads/block, 2x2x2 blocks
-Kernel time: 0.018943 ms
-Total time: 0.018943 ms
+Kernel time: 0.018748 ms
+Total time: 0.018748 ms
 Max Error vs Analytical: 7.957747e-02
 
 Config: 8x8x8 threads/block, 1x1x1 blocks
-Kernel time: 0.018430 ms
-Total time: 0.018430 ms
-Max Error vs Analytical: 5.626977e-02
+Kernel time: 0.019028 ms
+Total time: 0.019028 ms
+Max Error vs Analytical: 7.957690e-02
 
-=== Optimal Configuration ===
+=== Optimal Configuration for L=8 ===
+Block Size: 4x4x4
+Grid Size: 2x2x2
+Kernel Time: 0.018748 ms
+Total Time: 0.018748 ms
+Max Error vs Analytical: 7.957747e-02
+
+========================================
+
+
+Testing different configurations for L=16:
+----------------------------------
+
+Config: 2x2x2 threads/block, 8x8x8 blocks
+Kernel time: 7.964233 ms
+Total time: 7.964233 ms
+Max Error vs Analytical: 7.957654e-02
+
+Config: 4x4x4 threads/block, 4x4x4 blocks
+Kernel time: 0.020249 ms
+Total time: 0.020249 ms
+Max Error vs Analytical: 7.957747e-02
+
+Config: 8x8x8 threads/block, 2x2x2 blocks
+Kernel time: 0.020415 ms
+Total time: 0.020415 ms
+Max Error vs Analytical: 7.957658e-02
+
+=== Optimal Configuration for L=16 ===
+Block Size: 4x4x4
+Grid Size: 4x4x4
+Kernel Time: 0.020249 ms
+Total Time: 0.020249 ms
+Max Error vs Analytical: 7.957747e-02
+
+========================================
+
+
+Testing different configurations for L=32:
+----------------------------------
+
+Config: 2x2x2 threads/block, 16x16x16 blocks
+Kernel time: 38.600913 ms
+Total time: 38.600913 ms
+Max Error vs Analytical: 7.957747e-02
+
+Config: 4x4x4 threads/block, 8x8x8 blocks
+Kernel time: 4.574551 ms
+Total time: 4.574551 ms
+Max Error vs Analytical: 7.957747e-02
+
+Config: 8x8x8 threads/block, 4x4x4 blocks
+Kernel time: 0.039948 ms
+Total time: 0.039948 ms
+Max Error vs Analytical: 7.957649e-02
+
+=== Optimal Configuration for L=32 ===
 Block Size: 8x8x8
-Grid Size: 1x1x1
-Kernel Time: 0.018430 ms
-Total Time: 0.018430 ms
-Max Error vs Analytical: 5.626977e-02
+Grid Size: 4x4x4
+Kernel Time: 0.039948 ms
+Total Time: 0.039948 ms
+Max Error vs Analytical: 7.957649e-02
+
+========================================
+
+
+Testing different configurations for L=64:
+----------------------------------
+
+Config: 2x2x2 threads/block, 32x32x32 blocks
+Kernel time: 179.687294 ms
+Total time: 179.687294 ms
+Max Error vs Analytical: 7.957747e-02
+
+Config: 4x4x4 threads/block, 16x16x16 blocks
+Kernel time: 60.372808 ms
+Total time: 60.372808 ms
+Max Error vs Analytical: 7.957747e-02
+
+Config: 8x8x8 threads/block, 8x8x8 blocks
+Kernel time: 45.288639 ms
+Total time: 45.288639 ms
+Max Error vs Analytical: 7.957747e-02
+
+=== Optimal Configuration for L=64 ===
+Block Size: 8x8x8
+Grid Size: 8x8x8
+Kernel Time: 45.288639 ms
+Total Time: 45.288639 ms
+Max Error vs Analytical: 7.957747e-02
+
+========================================
+
