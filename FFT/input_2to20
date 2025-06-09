@@ -1,9 +1,0 @@
-GPU_ID1
-1048576
-0
-
-
-Enter the GPU ID (0/1): 0
-Enter the vector size: 1048576 = 2^20
-Print the data (0/1) ? 0
-

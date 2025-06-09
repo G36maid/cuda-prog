@@ -1,8 +1,0 @@
-GPU_ID1
-64
-1
-
-Enter the GPU ID (0/1): 0
-Enter the vector size: 64
-Print the data (0/1) ? 1
-
