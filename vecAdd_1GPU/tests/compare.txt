@@ -1,0 +1,7 @@
+Output_1024:Total time for GPU: 206.487778 (ms) 
+Output_128:Total time for GPU: 205.516830 (ms) 
+Output_16:Total time for GPU: 225.683716 (ms) 
+Output_256:Total time for GPU: 205.724930 (ms) 
+Output_32:Total time for GPU: 206.096191 (ms) 
+Output_512:Total time for GPU: 205.633789 (ms) 
+Output_64:Total time for GPU: 205.393066 (ms) 

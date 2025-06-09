@@ -1,0 +1,17 @@
+Enter the GPU ID: 0
+Set GPU with device ID = 0
+Vector Addition: C = 1/A + 1/B
+Enter the size of the vectors: 81920000
+Enter the number of threads per block: 32
+The number of blocks is 2560000
+Input time for GPU: 103.620094 (ms) 
+Processing time for GPU: 19.631935 (ms) 
+GPU Gflops: 12.518379
+Output time for GPU: 82.844162 (ms) 
+Total time for GPU: 206.096191 (ms) 
+Processing time for CPU: 303.908844 (ms) 
+CPU Gflops: 0.808664
+Speed up of GPU = 1.474597
+Check result:
+norm(h_C - h_D)=0.000000000000000e+00
+

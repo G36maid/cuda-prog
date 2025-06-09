@@ -1,0 +1,76 @@
+000 (1012208.000.000) 03/21 09:20:38 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012208.000.000) 03/21 09:20:39 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012208.000.000) 03/21 09:20:45 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012208, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/vecDotProduct
+005 (1012208.000.000) 03/21 09:20:50 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012209.000.000) 03/21 09:21:38 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012209.000.000) 03/21 09:21:41 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012209.000.000) 03/21 09:22:02 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012209, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/vecDotProduct
+005 (1012209.000.000) 03/21 09:22:04 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012210.000.000) 03/21 09:22:45 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012210.000.000) 03/21 09:22:54 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012210.000.000) 03/21 09:23:14 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012210, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/vecDotProduct
+005 (1012210.000.000) 03/21 09:23:16 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012211.000.000) 03/21 09:25:06 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012211.000.000) 03/21 09:25:08 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012211.000.000) 03/21 09:25:31 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012211, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/vecDotProduct
+005 (1012211.000.000) 03/21 09:25:41 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...

@@ -1,0 +1,7 @@
+Vector Addition: C = 1/A + 1/B
+To enter the seed for the initialization of RNG ? (1/0) 1
+Enter the seed: 12345
+No test / Test rand / Test rand_16870 ? (0/1/2) 0
+Enter the size of the vectors: 81920000
+Processing time for CPU: 712.128000 (ms) 
+CPU Gflops: 0.345106

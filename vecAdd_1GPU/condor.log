@@ -1,0 +1,19 @@
+000 (1012020.000.000) 03/14 09:38:01 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012020.000.000) 03/14 09:38:04 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012020.000.000) 03/14 09:38:20 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012020, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/vecAdd_1GPU
+005 (1012020.000.000) 03/14 09:38:24 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
