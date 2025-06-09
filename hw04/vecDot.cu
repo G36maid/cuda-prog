@@ -212,12 +212,11 @@ void findOptimalConfiguration(int N) {
     // CPU Reference computation
     double cpu_time;
     double cpu_result = computeCPUReference(h_A, h_B, N, cpu_time);
-    printf("\nCPU Reference:\n");
-    printf("Time: %.6f ms\n", cpu_time);
-    printf("GFLOPS: %.6f\n", (2.0 * N) / (cpu_time * 1000000.0));
-
-    printf("\nTesting different configurations:\n");
-    printf("----------------------------------\n");
+    printf("\n=== 2-GPU Vector Dot Product (N=%d) ===\n", N);
+    printf("CPU Reference: Time=%.3f ms, GFLOPS=%.2f\n", 
+           cpu_time, (2.0 * N) / (cpu_time * 1000000.0));
+    printf("\nBlock  Grid   KTime(ms)   TTime(ms)   GFLOPS    Error\n");
+    printf("--------------------------------------------------------\n");
 
     // Test different block sizes (powers of 2)
     int block_sizes[] = {32, 64, 128, 256, 512, 1024};
@@ -239,11 +238,10 @@ void findOptimalConfiguration(int N) {
             TestResult result = runTest(N, block_size, grid_size, cpu_result);
             results.push_back(result);
 
-            printf("\nConfig: %d threads/block, %d blocks\n", block_size, grid_size);
-            printf("Kernel time: %.6f ms\n", result.kernelTime);
-            printf("Total time: %.6f ms\n", result.totalTime);
-            printf("GFLOPS: %.6f\n", result.gflops);
-            printf("Relative Error: %.15e\n", result.relativeError);
+            printf("%4d   %4d   %8.3f    %8.3f    %6.2f    %.2e\n",
+                   block_size, grid_size,
+                   result.kernelTime, result.totalTime,
+                   result.gflops, result.relativeError);
         }
     }
 
@@ -253,15 +251,11 @@ void findOptimalConfiguration(int N) {
             return a.kernelTime < b.kernelTime;
         });
 
-    printf("\n=== Optimal Configuration ===\n");
-    printf("Block Size: %d\n", best->blockSize);
-    printf("Grid Size: %d\n", best->gridSize);
-    printf("Kernel Time: %.6f ms\n", best->kernelTime);
-    printf("Total Time: %.6f ms\n", best->totalTime);
-    printf("GFLOPS: %.6f\n", best->gflops);
-    printf("CPU Time: %.6f ms\n", cpu_time);
-    printf("Relative Error: %.15e\n", best->relativeError);
-    printf("Speedup vs CPU: %.2fx\n", cpu_time / best->totalTime);
+    printf("\n=== Best Configuration ===\n");
+    printf("Block: %d, Grid: %d, KTime: %.3f ms, GFLOPS: %.2f\n", 
+           best->blockSize, best->gridSize, best->kernelTime, best->gflops);
+    printf("Total: %.3f ms, Error: %.2e, Speedup: %.2fx\n",
+           best->totalTime, best->relativeError, cpu_time / best->totalTime);
 }
 
 int main() {
@@ -270,10 +264,9 @@ int main() {
     
     // Get GPU IDs
     int gpu0, gpu1;
-    std::cout << "Enter the first GPU ID: ";
-    std::cin >> gpu0;
-    std::cout << "Enter the second GPU ID: ";
-    std::cin >> gpu1;
+    std::cout << "Enter two GPU IDs (space separated): ";
+    std::cin >> gpu0 >> gpu1;
+    printf("\nUsing GPUs: %d and %d\n", gpu0, gpu1);
 
     // Setup P2P access between GPUs
     setupGPUs(gpu0, gpu1);
