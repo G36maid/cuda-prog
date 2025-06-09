@@ -1,0 +1,105 @@
+#!/bin/bash
+
+if [ $# = 0 ]; then
+    echo "Usage: $0 <executable> <input_file1> <input_file2> ... <output_file>"
+    exit 0
+fi
+
+export PATH='/usr/bin:/bin'
+
+icc_sh='/opt/intel/bin/iccvars.sh'
+[ -f $icc_sh ] && source $icc_sh intel64
+iff_sh='/opt/intel/bin/ifortvars.sh'
+[ -f $iff_sh ] && source $iff_sh intel64
+mpi_sh='/opt/intel/impi/4.0.0.025/bin64/mpivars.sh'
+[ -f $mpi_sh ] && source $mpi_sh
+export CONDOR_CONFIG=/opt/condor/etc/condor_config
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/nvidia/lib:/usr/local/nvidia/cuda/lib"
+
+#--------------------------------------------------------------------------
+#	Get the GPU_ID
+#
+get_GPU_ID() {
+    local slot mtype gid
+
+    grep "^Requirements = " $_CONDOR_JOB_AD | grep "MTYPE =?*= \"CPU\"" > /dev/null
+    [ $? = 0 ] && echo 'NULL' && return
+
+    slot=`grep "^Name = " $_CONDOR_MACHINE_AD | cut -d @ -f 1`
+    echo "$slot" | grep "\." > /dev/null
+    if [ $? != 0 ]; then
+	gid=`echo $_CONDOR_SLOT | sed 's|slot||'`
+	if [ ! -z "$gid" ]; then
+	    gid=`expr $gid - 1`
+	else
+	    gid=0
+	fi
+
+    else
+	gid=`/opt/bin/get_gpu -c $_CONDOR_JOB_AD`
+    fi
+
+    if [ -z "$gid" ] || [ "$gid" = 'NULL' ]; then
+	echo "!!! Cannot get GPU_ID. Please check the Condor system." >&2
+	exit 1
+    fi
+    echo "$gid"
+}
+
+#--------------------------------------------------------------------------
+#	Main program.
+#
+exe="$1"
+shift 1
+inps="$@"
+for arg in $@; do
+    out=$arg
+done
+inps=`echo "$inps" | sed "s/ $out//"`
+
+if [ ! -x "$exe" ]; then
+    echo "!!! The executable not available: $exe"
+    exit 1
+fi
+for inp in $inps; do
+    if [ "$inp" != 'NULL' ] && [ ! -s "$inp" ]; then
+	echo "!!! The input file not available: $inp"
+	exit 1
+    fi
+done
+if [ -z "$out" ]; then
+    echo "!!! The output file not specified."
+    exit 1
+fi
+
+myhost=`hostname`
+mypwd=`pwd`
+JOB_ID=`grep "^ClusterId =" "$_CONDOR_JOB_AD" | sed 's|[^=]* = ||'`
+GPU_ID=`get_GPU_ID`
+echo "Job start: host=$myhost, JOB_ID=$JOB_ID, GPU_ID=$GPU_ID, wdir=$mypwd" >> condor.log
+export GPU_ID JOB_ID myhost
+
+ngpu=0
+for g in $GPU_ID; do
+    ngpu=`expr $ngpu + 1`
+done
+export OMP_NUM_THREADS=$ngpu
+echo "$JOB_ID" > JID
+
+echo "$exe" | grep "^/" > /dev/null
+if [ $? != 0 ]; then
+    exe="./$exe"
+fi
+
+sedcmd="s/\\<GPU_ID\\>/$GPU_ID/"
+i=1; for gid in $GPU_ID; do
+    sedcmd="$sedcmd;s/\\<GPU_ID$i\\>/$gid/"
+    i=`expr $i + 1`
+done
+for inp in $inps; do
+    if [ "$inp" != 'NULL' ]; then
+	sed "$sedcmd" $inp | $exe >> $out
+    else
+	$exe >> $out
+    fi
+done

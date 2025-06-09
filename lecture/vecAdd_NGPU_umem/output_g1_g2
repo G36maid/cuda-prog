@@ -1,0 +1,57 @@
+
+Vector Addition with multiple GPUs 
+using unified memory 
+
+Enter the number of GPUs: 1
+GPU device number: 0 
+Enter the size of the vectors: 1
+Enter the number of threads per block: 134217728
+The number of threads per block must be less than 1024 ! 
+
+Vector Addition with multiple GPUs 
+using unified memory 
+
+Enter the number of GPUs: 2
+GPU device number: 0 1 
+Enter the size of the vectors: 134217728
+Enter the number of threads per block: 32
+The number of blocks is 2097152
+Processing time for GPU: 118.763329 (ms) 
+GPU Gflops: 3.390383
+Processing time for CPU: 674.928955 (ms) 
+CPU Gflops: 0.596586
+Speed up of GPU = 5.682974
+Check result:
+norm(h_C - h_D)=0.000000000000000e+00
+
+Vector Addition with multiple GPUs 
+using unified memory 
+
+Enter the number of GPUs: 1
+GPU device number: 0 
+Enter the size of the vectors: 134217728
+Enter the number of threads per block: 32
+The number of blocks is 4194304
+Processing time for GPU: 210.460510 (ms) 
+GPU Gflops: 1.913201
+Processing time for CPU: 675.214355 (ms) 
+CPU Gflops: 0.596334
+Speed up of GPU = 3.208271
+Check result:
+norm(h_C - h_D)=0.000000000000000e+00
+
+Vector Addition with multiple GPUs 
+using unified memory 
+
+Enter the number of GPUs: 2
+GPU device number: 0 1 
+Enter the size of the vectors: 134217728
+Enter the number of threads per block: 32
+The number of blocks is 2097152
+Processing time for GPU: 113.384193 (ms) 
+GPU Gflops: 3.551229
+Processing time for CPU: 675.884338 (ms) 
+CPU Gflops: 0.595743
+Speed up of GPU = 5.961010
+Check result:
+norm(h_C - h_D)=0.000000000000000e+00

@@ -1,0 +1,10 @@
+GPU_ID
+163840007
+512
+1024
+
+=============
+GPU_ID     device number to be assigned by condor
+163840007  vector size
+128        block size
+256        grid size

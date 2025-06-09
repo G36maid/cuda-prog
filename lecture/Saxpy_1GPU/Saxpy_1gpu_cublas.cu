@@ -1,0 +1,226 @@
+// Saxpy: B <- alpha*A + B, for arbitrarily long vectors
+
+// Includes
+#include <stdio.h>
+#include <stdlib.h>
+#include <cuda_runtime.h>
+#include "cublas_v2.h"          // header for CUBLAS
+
+
+// Variables
+float* h_A;   // host vectors
+float* h_B;
+float* h_C;
+float* d_A;   // device vectors
+float* d_B;
+
+
+void RandomInit(float* data, long n)    // Allocates an array with random float entries.
+{
+    for (long i = 0; i < n; ++i)
+        data[i] = rand() / (float)RAND_MAX;
+}
+
+
+// Host code
+
+int main(void)
+{
+
+    int gid;
+
+    // Error code to check return values for CUDA calls
+    cudaError_t err = cudaSuccess;
+
+    cublasHandle_t handle;          // CUBLAS context
+
+    printf("Saxpy: B <- alpha*A + B\n");
+    printf("Enter the GPU_ID: ");
+    scanf("%d",&gid);
+    printf("%d\n",gid);
+    err = cudaSetDevice(gid);
+    if (err != cudaSuccess) {
+        printf("!!! Cannot select GPU with device ID = %d\n", gid);
+        exit(1);
+    }
+    printf("Set GPU with device ID = %d\n", gid);
+
+    float alpha;
+    printf("Enter the value of alpha: ");
+    scanf("%f",&alpha);        
+    printf("%f\n",alpha);        
+
+    int N;
+    printf("Enter the size of the vectors: ");
+    scanf("%ld",&N);        
+    printf("%ld\n",N);        
+    long size = N * sizeof(float);
+    
+    // the timer
+    cudaEvent_t start, stop;
+
+    // Allocate input vectors h_A and h_B in host memory
+
+    h_A = (float*)malloc(size);
+    h_B = (float*)malloc(size);
+    h_C = (float*)malloc(size);
+    
+    // Check memory allocations  
+    if (h_A == NULL || h_B == NULL || h_C == NULL)
+    {
+        fprintf(stderr, "Failed to allocate host vectors!\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Initialize input vectors
+
+    RandomInit(h_A, N);
+    RandomInit(h_B, N);
+
+    // Set the sizes of threads and blocks
+
+    int threadsPerBlock;
+    printf("Enter the number of threads per block: ");
+    scanf("%d",&threadsPerBlock);
+    printf("%d\n",threadsPerBlock);
+    if( threadsPerBlock > 1024 ) {
+      printf("The number of threads per block must be less than 1024 ! \n");
+      exit(0);
+    }
+
+//    int blocksPerGrid = (N + threadsPerBlock - 1)/threadsPerBlock;
+
+    int blocksPerGrid;
+    printf("Enter the number of blocks per grid: ");
+    scanf("%d",&blocksPerGrid);
+    printf("%d\n",blocksPerGrid);
+    if( blocksPerGrid > 2147483647 ) {
+      printf("The number of blocks must be less than 2147483647 ! \n");
+      exit(0); 
+    }
+    printf("The number of blocks is %d\n", blocksPerGrid);
+
+    // Allocate vectors in the device memory
+
+    cudaMalloc((void**)&d_A, size);
+    cudaMalloc((void**)&d_B, size);
+
+    // start the timer
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+    cudaEventRecord(start,0);
+
+    cublasCreate(&handle);                    // initialize CUBLAS context
+    cublasSetVector(N, sizeof(float), h_A ,1 ,d_A ,1);   // copy h_A to d_A  
+    cublasSetVector(N, sizeof(float), h_B ,1 ,d_B ,1);    
+
+    // stop the timer
+    cudaEventRecord(stop,0);
+    cudaEventSynchronize(stop);
+
+    float Intime;
+    cudaEventElapsedTime( &Intime, start, stop);
+    printf("Input time for GPU: %f (ms) \n",Intime);
+
+    // destroy the timer
+    cudaEventDestroy(start);
+    cudaEventDestroy(stop);
+
+    // start the timer
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+    cudaEventRecord(start,0);
+
+    cublasSaxpy(handle, N, &alpha, d_A, 1, d_B, 1);    // B <- alpha*A + B
+    
+    // stop the timer
+    cudaEventRecord(stop,0);
+    cudaEventSynchronize(stop);
+
+    float gputime;
+    cudaEventElapsedTime( &gputime, start, stop);
+    printf("Processing time for GPU: %f (ms) \n",gputime);
+    printf("GPU Gflops: %f\n",2*N/(1000000.0*gputime));
+    
+    // destroy the timer
+    cudaEventDestroy(start);
+    cudaEventDestroy(stop);
+
+    // Copy result from device memory to host memory
+    // h_C contains the result in host memory
+
+    // start the timer
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+    cudaEventRecord(start,0);
+
+    cublasGetVector(N, sizeof(float) ,d_B ,1 , h_C ,1);  // copy d_B to h_C
+
+    // stop the timer
+    cudaEventRecord(stop,0);
+    cudaEventSynchronize(stop);
+
+    float Outime;
+    cudaEventElapsedTime( &Outime, start, stop);
+    printf("Output time for GPU: %f (ms) \n",Outime);
+
+    float gputime_tot;
+    gputime_tot = Intime + gputime + Outime;
+    printf("Total time for GPU: %f (ms) \n",gputime_tot);
+
+    // destroy the timer
+    cudaEventDestroy(start);
+    cudaEventDestroy(stop);
+
+    // start the timer
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+    cudaEventRecord(start,0);
+
+    for(long i = 0; i < N; ++i)   // compute CPU reference solution
+      h_B[i] += alpha*h_A[i];
+    
+    // stop the timer
+    cudaEventRecord(stop,0);
+    cudaEventSynchronize(stop);
+
+    float cputime;
+    cudaEventElapsedTime( &cputime, start, stop);
+    printf("Processing time for CPU: %f (ms) \n",cputime);
+    printf("CPU Gflops: %f\n",N/(1000000.0*cputime));
+    printf("Speed up of GPU = %f\n", cputime/(gputime_tot));
+
+    // destroy the timer
+    cudaEventDestroy(start);
+    cudaEventDestroy(stop);
+
+    // check result
+
+    printf("Check result:\n");
+    double sum=0; 
+    double diff;
+    for (long i = 0; i < N; ++i) {
+      diff = abs(h_B[i] - h_C[i]);
+      sum += diff*diff; 
+      if(diff > 1.0e-15) { 
+//        printf("i=%d, h_B=%.10e, h_C=%.10e \n", i, h_B[i], h_C[i]);
+      }
+    }
+    sum = sqrt(sum);
+    printf("norm(h_B - h_C)=%.15e\n\n",sum);
+//
+    cublasDestroy(handle);    // destroy cublas context
+    cudaFree(d_A);
+    cudaFree(d_B);
+//
+    free(h_A);
+    free(h_B);
+    free(h_C);
+//
+    cudaDeviceReset();
+}
+
+
+
+
+

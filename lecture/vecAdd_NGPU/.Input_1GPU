@@ -1,0 +1,9 @@
+1
+1
+134217728
+32
+
+# N_GPU
+# device numbers  
+# vector length 2^27 = 134217728
+# block size

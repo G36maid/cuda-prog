@@ -1,0 +1,37 @@
+000 (1008459.000.000) 05/20 11:42:11 Job submitted from host: <192.168.1.254:35685>
+...
+013 (1008459.000.000) 05/20 11:42:11 Job was released.
+	via condor_release (by user condor)
+...
+001 (1008459.000.000) 05/20 11:43:20 Job executing on host: <192.168.1.219:36545>
+...
+005 (1008459.000.000) 05/20 11:43:21 Job terminated.
+	(1) Normal termination (return value 1)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1008461.000.000) 05/20 11:45:51 Job submitted from host: <192.168.1.254:35685>
+...
+013 (1008461.000.000) 05/20 11:45:57 Job was released.
+	via condor_release (by user condor)
+...
+001 (1008461.000.000) 05/20 11:46:14 Job executing on host: <192.168.1.219:36545>
+...
+Job start: host=twqcd218, JOB_ID=1008461, GPU_ID=0, wdir=/home/cuda2024/twchiu/cuda_lecture/Saxpy_1GPU
+005 (1008461.000.000) 05/20 11:46:20 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...

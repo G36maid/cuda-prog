@@ -1,0 +1,197 @@
+Enter the GPU ID: Set GPU with device ID = 0
+Enter the size of the vectors: 
+CPU Reference:
+Time: 0.015641 ms
+GFLOPS: 0.818362
+
+Testing different configurations:
+----------------------------------
+
+Config: 32 threads/block, 200 blocks
+Kernel time: 0.089034 ms
+Total time: 0.144196 ms
+GFLOPS: 0.143765
+Relative Error: 2.276940650982565e-08
+
+Config: 32 threads/block, 100 blocks
+Kernel time: 0.013390 ms
+Total time: 0.047997 ms
+GFLOPS: 0.955937
+Relative Error: 7.338809555696446e-08
+
+Config: 32 threads/block, 50 blocks
+Kernel time: 0.012754 ms
+Total time: 0.047719 ms
+GFLOPS: 1.003607
+Relative Error: 6.076135286132536e-08
+
+Config: 32 threads/block, 25 blocks
+Kernel time: 0.013689 ms
+Total time: 0.046082 ms
+GFLOPS: 0.935057
+Relative Error: 7.228800115192905e-09
+
+Config: 32 threads/block, 12 blocks
+Kernel time: 0.016380 ms
+Total time: 0.049508 ms
+GFLOPS: 0.781441
+Relative Error: 9.171375914521998e-09
+
+Config: 64 threads/block, 200 blocks
+Kernel time: 0.012630 ms
+Total time: 0.045162 ms
+GFLOPS: 1.013460
+Relative Error: 7.340518379775293e-09
+
+Config: 64 threads/block, 100 blocks
+Kernel time: 0.012358 ms
+Total time: 0.044427 ms
+GFLOPS: 1.035766
+Relative Error: 7.340518379775293e-09
+
+Config: 64 threads/block, 50 blocks
+Kernel time: 0.011840 ms
+Total time: 0.044170 ms
+GFLOPS: 1.081081
+Relative Error: 5.299104966400899e-08
+
+Config: 64 threads/block, 25 blocks
+Kernel time: 0.012821 ms
+Total time: 0.044526 ms
+GFLOPS: 0.998362
+Relative Error: 2.665455810848384e-08
+
+Config: 64 threads/block, 12 blocks
+Kernel time: 0.013683 ms
+Total time: 0.047003 ms
+GFLOPS: 0.935467
+Relative Error: 4.910589806535080e-08
+
+Config: 128 threads/block, 200 blocks
+Kernel time: 0.014299 ms
+Total time: 0.047142 ms
+GFLOPS: 0.895167
+Relative Error: 1.401072717205626e-09
+
+Config: 128 threads/block, 100 blocks
+Kernel time: 0.011730 ms
+Total time: 0.046040 ms
+GFLOPS: 1.091219
+Relative Error: 1.401072717205626e-09
+
+Config: 128 threads/block, 50 blocks
+Kernel time: 0.011566 ms
+Total time: 0.043848 ms
+GFLOPS: 1.106692
+Relative Error: 1.401072717205626e-09
+
+Config: 128 threads/block, 25 blocks
+Kernel time: 0.011648 ms
+Total time: 0.044480 ms
+GFLOPS: 1.098901
+Relative Error: 2.579498847340168e-08
+
+Config: 128 threads/block, 12 blocks
+Kernel time: 0.012281 ms
+Total time: 0.044464 ms
+GFLOPS: 1.042260
+Relative Error: 6.076135286132536e-08
+
+Config: 256 threads/block, 200 blocks
+Kernel time: 0.019210 ms
+Total time: 0.050772 ms
+GFLOPS: 0.666320
+Relative Error: 3.939301906870533e-08
+
+Config: 256 threads/block, 100 blocks
+Kernel time: 0.015145 ms
+Total time: 0.047932 ms
+GFLOPS: 0.845163
+Relative Error: 3.939301906870533e-08
+
+Config: 256 threads/block, 50 blocks
+Kernel time: 0.012557 ms
+Total time: 0.044704 ms
+GFLOPS: 1.019352
+Relative Error: 3.939301906870533e-08
+
+Config: 256 threads/block, 25 blocks
+Kernel time: 0.011910 ms
+Total time: 0.046739 ms
+GFLOPS: 1.074727
+Relative Error: 3.939301906870533e-08
+
+Config: 256 threads/block, 12 blocks
+Kernel time: 0.012827 ms
+Total time: 0.045107 ms
+GFLOPS: 0.997895
+Relative Error: 8.407226245327447e-08
+
+Config: 512 threads/block, 200 blocks
+Kernel time: 0.030690 ms
+Total time: 0.063193 ms
+GFLOPS: 0.417074
+Relative Error: 1.413953367742712e-08
+
+Config: 512 threads/block, 100 blocks
+Kernel time: 0.020188 ms
+Total time: 0.052025 ms
+GFLOPS: 0.634040
+Relative Error: 1.413953367742712e-08
+
+Config: 512 threads/block, 50 blocks
+Kernel time: 0.015901 ms
+Total time: 0.047158 ms
+GFLOPS: 0.804981
+Relative Error: 1.413953367742712e-08
+
+Config: 512 threads/block, 25 blocks
+Kernel time: 0.012859 ms
+Total time: 0.045556 ms
+GFLOPS: 0.995412
+Relative Error: 1.413953367742712e-08
+
+Config: 512 threads/block, 12 blocks
+Kernel time: 0.012377 ms
+Total time: 0.045192 ms
+GFLOPS: 1.034176
+Relative Error: 1.073831720452236e-07
+
+Config: 1024 threads/block, 200 blocks
+Kernel time: 0.059645 ms
+Total time: 0.092705 ms
+GFLOPS: 0.214603
+Relative Error: 9.961286884790722e-08
+
+Config: 1024 threads/block, 100 blocks
+Kernel time: 0.034932 ms
+Total time: 0.067054 ms
+GFLOPS: 0.366426
+Relative Error: 9.961286884790722e-08
+
+Config: 1024 threads/block, 50 blocks
+Kernel time: 0.022749 ms
+Total time: 0.056586 ms
+GFLOPS: 0.562662
+Relative Error: 9.961286884790722e-08
+
+Config: 1024 threads/block, 25 blocks
+Kernel time: 0.018944 ms
+Total time: 0.051099 ms
+GFLOPS: 0.675676
+Relative Error: 9.961286884790722e-08
+
+Config: 1024 threads/block, 12 blocks
+Kernel time: 0.014264 ms
+Total time: 0.047224 ms
+GFLOPS: 0.897364
+Relative Error: 9.961286884790722e-08
+
+=== Optimal Configuration ===
+Block Size: 128
+Grid Size: 50
+Kernel Time: 0.011566 ms
+Total Time: 0.043848 ms
+GFLOPS: 1.106692
+Relative Error: 1.401072717205626e-09
+Speedup vs CPU: 0.36x

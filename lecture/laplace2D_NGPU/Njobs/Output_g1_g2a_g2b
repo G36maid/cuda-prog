@@ -1,0 +1,86 @@
+
+* Initial parameters:
+  Enter the number of GPUs (NGx, NGy): 1 1
+  * Enter the GPU ID (0/1/...): 0
+  Solve Laplace equation on 2D lattice with boundary conditions
+  Enter the size (Nx, Ny) of the 2D lattice: 1024 1024
+  Enter the number of threads (tx,ty) per block: 16 16
+  The dimension of the grid per GPU is (64, 64)
+  To compute the solution vector with CPU (1/0) ? 0
+
+* Allocate working space for GPUs ....
+  Data input time for GPU: 11.821056 (ms) 
+
+* Compute GPU solution ....
+  error (GPU) = 0.000000000000000e+00
+  total iterations (GPU) = 1399571
+  Processing time for GPU: 184503.750000 (ms) 
+  GPU Gflops: 55.461239
+
+
+* Copy result from device memory to host memory ....
+  Data output time for GPU: 8.025504 (ms) 
+  Total time for GPU: 184523.609375 (ms) 
+
+Sat Apr 12 03:07:31 CST 2025
+
+=======================================
+
+
+* Initial parameters:
+  Enter the number of GPUs (NGx, NGy): 2 1
+  * Enter the GPU ID (0/1/...): 0
+  * Enter the GPU ID (0/1/...): 1
+  Solve Laplace equation on 2D lattice with boundary conditions
+  Enter the size (Nx, Ny) of the 2D lattice: 1024 1024
+  Enter the number of threads (tx,ty) per block: 16 16
+  The dimension of the grid per GPU is (32, 64)
+  To compute the solution vector with CPU (1/0) ? 0
+
+* Allocate working space for GPUs ....
+  Data input time for GPU: 11.129632 (ms) 
+
+* Compute GPU solution ....
+  error (GPU) = 0.000000000000000e+00
+  total iterations (GPU) = 1399571
+  Processing time for GPU: 110448.453125 (ms) 
+  GPU Gflops: 92.647804
+
+
+* Copy result from device memory to host memory ....
+  Data output time for GPU: 8.239424 (ms) 
+  Total time for GPU: 110467.828125 (ms) 
+
+Sat Apr 12 03:09:23 CST 2025
+
+=======================================
+
+
+* Initial parameters:
+  Enter the number of GPUs (NGx, NGy): 1 2
+  * Enter the GPU ID (0/1/...): 0
+  * Enter the GPU ID (0/1/...): 1
+  Solve Laplace equation on 2D lattice with boundary conditions
+  Enter the size (Nx, Ny) of the 2D lattice: 1024 1024
+  Enter the number of threads (tx,ty) per block: 16 16
+  The dimension of the grid per GPU is (64, 32)
+  To compute the solution vector with CPU (1/0) ? 0
+
+* Allocate working space for GPUs ....
+  Data input time for GPU: 7.102464 (ms) 
+
+* Compute GPU solution ....
+  error (GPU) = 0.000000000000000e+00
+  total iterations (GPU) = 1399571
+  Processing time for GPU: 109452.289062 (ms) 
+  GPU Gflops: 93.491024
+
+
+* Copy result from device memory to host memory ....
+  Data output time for GPU: 4.817760 (ms) 
+  Total time for GPU: 109464.210938 (ms) 
+
+Sat Apr 12 03:11:14 CST 2025
+
+=======================================
+

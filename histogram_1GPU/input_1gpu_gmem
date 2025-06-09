@@ -1,0 +1,19 @@
+GPU_ID
+81920000
+-10 10
+33
+64
+128
+1
+
+
+
+
+GPU_ID         
+40960000        the size of the data vector 
+-10 10          data range [Rmin, Rmax] for the histogram
+33              the number of bins of the histogram
+32              the number of threads per block
+128             the number of blocks per grid
+1               To compute the histogram with CPU/not (1/0)
+

@@ -1,0 +1,18 @@
+0
+81920000
+-10 10
+33
+33
+128
+1
+
+
+GPU_ID          This is the actual device number if running at twqcd132 or twqcd135
+40960000        the size of the data vector
+-10 10          data range [Rmin, Rmax] for the histogram
+33              the number of bins of the histogram
+33              the number of threads per block = the number of bins
+128             the number of blocks per grid
+1               To compute the histogram with CPU/not (1/0)
+
+

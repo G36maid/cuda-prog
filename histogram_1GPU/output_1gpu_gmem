@@ -1,0 +1,190 @@
+Set GPU with device ID = 0
+To find the histogram of a data set (with real numbers): 
+Enter the size of the data vector: 81920000
+Enter the data range [Rmin, Rmax] for the histogram: -10.000000 10.000000
+Enter the number of bins of the histogram: 33
+Starting to generate data by RNG
+Finish the generaton of data
+Enter the number of threads per block: 64
+Enter the number of blocks per grid: 128
+The number of blocks is 128
+To compute the histogram with CPU (1/0) ? 1
+Fri Apr 18 09:03:02 CST 2025
+Input time for GPU: 46.682114 (ms) 
+Processing time for GPU: 45.492226 (ms) 
+GPU Gflops: 3.601494
+Output time for GPU: 3.599104 (ms) 
+Total time for GPU: 95.773445 (ms) 
+
+Histogram (GPU):
+-9.696970 0 
+-9.090909 0 
+-8.484848 0 
+-7.878788 0 
+-7.272727 0 
+-6.666667 0 
+-6.060606 1 
+-5.454545 11 
+-4.848485 208 
+-4.242424 3170 
+-3.636364 31444 
+-3.030303 226059 
+-2.424242 1127979 
+-1.818182 3926376 
+-1.212121 9568497 
+-0.606060 16325384 
+0.000000 19512023 
+0.606061 16323351 
+1.212121 9557894 
+1.818182 3928532 
+2.424243 1126736 
+3.030303 227184 
+3.636364 31796 
+4.242424 3142 
+4.848485 198 
+5.454546 13 
+6.060606 2 
+6.666667 0 
+7.272728 0 
+7.878788 0 
+8.484849 0 
+9.090910 0 
+9.696970 0 
+
+Processing time for CPU: 150.738464 (ms) 
+CPU Gflops: 1.086916
+Speed up of GPU = 1.573907
+
+Histogram (CPU):
+-9.696970 0 
+-9.090909 0 
+-8.484848 0 
+-7.878788 0 
+-7.272727 0 
+-6.666667 0 
+-6.060606 1 
+-5.454545 11 
+-4.848485 208 
+-4.242424 3170 
+-3.636364 31444 
+-3.030303 226059 
+-2.424242 1127979 
+-1.818182 3926376 
+-1.212121 9568497 
+-0.606060 16325384 
+0.000000 19512023 
+0.606061 16323351 
+1.212121 9557894 
+1.818182 3928532 
+2.424243 1126736 
+3.030303 227184 
+3.636364 31796 
+4.242424 3142 
+4.848485 198 
+5.454546 13 
+6.060606 2 
+6.666667 0 
+7.272728 0 
+7.878788 0 
+8.484849 0 
+9.090910 0 
+9.696970 0 
+
+
+=======================
+
+Set GPU with device ID = 0
+To find the histogram of a data set (with real numbers): 
+Enter the size of the data vector: 81920000
+Enter the data range [Rmin, Rmax] for the histogram: -10.000000 10.000000
+Enter the number of bins of the histogram: 33
+Starting to generate data by RNG
+Finish the generaton of data
+Enter the number of threads per block: 64
+Enter the number of blocks per grid: 128
+The number of blocks is 128
+To compute the histogram with CPU (1/0) ? 1
+Fri Apr 25 11:02:12 CST 2025
+Input time for GPU: 47.063393 (ms) 
+Processing time for GPU: 45.496319 (ms) 
+GPU Gflops: 3.601170
+Output time for GPU: 3.578944 (ms) 
+Total time for GPU: 96.138649 (ms) 
+
+Histogram (GPU):
+-9.696970 0 
+-9.090909 0 
+-8.484848 0 
+-7.878788 0 
+-7.272727 0 
+-6.666667 0 
+-6.060606 1 
+-5.454545 11 
+-4.848485 208 
+-4.242424 3170 
+-3.636364 31444 
+-3.030303 226059 
+-2.424242 1127979 
+-1.818182 3926376 
+-1.212121 9568497 
+-0.606060 16325384 
+0.000000 19512023 
+0.606061 16323351 
+1.212121 9557894 
+1.818182 3928532 
+2.424243 1126736 
+3.030303 227184 
+3.636364 31796 
+4.242424 3142 
+4.848485 198 
+5.454546 13 
+6.060606 2 
+6.666667 0 
+7.272728 0 
+7.878788 0 
+8.484849 0 
+9.090910 0 
+9.696970 0 
+
+Processing time for CPU: 150.806625 (ms) 
+CPU Gflops: 1.086424
+Speed up of GPU = 1.568637
+
+Histogram (CPU):
+-9.696970 0 
+-9.090909 0 
+-8.484848 0 
+-7.878788 0 
+-7.272727 0 
+-6.666667 0 
+-6.060606 1 
+-5.454545 11 
+-4.848485 208 
+-4.242424 3170 
+-3.636364 31444 
+-3.030303 226059 
+-2.424242 1127979 
+-1.818182 3926376 
+-1.212121 9568497 
+-0.606060 16325384 
+0.000000 19512023 
+0.606061 16323351 
+1.212121 9557894 
+1.818182 3928532 
+2.424243 1126736 
+3.030303 227184 
+3.636364 31796 
+4.242424 3142 
+4.848485 198 
+5.454546 13 
+6.060606 2 
+6.666667 0 
+7.272728 0 
+7.878788 0 
+8.484849 0 
+9.090910 0 
+9.696970 0 
+
+
+=======================
+

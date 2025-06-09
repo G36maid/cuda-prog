@@ -1,0 +1,19 @@
+Saxpy: B <- alpha*A + B
+Enter the GPU_ID: 0
+Set GPU with device ID = 0
+Enter the value of alpha: 3.141600
+Enter the size of the vectors: 163840000
+Enter the number of threads per block: 128
+Enter the number of blocks per grid: 128
+The number of blocks is 128
+Input time for GPU: 205.460648 (ms) 
+Processing time for GPU: 12.879744 (ms) 
+GPU Gflops: 25.441500
+Output time for GPU: 138.329758 (ms) 
+Total time for GPU: 356.670166 (ms) 
+Processing time for CPU: 403.071747 (ms) 
+CPU Gflops: 0.406479
+Speed up of GPU = 1.130097
+Check result:
+norm(h_B - h_C)=0.000000000000000e+00
+

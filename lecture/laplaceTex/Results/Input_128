@@ -1,0 +1,11 @@
+GPU_ID
+128 128  
+16 16 
+2
+
+=============
+GPU_ID        device number to be assigned by condor
+8 8           (Nx, Ny) of the 2D lattice
+4 4           block size (tx,ty)
+2             to compute the solution vector with CPU/GPU/both (0/1/2)
+

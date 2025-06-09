@@ -1,0 +1,596 @@
+000 (1005573.000.000) 03/25 08:51:04 Job submitted from host: <192.168.1.254:52171>
+...
+013 (1005573.000.000) 03/25 08:51:12 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005573.000.000) 03/25 08:51:29 Job executing on host: <192.168.1.219:53667>
+...
+Job start: host=twqcd218, JOB_ID=1005573, GPU_ID=0, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+006 (1005573.000.000) 03/25 08:51:37 Image size of job updated: 120564
+...
+005 (1005573.000.000) 03/25 08:55:28 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:02:31, Sys 0 00:01:14  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:02:31, Sys 0 00:01:14  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005574.000.000) 03/25 09:00:08 Job submitted from host: <192.168.1.254:52171>
+...
+013 (1005574.000.000) 03/25 09:00:17 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005574.000.000) 03/25 09:00:39 Job executing on host: <192.168.1.219:53667>
+...
+Job start: host=twqcd218, JOB_ID=1005574, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1005574.000.000) 03/25 09:00:53 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:19, Sys 0 00:00:06  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:19, Sys 0 00:00:06  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005575.000.000) 03/25 09:03:35 Job submitted from host: <192.168.1.254:52171>
+...
+013 (1005575.000.000) 03/25 09:03:43 Job was released.
+	via condor_release (by user condor)
+...
+000 (1005576.000.000) 03/25 09:03:53 Job submitted from host: <192.168.1.254:52171>
+...
+001 (1005575.000.000) 03/25 09:03:57 Job executing on host: <192.168.1.219:53667>
+...
+Job start: host=twqcd218, JOB_ID=1005575, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+013 (1005576.000.000) 03/25 09:04:04 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005576.000.000) 03/25 09:04:18 Job executing on host: <192.168.1.81:55797>
+...
+Job start: host=twqcd80, JOB_ID=1005576, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1005575.000.000) 03/25 09:06:14 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:03:01, Sys 0 00:01:19  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:03:01, Sys 0 00:01:19  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+006 (1005576.000.000) 03/25 09:09:28 Image size of job updated: 17879884
+...
+005 (1005576.000.000) 03/25 09:10:24 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:05:16, Sys 0 00:02:27  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:05:16, Sys 0 00:02:27  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005577.000.000) 03/25 09:51:37 Job submitted from host: <192.168.1.254:52171>
+...
+013 (1005577.000.000) 03/25 09:51:42 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005577.000.000) 03/25 09:51:59 Job executing on host: <192.168.1.219:53667>
+...
+Job start: host=twqcd218, JOB_ID=1005577, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+006 (1005577.000.000) 03/25 09:57:08 Image size of job updated: 17879992
+...
+005 (1005577.000.000) 03/25 10:00:33 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:08:48, Sys 0 00:04:01  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:08:48, Sys 0 00:04:01  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005592.000.000) 03/25 12:20:23 Job submitted from host: <192.168.1.254:52171>
+...
+013 (1005592.000.000) 03/25 12:20:29 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005592.000.000) 03/25 12:20:45 Job executing on host: <192.168.1.219:53667>
+...
+Job start: host=twqcd218, JOB_ID=1005592, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+006 (1005592.000.000) 03/25 12:25:55 Image size of job updated: 17880092
+...
+005 (1005592.000.000) 03/25 12:29:19 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:08:26, Sys 0 00:03:48  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:08:26, Sys 0 00:03:48  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005593.000.000) 03/25 12:52:16 Job submitted from host: <192.168.1.254:52171>
+...
+013 (1005593.000.000) 03/25 12:52:21 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005593.000.000) 03/25 12:52:44 Job executing on host: <192.168.1.219:53667>
+...
+Job start: host=twqcd218, JOB_ID=1005593, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+006 (1005593.000.000) 03/25 12:57:52 Image size of job updated: 17880092
+...
+005 (1005593.000.000) 03/25 13:01:17 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:08:43, Sys 0 00:03:56  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:08:43, Sys 0 00:03:56  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005606.000.000) 03/25 13:32:15 Job submitted from host: <192.168.1.254:52171>
+...
+013 (1005606.000.000) 03/25 13:32:22 Job was released.
+	via condor_release (by user condor)
+...
+000 (1005607.000.000) 03/25 13:32:28 Job submitted from host: <192.168.1.254:52171>
+...
+000 (1005608.000.000) 03/25 13:32:38 Job submitted from host: <192.168.1.254:52171>
+...
+001 (1005606.000.000) 03/25 13:32:40 Job executing on host: <192.168.1.219:53667>
+...
+Job start: host=twqcd218, JOB_ID=1005606, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+013 (1005607.000.000) 03/25 13:32:43 Job was released.
+	via condor_release (by user condor)
+...
+000 (1005609.000.000) 03/25 13:32:46 Job submitted from host: <192.168.1.254:52171>
+...
+001 (1005607.000.000) 03/25 13:33:00 Job executing on host: <192.168.1.81:55797>
+...
+Job start: host=twqcd80, JOB_ID=1005607, GPU_ID=0, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+013 (1005608.000.000) 03/25 13:33:04 Job was released.
+	via condor_release (by user condor)
+...
+012 (1005608.000.000) 03/25 13:33:14 Job was held.
+	via condor_hold (by user condor)
+	Code 1 Subcode 0
+...
+005 (1005607.000.000) 03/25 13:36:47 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:02:32, Sys 0 00:01:12  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:02:32, Sys 0 00:01:12  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+013 (1005608.000.000) 03/25 13:36:59 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005608.000.000) 03/25 13:37:12 Job executing on host: <192.168.1.81:55797>
+...
+Job start: host=twqcd80, JOB_ID=1005608, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+006 (1005606.000.000) 03/25 13:37:48 Image size of job updated: 17879676
+...
+005 (1005608.000.000) 03/25 13:39:19 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:02:43, Sys 0 00:01:15  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:02:43, Sys 0 00:01:15  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+013 (1005609.000.000) 03/25 13:39:33 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005609.000.000) 03/25 13:39:35 Job executing on host: <192.168.1.81:55797>
+...
+Job start: host=twqcd80, JOB_ID=1005609, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1005606.000.000) 03/25 13:41:13 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:08:34, Sys 0 00:03:57  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:08:34, Sys 0 00:03:57  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+005 (1005609.000.000) 03/25 13:41:43 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:02:42, Sys 0 00:01:16  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:02:42, Sys 0 00:01:16  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005612.000.000) 03/25 13:45:07 Job submitted from host: <192.168.1.254:52171>
+...
+013 (1005612.000.000) 03/25 13:45:13 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005612.000.000) 03/25 13:45:25 Job executing on host: <192.168.1.219:53667>
+...
+Job start: host=twqcd218, JOB_ID=1005612, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+006 (1005612.000.000) 03/25 13:50:35 Image size of job updated: 17879676
+...
+005 (1005612.000.000) 03/25 13:53:59 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:08:38, Sys 0 00:03:57  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:08:38, Sys 0 00:03:57  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005670.000.000) 04/01 07:57:25 Job submitted from host: <192.168.1.254:36617>
+...
+013 (1005670.000.000) 04/01 07:57:28 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005670.000.000) 04/01 07:57:51 Job executing on host: <192.168.1.219:50797>
+...
+Job start: host=twqcd218, JOB_ID=1005670, GPU_ID=0, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+004 (1005670.000.000) 04/01 08:01:28 Job was evicted.
+	(0) Job was not checkpointed.
+		Usr 0 00:02:24, Sys 0 00:01:12  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+009 (1005670.000.000) 04/01 08:01:28 Job was aborted by the user.
+	via condor_rm (by user twchiu)
+...
+000 (1005671.000.000) 04/01 08:03:07 Job submitted from host: <192.168.1.254:36617>
+...
+013 (1005671.000.000) 04/01 08:03:08 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005671.000.000) 04/01 08:03:16 Job executing on host: <192.168.1.219:50797>
+...
+Job start: host=twqcd218, JOB_ID=1005671, GPU_ID=0, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1005671.000.000) 04/01 08:03:42 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:13, Sys 0 00:00:01  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:13, Sys 0 00:00:01  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005672.000.000) 04/01 08:11:37 Job submitted from host: <192.168.1.254:36617>
+...
+013 (1005672.000.000) 04/01 08:11:42 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005672.000.000) 04/01 08:12:05 Job executing on host: <192.168.1.219:50797>
+...
+Job start: host=twqcd218, JOB_ID=1005672, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1005672.000.000) 04/01 08:12:30 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:14, Sys 0 00:00:01  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:14, Sys 0 00:00:01  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005673.000.000) 04/01 08:14:48 Job submitted from host: <192.168.1.254:36617>
+...
+013 (1005673.000.000) 04/01 08:14:57 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005673.000.000) 04/01 08:15:15 Job executing on host: <192.168.1.219:50797>
+...
+Job start: host=twqcd218, JOB_ID=1005673, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1005673.000.000) 04/01 08:15:41 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:15, Sys 0 00:00:01  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:15, Sys 0 00:00:01  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005674.000.000) 04/01 08:16:30 Job submitted from host: <192.168.1.254:36617>
+...
+013 (1005674.000.000) 04/01 08:16:40 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005674.000.000) 04/01 08:16:56 Job executing on host: <192.168.1.219:50797>
+...
+Job start: host=twqcd218, JOB_ID=1005674, GPU_ID=0, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1005674.000.000) 04/01 08:17:17 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:10, Sys 0 00:00:04  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:10, Sys 0 00:00:04  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005675.000.000) 04/01 08:18:59 Job submitted from host: <192.168.1.254:36617>
+...
+013 (1005675.000.000) 04/01 08:19:04 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005675.000.000) 04/01 08:19:20 Job executing on host: <192.168.1.219:50797>
+...
+Job start: host=twqcd218, JOB_ID=1005675, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+006 (1005675.000.000) 04/01 08:19:28 Image size of job updated: 17870776
+...
+005 (1005675.000.000) 04/01 08:19:35 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:07, Sys 0 00:00:02  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:07, Sys 0 00:00:02  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005676.000.000) 04/01 08:21:55 Job submitted from host: <192.168.1.254:36617>
+...
+013 (1005676.000.000) 04/01 08:21:59 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005676.000.000) 04/01 08:22:17 Job executing on host: <192.168.1.219:50797>
+...
+Job start: host=twqcd218, JOB_ID=1005676, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1005676.000.000) 04/01 08:22:32 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005677.000.000) 04/01 08:24:53 Job submitted from host: <192.168.1.254:36617>
+...
+013 (1005677.000.000) 04/01 08:24:54 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005677.000.000) 04/01 08:25:14 Job executing on host: <192.168.1.219:50797>
+...
+Job start: host=twqcd218, JOB_ID=1005677, GPU_ID=0, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1005677.000.000) 04/01 08:28:20 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:02:05, Sys 0 00:00:53  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:02:05, Sys 0 00:00:53  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005678.000.000) 04/01 08:30:51 Job submitted from host: <192.168.1.254:36617>
+...
+013 (1005678.000.000) 04/01 08:30:54 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005678.000.000) 04/01 08:31:13 Job executing on host: <192.168.1.219:50797>
+...
+Job start: host=twqcd218, JOB_ID=1005678, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1005678.000.000) 04/01 08:33:05 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:02:27, Sys 0 00:00:58  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:02:27, Sys 0 00:00:58  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005679.000.000) 04/01 08:36:27 Job submitted from host: <192.168.1.254:36617>
+...
+013 (1005679.000.000) 04/01 08:36:34 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005679.000.000) 04/01 08:36:39 Job executing on host: <192.168.1.219:50797>
+...
+Job start: host=twqcd218, JOB_ID=1005679, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1005679.000.000) 04/01 08:38:30 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:02:30, Sys 0 00:00:58  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:02:30, Sys 0 00:00:58  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005680.000.000) 04/01 08:40:11 Job submitted from host: <192.168.1.254:36617>
+...
+013 (1005680.000.000) 04/01 08:40:20 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005680.000.000) 04/01 08:40:33 Job executing on host: <192.168.1.219:50797>
+...
+Job start: host=twqcd218, JOB_ID=1005680, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+006 (1005680.000.000) 04/01 08:40:42 Image size of job updated: 17880056
+...
+005 (1005680.000.000) 04/01 08:44:17 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:04:47, Sys 0 00:01:48  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:04:47, Sys 0 00:01:48  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1005681.000.000) 04/01 08:47:28 Job submitted from host: <192.168.1.254:36617>
+...
+013 (1005681.000.000) 04/01 08:47:32 Job was released.
+	via condor_release (by user condor)
+...
+001 (1005681.000.000) 04/01 08:47:50 Job executing on host: <192.168.1.219:50797>
+...
+Job start: host=twqcd218, JOB_ID=1005681, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+006 (1005681.000.000) 04/01 08:53:00 Image size of job updated: 17879720
+...
+005 (1005681.000.000) 04/01 08:54:39 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:07:01, Sys 0 00:02:46  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:07:01, Sys 0 00:02:46  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1008234.000.000) 05/17 22:31:51 Job submitted from host: <192.168.1.254:36617>
+...
+013 (1008234.000.000) 05/17 22:31:58 Job was released.
+	via condor_release (by user condor)
+...
+001 (1008234.000.000) 05/17 22:32:17 Job executing on host: <192.168.1.219:50797>
+...
+Job start: host=twqcd218, JOB_ID=1008234, GPU_ID=0 1, wdir=/home/cuda2024/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1008234.000.000) 05/17 22:34:09 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:02:28, Sys 0 00:00:59  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:02:28, Sys 0 00:00:59  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012650.000.000) 04/12 02:24:32 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012650.000.000) 04/12 02:24:32 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012650.000.000) 04/12 02:24:40 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012650, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1012650.000.000) 04/12 02:24:41 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012651.000.000) 04/12 02:32:35 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012651.000.000) 04/12 02:32:37 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012651.000.000) 04/12 02:33:00 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012651, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1012651.000.000) 04/12 02:33:25 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:13, Sys 0 00:00:01  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:13, Sys 0 00:00:01  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012652.000.000) 04/12 02:49:32 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012652.000.000) 04/12 02:49:37 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012652.000.000) 04/12 02:49:55 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012652, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1012652.000.000) 04/12 02:53:01 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:02:06, Sys 0 00:00:52  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:02:06, Sys 0 00:00:52  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012653.000.000) 04/12 02:57:29 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012653.000.000) 04/12 02:57:31 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012653.000.000) 04/12 02:57:54 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012653, GPU_ID=0 1, wdir=/home/cuda2025/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1012653.000.000) 04/12 02:59:45 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:02:32, Sys 0 00:00:56  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:02:32, Sys 0 00:00:56  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012654.000.000) 04/12 03:01:05 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012654.000.000) 04/12 03:01:07 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012654.000.000) 04/12 03:01:22 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012654, GPU_ID=0 1, wdir=/home/cuda2025/twchiu/cuda_lecture/laplace2D_NGPU
+005 (1012654.000.000) 04/12 03:03:13 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:02:29, Sys 0 00:00:58  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:02:29, Sys 0 00:00:58  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...

@@ -1,0 +1,622 @@
+000 (1012212.000.000) 03/21 09:43:26 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012212.000.000) 03/21 09:43:30 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012212.000.000) 03/21 09:43:49 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012212, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/laplaceTex
+004 (1012212.000.000) 03/21 09:45:28 Job was evicted.
+	(0) Job was not checkpointed.
+		Usr 0 00:01:07, Sys 0 00:00:31  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+009 (1012212.000.000) 03/21 09:45:28 Job was aborted by the user.
+	via condor_rm (by user twchiu)
+...
+000 (1012213.000.000) 03/21 09:46:02 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012213.000.000) 03/21 09:46:05 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012213.000.000) 03/21 09:46:15 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012213, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/laplaceTex
+005 (1012213.000.000) 03/21 09:46:16 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012381.000.000) 03/28 07:58:14 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012381.000.000) 03/28 07:58:17 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012381.000.000) 03/28 07:58:39 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012381, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/laplaceTex
+005 (1012381.000.000) 03/28 07:58:40 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012382.000.000) 03/28 08:03:55 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012382.000.000) 03/28 08:03:57 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012382.000.000) 03/28 08:04:10 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012382, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/laplaceTex
+005 (1012382.000.000) 03/28 08:04:12 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012383.000.000) 03/28 08:06:13 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012383.000.000) 03/28 08:06:21 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012383.000.000) 03/28 08:06:41 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012383, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/laplaceTex
+005 (1012383.000.000) 03/28 08:06:44 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012384.000.000) 03/28 08:10:31 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012384.000.000) 03/28 08:10:39 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012384.000.000) 03/28 08:10:56 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012384, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/laplaceTex
+005 (1012384.000.000) 03/28 08:11:21 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:13, Sys 0 00:00:01  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:13, Sys 0 00:00:01  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012385.000.000) 03/28 08:14:31 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012385.000.000) 03/28 08:14:36 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012385.000.000) 03/28 08:14:47 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012385, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/laplaceTex
+006 (1012385.000.000) 03/28 08:19:57 Image size of job updated: 13350096
+...
+005 (1012385.000.000) 03/28 08:20:01 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:04:53, Sys 0 00:00:06  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:04:53, Sys 0 00:00:06  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012386.000.000) 03/28 08:31:33 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012386.000.000) 03/28 08:31:36 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012386.000.000) 03/28 08:31:45 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012386, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/laplaceTex
+005 (1012386.000.000) 03/28 08:35:20 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:02:21, Sys 0 00:01:08  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:02:21, Sys 0 00:01:08  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012387.000.000) 03/28 08:37:58 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012387.000.000) 03/28 08:38:08 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012387.000.000) 03/28 08:38:21 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012387, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/laplaceTex
+006 (1012387.000.000) 03/28 08:38:30 Image size of job updated: 13361300
+...
+005 (1012387.000.000) 03/28 08:41:28 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:01:59, Sys 0 00:00:53  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:01:59, Sys 0 00:00:53  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1013438.000.000) 04/19 09:15:56 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1013438.000.000) 04/19 09:16:01 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:16:26 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:16:26 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:16:32 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:16:49 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:16:49 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:16:53 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:17:11 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:17:11 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:17:13 Job was released.
+	via condor_release (by user condor)
+...
+000 (1013439.000.000) 04/19 09:17:16 Job submitted from host: <192.168.1.254:35795>
+...
+007 (1013438.000.000) 04/19 09:17:33 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:17:33 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:17:34 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:17:54 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:17:55 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:17:55 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:18:17 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:18:17 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:18:26 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:18:40 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:18:40 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:18:47 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:19:03 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:19:03 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:19:08 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:19:26 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:19:26 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:19:29 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:19:49 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:19:49 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013439.000.000) 04/19 09:19:49 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013439.000.000) 04/19 09:20:11 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013439.000.000) 04/19 09:20:11 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:20:20 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:20:32 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:20:33 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:20:41 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:20:55 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:20:55 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:21:02 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:21:18 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:21:18 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:21:23 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:21:41 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:21:41 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:21:43 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:22:03 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:22:03 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:22:04 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:22:24 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:22:25 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:22:25 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:22:47 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:22:47 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:22:56 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:23:10 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:23:10 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:23:17 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:23:33 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:23:33 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:23:38 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:23:56 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:23:56 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:23:59 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:24:18 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:24:18 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:24:19 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:24:39 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:24:40 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:24:40 Job was released.
+	via condor_release (by user condor)
+...
+013 (1013439.000.000) 04/19 09:25:01 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:25:01 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:25:01 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+007 (1013439.000.000) 04/19 09:25:02 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013439.000.000) 04/19 09:25:02 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:25:12 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:25:23 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:25:24 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:25:32 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:25:46 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:25:46 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:25:53 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:26:07 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:26:07 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:26:14 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:26:30 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:26:30 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:26:35 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:26:51 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:26:52 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:26:55 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:27:13 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:27:13 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:27:16 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:27:35 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:27:35 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:27:37 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:27:58 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:27:58 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:28:08 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:28:21 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:28:21 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:28:29 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013438.000.000) 04/19 09:28:42 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013438.000.000) 04/19 09:28:42 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013438.000.000) 04/19 09:28:50 Job was released.
+	via condor_release (by user condor)
+...
+009 (1013438.000.000) 04/19 09:28:55 Job was aborted by the user.
+	via condor_rm (by user twchiu)
+...
+013 (1013439.000.000) 04/19 09:29:01 Job was released.
+	via condor_release (by user condor)
+...
+007 (1013439.000.000) 04/19 09:29:04 Shadow exception!
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+...
+012 (1013439.000.000) 04/19 09:29:04 Job was held.
+	Error from slot1@twqcd218: Failed to open '/home/cuda2025/twchiu/cuda_lecture_2025/laplaceTex/condor.out' as standard output: No such file or directory (errno 2)
+	Code 7 Subcode 2
+...
+013 (1013439.000.000) 04/19 09:29:11 Job was released.
+	via condor_release (by user condor)
+...
+009 (1013439.000.000) 04/19 09:29:16 Job was aborted by the user.
+	via condor_rm (by user twchiu)
+...

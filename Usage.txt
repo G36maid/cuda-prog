@@ -1,0 +1,129 @@
+Usage of twcp1 cluster: 
+
+0. You can loin the twcp1 cluster via ssh:
+
+   ssh -p 5040 student_number@twcp1.phys.ntu.edu.tw
+   
+   The initial password is your student_number. 
+   You should change your password upon your first login, for security. 
+
+   Note that for the students of NTUST and NTNU, student_number is replaced by
+   ntust_student_number or ntnu_student number 
+   For example, if your NTUST student number is d12345678, then you can login 
+   twcp1 cluster with the command:
+
+   ssh -p 5040 ntust_D12345678@twcp1.phys.ntu.edu.tw
+
+   Similarly, if your NTNU student number is 41234567S, then you can login 
+   twcp1 cluster with the command:
+
+   ssh -p 5040 ntnu_41234567S@twcp1.phys.ntu.edu.tw
+
+   You can use scp to transfer files bwtween twcp1 and your own computer.
+   For example, to transfer a gzipped tar file from your computer to 
+   your home directory in twcp1: 
+
+   scp -P 5040 source.tar.gz student_number@twcp1.phys.ntu.edu.tw:~/. 
+
+1. System configuration:
+   - Hardware:  Nvidia GeForce GTX 1060
+
+   - OS:        Debian GNU/Linux 11.9, kernel version 4.19.172           
+
+   - Software:
+     - CUDA 12.3:       /usr/local/nvidia
+     - Intel Compilers: /opt/intel
+     - Gnu compliers:   /usr/bin
+
+3. All jobs should be submitted and run through the condor system.
+
+4. In the condor system, the available queues and list of machines can be
+   queried by the "nodeview" command. Here is an example output: 
+
+
+  Name          MTYPE     Config            State     NP     JobID  Activity  LoadAv
+------------------------------------------------------------------------------------
+  vm1@twqcd80   sm61_60G  2GPU-32G-sm61_60G Unclaimed  2       n/a    Idle     0.000
+  vm2@twqcd80   CPU       2GPU-32G-sm61_60G Unclaimed  1       n/a    Idle     -1.000
+  vm1@twqcd218  sm61_60G  2GPU-32G-sm61_60G Unclaimed  2       n/a    Idle     -1.000
+  vm2@twqcd218  CPU       2GPU-32G-sm61_60G Unclaimed  1       n/a    Idle     0.000
+
+Number of CPU:      total=02, busy=00, free=02
+Number of sm61_60G: total=04, busy=00, free=04
+
+   where:
+
+   - Name:     machine hostname, with job running slot ID in that machine.
+   - MTYPE:    the queue name.
+   - Config:   the hardware configuration summary (GPU type, the size of
+               GPU memory, and the size of host memory) of that machine.
+   - State:    the current state of that machine: "Claimed" means occupied
+               by a job, and "Unclaimed" means unoccupied.
+   - NP:       number of GPUs or CPUs in that machine.
+   - JobID:    the ID of the job running in that machine.
+   - Activity: the machine activity, Busy or Idle.
+   - LoadAv:   the machine load average.
+
+   Finally, the "Number of <queue_name>" counts the total number of GPUs
+   belong to the queue.
+
+
+6. To run jobs in the cluster, one should follow the following guidelines:
+
+   - Create a working directory under /home/cuda2025/<account>/ for your job.
+
+   - Put all the necessary data files and input files in the working
+     directory.
+
+   - Prepare a job description file to tell condor the requirements of
+     your job, such as which queue to run, how many GPUs are needed, ...
+     etc. The example job description file named "cmd" are available in
+     the /cuda_lecture_2025/vecAdd_1GPU/cmd directory. It is self-described. 
+     Please use it as an template and modify it to fulfill your job requirements.
+
+   - To submit your job, please run (suppose that your job description
+     filename is "cmd"):
+
+     condor_submit cmd
+
+   - After that, you can use the command "jview" to check the job status.
+     Here is an example output:
+
+ JobID  User    RunTime NGPU  ST  Host      GPU       Config    Wdir
+----------------------------------------------------------------------------------------------------------------------
+1004702  twchiu       4s    1   R  twqcd218  sm61_60G  2GPU-32G-sm61_60G/home/cuda2025/twchiu/cuda_lecture/laplaceTex
+
+Number of CPU:      total=02, busy=00, free=02
+Number of sm61_60G: total=04, busy=00, free=04
+
+     where:
+
+     - JobID:   The ID number of this job.
+     - User:    The owner of this job.
+     - RunTime: The running time of this job.
+     - NGPU:    The number of GPUs used in this job.
+     - ST:      The job state. R: Running, H: Holding (waiting for available
+                computing resources), I: Ready to start.
+     - Host:    The node "twqcd218" is running this job
+     - GPU:     The type of the GPU or CPU which runs this job.
+     - Config:  The short configuration description of the computing node.
+     - Wdir:    The working directory of this job.
+
+    - If you want to kill a job, please use the command:
+
+     condor_rm <JobID>
+
+7. About GPU_ID
+
+   In your input file, there is a parameter with the keyword "GPU_ID". 
+   When the job starts, this keyword of the input file will be replaced 
+   by the actual GPU ID assigned by the condor.
+
+8. To perform a run in your working directory.
+
+   - Edit the parameter "Initialdir" in the "cmd" file, which should be 
+     set to your working directory. You can use the linux command "pwd" 
+     to obtain your working directory.
+
+   - Use the command "condor_submit cmd" to submit the job.
+

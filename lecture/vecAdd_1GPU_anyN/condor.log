@@ -1,0 +1,57 @@
+000 (1012199.000.000) 03/21 08:53:41 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012199.000.000) 03/21 08:53:50 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012199.000.000) 03/21 08:54:05 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012199, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/vecAdd_1GPU_anyN
+005 (1012199.000.000) 03/21 08:54:12 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012200.000.000) 03/21 08:54:45 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012200.000.000) 03/21 08:54:52 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012200.000.000) 03/21 08:55:10 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012200, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/vecAdd_1GPU_anyN
+005 (1012200.000.000) 03/21 08:55:17 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...
+000 (1012201.000.000) 03/21 08:55:51 Job submitted from host: <192.168.1.254:35795>
+...
+013 (1012201.000.000) 03/21 08:55:54 Job was released.
+	via condor_release (by user condor)
+...
+001 (1012201.000.000) 03/21 08:56:15 Job executing on host: <192.168.1.219:42259>
+...
+Job start: host=twqcd218, JOB_ID=1012201, GPU_ID=0, wdir=/home/cuda2025/twchiu/cuda_lecture/vecAdd_1GPU_anyN
+005 (1012201.000.000) 03/21 08:56:23 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:04, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:04, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+...

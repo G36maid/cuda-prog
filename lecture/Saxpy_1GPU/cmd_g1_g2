@@ -1,0 +1,43 @@
+Universe      = vanilla
+Executable    = /opt/bin/runjob
+Output        = condor.out
+Error         = condor.err
+Log           = condor.log
+Requirements  = (MTYPE == "sm61_60G")
+notification  = never
+Machine_count = 1
+
+#--------------------------------------------------------------------------
+#       Number of required CPUs or GPUs in one computing node.
+#
+request_cpus  = 2
+
+#--------------------------------------------------------------------------
+#       Set the job priority.
+#
+#       Default priority:  0
+#       Larger priority value means higher priority.
+#
+#priority = -1
+
+#--------------------------------------------------------------------------
+#       Change to the full path of the working directory
+#
+Initialdir = /home/cuda2024/twchiu/cuda_lecture/vecAdd_NGPU
+
+#--------------------------------------------------------------------------
+#       Modify the following line according to your needs.
+#
+#       There should have 4 arguments listed in the below:
+#
+#       <working dir in twcp10> <program name> <input file> <output file>
+#
+#       Please note that, in the <input file>, the place to fill in the
+#       GPU ID should be a keyword "GPU_ID".
+#
+Arguments = ./vecAdd_ngpu Input_g1 Input_g2 Output_g1_g2
+#
+#
+#--------------------------------------------------------------------------
+
+Queue

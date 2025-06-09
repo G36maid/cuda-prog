@@ -1,0 +1,12 @@
+2 1 
+GPU_ID1 GPU_ID2
+1024 1024
+16 16 
+0
+
+
+# the number of GPUs (NGx, NGy), where NGPU=NGx*NGy.
+# GPU_ID
+# the size (Nx, Ny) of the 2D lattice.
+# the number of threads (tx,ty) per block
+# Compute CPU solution or not (1/0) 

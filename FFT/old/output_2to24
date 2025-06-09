@@ -1,0 +1,7 @@
+Enter the GPU ID (0/1): 0
+Enter the vector size: 16777216
+Print the data (0/1) ? 0
+Difference of solutions between CPU and GPU: 7.071759E-16
+GPU time: 178.430084 (ms)
+CPU time: 11846.321289 (ms)
+GPU speed up: 66.391953 

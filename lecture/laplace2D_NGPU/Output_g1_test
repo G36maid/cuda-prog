@@ -1,0 +1,72 @@
+
+* Initial parameters:
+  Enter the number of GPUs (NGx, NGy): 1 1
+  * Enter the GPU ID (0/1/...): 0
+  Solve Laplace equation on 2D lattice with boundary conditions
+  Enter the size (Nx, Ny) of the 2D lattice: 64 64
+  Enter the number of threads (tx,ty) per block: 16 16
+  The dimension of the grid per GPU is (4, 4)
+  To compute the solution vector with CPU (1/0) ? 1
+
+* Allocate working space for GPUs ....
+  Data input time for GPU: 0.641824 (ms) 
+
+* Compute GPU solution ....
+  error (GPU) = 5.820766091346741e-11
+  total iterations (GPU) = 9745
+  Processing time for GPU: 157.605438 (ms) 
+  GPU Gflops: 1.663765
+
+
+* Copy result from device memory to host memory ....
+  Data output time for GPU: 0.473696 (ms) 
+  Total time for GPU: 158.720963 (ms) 
+
+
+* Compute CPU solution ....
+  error (CPU) = 5.820766091346741e-11
+  total iterations (CPU) = 9745
+  Processing time for CPU: 100.825600 (ms) 
+  CPU Gflops: 2.600713
+  Speed up of GPU = 0.635238
+
+Sat Apr 12 02:24:41 CST 2025
+
+=======================================
+
+
+* Initial parameters:
+  Enter the number of GPUs (NGx, NGy): 1 1
+  * Enter the GPU ID (0/1/...): 0
+  Solve Laplace equation on 2D lattice with boundary conditions
+  Enter the size (Nx, Ny) of the 2D lattice: 256 256
+  Enter the number of threads (tx,ty) per block: 16 16
+  The dimension of the grid per GPU is (16, 16)
+  To compute the solution vector with CPU (1/0) ? 1
+
+* Allocate working space for GPUs ....
+  Data input time for GPU: 2.588672 (ms) 
+
+* Compute GPU solution ....
+  error (GPU) = 5.820766091346741e-11
+  total iterations (GPU) = 124611
+  Processing time for GPU: 2714.383057 (ms) 
+  GPU Gflops: 20.732454
+
+
+* Copy result from device memory to host memory ....
+  Data output time for GPU: 1.670752 (ms) 
+  Total time for GPU: 2718.642334 (ms) 
+
+
+* Compute CPU solution ....
+  error (CPU) = 5.820766091346741e-11
+  total iterations (CPU) = 124611
+  Processing time for CPU: 21616.042969 (ms) 
+  CPU Gflops: 2.603429
+  Speed up of GPU = 7.951043
+
+Sat Apr 12 02:33:25 CST 2025
+
+=======================================
+
