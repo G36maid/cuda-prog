@@ -9,7 +9,7 @@ To run your assignments on the twcp1 cluster:
 1. Modify the provided job submission script (cmd).
 2. Submit the job using:
   - condor_submit cmd
-3. Monitor the job output using:
+3. Monitor the jobs using:
   - jview
 
 ## HW01
