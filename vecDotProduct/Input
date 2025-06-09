@@ -1,5 +1,5 @@
 GPU_ID
-268435457
+6400
 64
 256
 
@@ -9,4 +9,3 @@ GPU_ID     device number to be assigned by condor
 vector size
 block size
 grid size
-

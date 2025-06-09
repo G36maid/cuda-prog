@@ -1,13 +1,17 @@
 
 Introduction to CUDA Parallel Programming Homework Assignment 3
 March, 2025
+
 1. Solve the Poisson equation on a 3D lattice with boundary conditions.
 Consider a cube of size L x L x L with a point charge q=1 at its center
 (L/2, L/2, L/2), with lattice sites (0, 1, 2, ..., L) in each direction, subject
 to the boundary conditions with potential equal to zero on its entire
 surface. Find the potential versus the distance r from the point
 charge, for L=8, 16, 32, 64 respectively.
-Does the potential approach the Coulomb’s law in the limit L >>1 ?
+
+
+2. Does the potential approach the Coulomb’s law in the limit L >>1 ?
+
 As usual, your homework report should include your source codes,
 results, and discussions. The discussion file should be prepared with a
 typesetting system, e.g., LaTeX, Word, etc., and it is converted to a
