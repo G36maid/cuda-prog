@@ -223,21 +223,20 @@ void findOptimalConfiguration(int N) {
     int block_sizes[] = {32, 64, 128, 256, 512, 1024};
 
     // Test different grid sizes for each block size
-    int max_blocks = std::min(65535, (N/2 + 31) / 32);  // N/2 because work is split between 2 GPUs
-
     for (int block_size : block_sizes) {
         // For dual GPU, each GPU processes N/2 elements
-        // Aim for ~256 elements per block for good occupancy
-        int elements_per_block = block_size * 256;
-        int optimal_blocks = (N/2 + elements_per_block - 1) / elements_per_block;
-        optimal_blocks = std::min(1024, optimal_blocks); // Limit max blocks for efficiency
+        // Calculate grid size based on elements per thread
+        int elements_per_thread = 256;  // Each thread processes 256 elements
+        int total_threads_needed = (N/2 + elements_per_thread - 1) / elements_per_thread;
+        int base_grid_size = (total_threads_needed + block_size - 1) / block_size;
+        base_grid_size = std::min(1024, base_grid_size); // Limit max blocks for efficiency
 
         int grid_sizes[] = {
-            optimal_blocks,
-            optimal_blocks / 2,
-            optimal_blocks / 4,
-            optimal_blocks / 8,
-            optimal_blocks / 16
+            base_grid_size,
+            base_grid_size / 2,
+            base_grid_size / 4,
+            base_grid_size / 8,
+            base_grid_size / 16
         };
 
         for (int grid_size : grid_sizes) {
