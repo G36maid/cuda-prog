@@ -1,5 +1,17 @@
 # Introduction to CUDA Parallel Programming Homework Assignments 2025
 
+This document summarizes the CUDA homework assignments for the 2025 Introduction to CUDA Parallel Programming course. It is intended to provide a clear overview of each assignment and how to run them on the TWCP1 cluster.
+
+# Usage on TWCP1 Cluster
+
+To run your assignments on the twcp1 cluster:
+
+1. Modify the provided job submission script (cmd).
+2. Submit the job using:
+  - condor_submit cmd
+3. Monitor the job output using:
+  - jview
+
 ## HW01
 
 1. To write your own CPU+GPU code for the modified matrix addition as
