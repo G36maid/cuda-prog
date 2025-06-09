@@ -1,6 +1,6 @@
-
-Introduction to CUDA Parallel Programming Homework Assignment 5
+# Introduction to CUDA Parallel Programming Homework Assignment 5
 April, 2025
+
 1. Heat Diffusion
 Using a Cartesian grid of 1024 x 1024, solve for the thermal
 equilibrium temperature distribution on a square plate. The
@@ -9,6 +9,8 @@ remainder of the circumference is at 273 K. Write a CUDA code for
 multi-GPUs to solve this problem. Test your code with one and two
 GPUs. Also, to determine the optimal block size for this problem. The
 value of  can be fixed to 1.
+
+## Submission Guidelines
 As usual, your homework report should include your source codes,
 results, and discussions (without any executable files). The discussion
 file should be prepared with a typesetting system, e.g., LaTeX, Word,

@@ -10,6 +10,9 @@ Then, to assert that your solution is indeed physically correct.
 Next, to investigate what is the largest 3D lattice you can solve the Poisson
 equation with one Nvidia GTX-1060.
 
+
+## Submission Guidelines
+
 As usual, your homework report should include your source codes, results, and
 discussions. The discussion file should be prepared with a typesetting system, e.g.,
 LaTeX, Word, etc., and it is converted to a PDF file. All files should be zipped into one

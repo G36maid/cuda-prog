@@ -1,6 +1,6 @@
-
-Introduction to CUDA Parallel Programming Homework Assignment 6
+# Introduction to CUDA Parallel Programming Homework Assignment 6
 April, 2025
+
 1. Histogram of a data set with exponential distribution
 Write a pseudo-random number generator to generate random
 numbers in (0,) with the exponential distribution exp(-x), and use it
@@ -9,6 +9,8 @@ computed by CPU, GPU with global memory, and GPU with shared
 memory, as well as their speeds. Plot the histogram, together with the
 curve of the theoretical probability distribution.
 Also, to determine the optimal block sizes for this problem.
+
+## Submission Guidelines
 As usual, your homework report should include your source codes,
 results, and discussions (without *.exe files). The discussion file should
 be prepared with a typesetting system, e.g., LaTeX, Word, etc., and it
