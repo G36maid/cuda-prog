@@ -3,7 +3,7 @@
 #include <cuda_runtime.h>
 #include <chrono>
 
-#define N (1 << 24) // 約 16M 筆資料
+#define N (1 << 24)
 #define THREADS_PER_BLOCK 256
 
 void initData(float *a, float *b, int n) {
@@ -26,14 +26,16 @@ void checkResult(const float *a, const float *b, int n) {
 
 void addVectorsCPU(const float *a, const float *b, float *c, int n) {
     for (int i = 0; i < n; ++i) {
-        c[i] = a[i] + b[i];
+        //    c[i] = a[i] + b[i];
+        c[i] = 1.0f / a[i] + 1.0f / b[i];//hw01
     }
 }
 
 __global__ void addKernel(const float *a, const float *b, float *c, int n) {
     int idx = threadIdx.x + blockDim.x * blockIdx.x;
     if (idx < n) {
-        c[idx] = a[idx] + b[idx];
+    //    c[idx] = a[idx] + b[idx];
+        c[idx] = 1.0f / a[idx] + 1.0f / b[idx];//hw01
     }
 }
 
@@ -67,21 +69,18 @@ int main() {
 
     initData(a, b, N);
 
-    // CPU 計算
     auto start_cpu = std::chrono::high_resolution_clock::now();
     addVectorsCPU(a, b, c_cpu, N);
     auto end_cpu = std::chrono::high_resolution_clock::now();
     double time_cpu = std::chrono::duration<double>(end_cpu - start_cpu).count();
     printf("CPU Time: %.4f seconds\n", time_cpu);
 
-    // GPU 計算
     auto start_gpu = std::chrono::high_resolution_clock::now();
     addVectorsGPU(a, b, c_gpu, N);
     auto end_gpu = std::chrono::high_resolution_clock::now();
     double time_gpu = std::chrono::duration<double>(end_gpu - start_gpu).count();
     printf("GPU Time: %.4f seconds\n", time_gpu);
 
-    // 驗證
     checkResult(c_cpu, c_gpu, N);
 
     free(a);
