@@ -166,11 +166,11 @@ void findOptimalConfiguration(int L, int maxIter, float tolerance) {
     }
 
     printf("\n=== Optimal Configuration for L=%d ===\n", L);
-    printf("Block Size: %dx%dx%d\n", best->blockSize, best->blockSize, best->blockSize);
-    printf("Grid Size: %dx%dx%d\n", best->gridSize, best->gridSize, best->gridSize);
-    printf("Kernel Time: %.6f ms\n", best->kernelTime);
-    printf("Total Time: %.6f ms\n", best->totalTime);
-    printf("Max Error vs Analytical: %.6e\n", best->maxError);
+    printf("Block Size: %dx%dx%d\n", best.blockSize, best.blockSize, best.blockSize);
+    printf("Grid Size: %dx%dx%d\n", best.gridSize, best.gridSize, best.gridSize);
+    printf("Kernel Time: %.6f ms\n", best.kernelTime);
+    printf("Total Time: %.6f ms\n", best.totalTime);
+    printf("Max Error vs Analytical: %.6e\n", best.maxError);
 
     // Write potential vs distance data for this L
     char filename[32];
