@@ -18,12 +18,12 @@ request_cpus  = 1
 #       Default priority:  0
 #       Larger priority value means higher priority.
 #
-#priority = -1
+#priority = 20
 
 #--------------------------------------------------------------------------
 #       Change to the full path of the working directory
 #
-Initialdir = /home/cuda2025/twchiu/cuda_lecture/vecDotProduct
+Initialdir = /home/cuda2025/ntnu_41173058H/cuda-prog/hw02
 
 #--------------------------------------------------------------------------
 #       Modify the following line according to your needs.
