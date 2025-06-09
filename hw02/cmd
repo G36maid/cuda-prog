@@ -18,12 +18,12 @@ request_cpus  = 1
 #       Default priority:  0
 #       Larger priority value means higher priority.
 #
-#priority = 20
+#priority = -1
 
 #--------------------------------------------------------------------------
 #       Change to the full path of the working directory
 #
-Initialdir = /home/cuda2025/ntnu_41173058H/cuda-prog/hw01
+Initialdir = /home/cuda2025/twchiu/cuda_lecture/vecDotProduct
 
 #--------------------------------------------------------------------------
 #       Modify the following line according to your needs.
@@ -35,7 +35,7 @@ Initialdir = /home/cuda2025/ntnu_41173058H/cuda-prog/hw01
 #       Please note that, in the <input file>, the place to fill in the
 #       GPU ID should be a keyword "GPU_ID".
 #
-Arguments = ./vecAdd Input Output
+Arguments = ./vecDot Input Output
 
 #
 #--------------------------------------------------------------------------

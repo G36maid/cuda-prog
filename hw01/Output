@@ -1,16 +1,72 @@
-Enter the GPU ID: 0
-Set GPU with device ID = 0
+Enter the GPU ID: Set GPU with device ID = 0
 Vector Addition: C = 1/A + 1/B
-Enter the size of the vectors: 81920000
-Enter the number of threads per block: 64
-The number of blocks is 1280000
-Input time for GPU: 94.864227 (ms)
-Processing time for GPU: 19.285568 (ms)
-GPU Gflops: 12.743208
-Output time for GPU: 90.671005 (ms)
-Total time for GPU: 204.820801 (ms)
-Processing time for CPU: 319.700775 (ms)
-CPU Gflops: 0.768719
-Speed up of GPU = 1.560880
+Enter the size of the vectors: Enter the number of threads per block: The number of blocks is 1280000
+Processing time for CPU: 99.092181 (ms)
+CPU Gflops: 1.653410
+Input time for GPU: 92.642632 (ms)
+Processing time for GPU: 6.788968 (ms)
+GPU Gflops: 24.133270
+Output time for GPU: 76.560531 (ms)
+Total time for GPU: 175.992131 (ms)
+Speed up of GPU = 14.596060
+Check result:
+norm(h_C - h_D)=0.000000000000000e+00
+Enter the GPU ID: Set GPU with device ID = 1
+Vector Addition: C = 1/A + 1/B
+Enter the size of the vectors:
+CPU Results:
+Processing time for CPU: 99.507757 (ms)
+CPU Gflops: 1.646505
+
+Testing different block sizes:
+------------------------------------------------
+Block size: 32
+Input time: 91.601582 ms
+Kernel time: 9.755376 ms
+Output time: 78.183532 ms
+Total time: 179.540490 ms
+GFLOPS: 16.794842
+------------------------
+Block size: 64
+Input time: 91.732560 ms
+Kernel time: 6.627556 ms
+Output time: 40.947377 ms
+Total time: 139.307493 ms
+GFLOPS: 24.721028
+------------------------
+Block size: 128
+Input time: 91.637097 ms
+Kernel time: 6.532353 ms
+Output time: 40.956507 ms
+Total time: 139.125957 ms
+GFLOPS: 25.081314
+------------------------
+Block size: 256
+Input time: 92.411399 ms
+Kernel time: 6.490684 ms
+Output time: 41.034729 ms
+Total time: 139.936812 ms
+GFLOPS: 25.242332
+------------------------
+Block size: 512
+Input time: 91.592491 ms
+Kernel time: 6.517875 ms
+Output time: 41.107149 ms
+Total time: 139.217515 ms
+GFLOPS: 25.137027
+------------------------
+Block size: 1024
+Input time: 91.491548 ms
+Kernel time: 6.593908 ms
+Output time: 40.871311 ms
+Total time: 138.956767 ms
+GFLOPS: 24.847177
+------------------------
+
+Optimal configuration found:
+Block size: 256
+Kernel time: 6.490684 ms
+GFLOPS: 25.242332
+Speedup vs CPU: 15.33x
 Check result:
 norm(h_C - h_D)=0.000000000000000e+00
