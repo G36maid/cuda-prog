@@ -1,9 +1,9 @@
-GPU_ID
-6400
-
+0
+1
 
 =============
-GPU_ID     device number to be assigned by condor
-vector size
+GPU_ID_1   first GPU device number to be assigned by condor
+GPU_ID_2   second GPU device number to be assigned by condor
 block size  = auto
-grid size = auto
+grid size   = auto
+vector size = 40960000
