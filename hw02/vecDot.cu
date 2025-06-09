@@ -3,6 +3,17 @@
 #include <stdlib.h>
 #include <cuda_runtime.h>
 #include <chrono>
+#include <vector>
+#include <algorithm>
+
+struct TestResult {
+    int blockSize;
+    int gridSize;
+    double kernelTime;
+    double totalTime;
+    double gflops;
+    double relativeError;
+};
 
 float* h_A;
 float* h_B;
@@ -29,7 +40,6 @@ __global__ void VecDot(const float* A, const float* B, float* C, int N) {
     }
    
     cache[cacheIndex] = temp;
-
     __syncthreads();
 
     // Parallel reduction
@@ -45,9 +55,11 @@ __global__ void VecDot(const float* A, const float* B, float* C, int N) {
         C[blockIdx.x] = cache[0];
 }
 
-double runGPUComputation(int N, int threadsPerBlock, int blocksPerGrid,
-                        double &input_time, double &kernel_time, 
-                        double &output_time, double &total_time) {
+TestResult runTest(int N, int threadsPerBlock, int blocksPerGrid, const double cpu_result) {
+    TestResult result;
+    result.blockSize = threadsPerBlock;
+    result.gridSize = blocksPerGrid;
+
     int size = N * sizeof(float);
     int sb = blocksPerGrid * sizeof(float);
     
@@ -55,6 +67,7 @@ double runGPUComputation(int N, int threadsPerBlock, int blocksPerGrid,
     cudaMalloc(&d_A, size);
     cudaMalloc(&d_B, size);
     cudaMalloc(&d_C, sb);
+    h_C = (float*)malloc(sb);
 
     // Copy input data to device
     auto start_input = std::chrono::high_resolution_clock::now();
@@ -73,21 +86,27 @@ double runGPUComputation(int N, int threadsPerBlock, int blocksPerGrid,
     auto start_output = std::chrono::high_resolution_clock::now();
     cudaMemcpy(h_C, d_C, sb, cudaMemcpyDeviceToHost);
     
-    double result = 0.0;
+    double gpu_result = 0.0;
     for(int i = 0; i < blocksPerGrid; i++) {
-        result += static_cast<double>(h_C[i]);
+        gpu_result += static_cast<double>(h_C[i]);
     }
 
-    cudaFree(d_A);
-    cudaFree(d_B);
-    cudaFree(d_C);
     auto end_output = std::chrono::high_resolution_clock::now();
 
     // Calculate timings
-    input_time = std::chrono::duration<double, std::milli>(end_input - start_input).count();
-    kernel_time = std::chrono::duration<double, std::milli>(end_kernel - start_kernel).count();
-    output_time = std::chrono::duration<double, std::milli>(end_output - start_output).count();
-    total_time = input_time + kernel_time + output_time;
+    double input_time = std::chrono::duration<double, std::milli>(end_input - start_input).count();
+    result.kernelTime = std::chrono::duration<double, std::milli>(end_kernel - start_kernel).count();
+    double output_time = std::chrono::duration<double, std::milli>(end_output - start_output).count();
+    result.totalTime = input_time + result.kernelTime + output_time;
+    
+    result.gflops = (2.0 * N) / (result.kernelTime * 1000000.0);
+    result.relativeError = fabs((cpu_result - gpu_result) / cpu_result);
+
+    // Cleanup
+    cudaFree(d_A);
+    cudaFree(d_B);
+    cudaFree(d_C);
+    free(h_C);
 
     return result;
 }
@@ -105,29 +124,61 @@ double computeCPUReference(float* A, float* B, int N, double &cpu_time) {
     return result;
 }
 
-void testConfiguration(int N, int threadsPerBlock, int blocksPerGrid) {
-    double input_time, kernel_time, output_time, total_time;
+void findOptimalConfiguration(int N) {
+    std::vector<TestResult> results;
     
-    double gpu_result = runGPUComputation(N, threadsPerBlock, blocksPerGrid,
-                                        input_time, kernel_time, output_time, total_time);
-    
-    double gflops = (2.0 * N) / (kernel_time * 1000000.0);
-    
-    printf("\nConfiguration: %d threads/block, %d blocks\n", threadsPerBlock, blocksPerGrid);
-    printf("Input time: %.6f ms\n", input_time);
-    printf("Kernel time: %.6f ms\n", kernel_time);
-    printf("Output time: %.6f ms\n", output_time);
-    printf("Total time: %.6f ms\n", total_time);
-    printf("Performance: %.6f GFLOPS\n", gflops);
-    
+    // CPU Reference computation
     double cpu_time;
     double cpu_result = computeCPUReference(h_A, h_B, N, cpu_time);
-    double relative_error = fabs((cpu_result - gpu_result) / cpu_result);
+    printf("\nCPU Reference:\n");
+    printf("Time: %.6f ms\n", cpu_time);
+    printf("GFLOPS: %.6f\n", (2.0 * N) / (cpu_time * 1000000.0));
+
+    printf("\nTesting different configurations:\n");
+    printf("----------------------------------\n");
+
+    // Test different block sizes (powers of 2)
+    int block_sizes[] = {32, 64, 128, 256, 512, 1024};
     
-    printf("CPU time: %.6f ms\n", cpu_time);
-    printf("CPU GFLOPS: %.6f\n", (2.0 * N) / (cpu_time * 1000000.0));
-    printf("Speedup vs CPU: %.2fx\n", cpu_time/total_time);
-    printf("Relative Error: %.15e\n", relative_error);
+    // Test different grid sizes for each block size
+    int max_blocks = std::min(65535, (N + 31) / 32);
+    int grid_sizes[] = {
+        max_blocks,
+        max_blocks / 2,
+        max_blocks / 4,
+        max_blocks / 8,
+        max_blocks / 16
+    };
+
+    for (int block_size : block_sizes) {
+        for (int grid_size : grid_sizes) {
+            if (grid_size < 1) continue;
+            
+            TestResult result = runTest(N, block_size, grid_size, cpu_result);
+            results.push_back(result);
+
+            printf("\nConfig: %d threads/block, %d blocks\n", block_size, grid_size);
+            printf("Kernel time: %.6f ms\n", result.kernelTime);
+            printf("Total time: %.6f ms\n", result.totalTime);
+            printf("GFLOPS: %.6f\n", result.gflops);
+            printf("Relative Error: %.15e\n", result.relativeError);
+        }
+    }
+
+    // Find best configuration based on kernel time
+    auto best = std::min_element(results.begin(), results.end(),
+        [](const TestResult& a, const TestResult& b) {
+            return a.kernelTime < b.kernelTime;
+        });
+
+    printf("\n=== Optimal Configuration ===\n");
+    printf("Block Size: %d\n", best->blockSize);
+    printf("Grid Size: %d\n", best->gridSize);
+    printf("Kernel Time: %.6f ms\n", best->kernelTime);
+    printf("Total Time: %.6f ms\n", best->totalTime);
+    printf("GFLOPS: %.6f\n", best->gflops);
+    printf("Relative Error: %.15e\n", best->relativeError);
+    printf("Speedup vs CPU: %.2fx\n", cpu_time / best->totalTime);
 }
 
 int main() {
@@ -150,21 +201,7 @@ int main() {
     RandomInit(h_A, N);
     RandomInit(h_B, N);
 
-    printf("\nTesting different configurations:\n");
-    printf("----------------------------------\n");
-
-    // Test different block sizes (must be power of 2)
-    int block_sizes[] = {32, 64, 128, 256, 512, 1024};
-    
-    for (int threads : block_sizes) {
-        // Calculate appropriate number of blocks
-        int blocks = (N + threads - 1) / threads;
-        if (blocks > 65535) blocks = 65535; // Maximum blocks limit
-        
-        h_C = (float*)malloc(blocks * sizeof(float));
-        testConfiguration(N, threads, blocks);
-        free(h_C);
-    }
+    findOptimalConfiguration(N);
 
     free(h_A);
     free(h_B);

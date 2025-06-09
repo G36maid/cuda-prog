@@ -1,9 +1,9 @@
-GPU_ID             
-81920000
-64
+GPU_ID
+6400
+
 
 
 ========= Input parameters =====
 GPU_ID        device number to be assigned by condor
 vector_size
-block_size
+block_size set by auto
