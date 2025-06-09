@@ -1,0 +1,26 @@
+Enter the GPU ID: Set GPU with device ID = 0
+Enter the size of the cube (L): Enter maximum iterations: Enter convergence tolerance: 
+Testing different configurations for L=8:
+----------------------------------
+
+Config: 2x2x2 threads/block, 4x4x4 blocks
+Kernel time: 0.108355 ms
+Total time: 0.108355 ms
+Max Error vs Analytical: 8.708920e-02
+
+Config: 4x4x4 threads/block, 2x2x2 blocks
+Kernel time: 0.018943 ms
+Total time: 0.018943 ms
+Max Error vs Analytical: 7.957747e-02
+
+Config: 8x8x8 threads/block, 1x1x1 blocks
+Kernel time: 0.018430 ms
+Total time: 0.018430 ms
+Max Error vs Analytical: 5.626977e-02
+
+=== Optimal Configuration ===
+Block Size: 8x8x8
+Grid Size: 1x1x1
+Kernel Time: 0.018430 ms
+Total Time: 0.018430 ms
+Max Error vs Analytical: 5.626977e-02

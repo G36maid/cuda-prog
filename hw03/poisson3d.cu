@@ -158,60 +158,80 @@ void findOptimalConfiguration(int L, int maxIter, float tolerance) {
     }
 
     // Find best configuration based on kernel time
-    TestResult* best = &results[0];
+    TestResult best = results[0];
     for(size_t i = 1; i < results.size(); i++) {
-        if(results[i].kernelTime < best->kernelTime) {
-            best = &results[i];
+        if(results[i].kernelTime < best.kernelTime) {
+            best = results[i];
         }
     }
 
-    printf("\n=== Optimal Configuration ===\n");
+    printf("\n=== Optimal Configuration for L=%d ===\n", L);
     printf("Block Size: %dx%dx%d\n", best->blockSize, best->blockSize, best->blockSize);
     printf("Grid Size: %dx%dx%d\n", best->gridSize, best->gridSize, best->gridSize);
     printf("Kernel Time: %.6f ms\n", best->kernelTime);
     printf("Total Time: %.6f ms\n", best->totalTime);
     printf("Max Error vs Analytical: %.6e\n", best->maxError);
+
+    // Write potential vs distance data for this L
+    char filename[32];
+    sprintf(filename, "potential_L%d.dat", L);
+    FILE *fp = fopen(filename, "w");
+    int center = L/2;
+    // Write both numerical and analytical solutions
+    for (int i = 1; i < L-1; i++) {
+        for (int j = 1; j < L-1; j++) {
+            for (int k = 1; k < L-1; k++) {
+                if (i == center && j == center && k == center) continue;
+                float r = sqrt(pow(i-center, 2) + pow(j-center, 2) + pow(k-center, 2));
+                float numerical = h_potential[i + L*j + L*L*k];
+                float analytical = 1.0f / (4.0f * M_PI * r);
+                fprintf(fp, "%f %f %f\n", r, numerical, analytical);
+            }
+        }
+    }
+    fclose(fp);
+}
+
+void testAllLSizes(int maxIter, float tolerance) {
+    int L_sizes[] = {8, 16, 32, 64};
+
+    for (int L : L_sizes) {
+        // Allocate and initialize host memory for this L
+        int size = L * L * L * sizeof(float);
+        h_potential = (float*)malloc(size);
+        h_new_potential = (float*)malloc(size);
+        initializePotential(h_potential, L);
+
+        // Run tests for this L
+        findOptimalConfiguration(L, maxIter, tolerance);
+
+        // Cleanup
+        free(h_potential);
+        free(h_new_potential);
+
+        printf("\n========================================\n\n");
+    }
 }
 
 int main() {
-    int gpuID, L, maxIter;
+    int gpuID, maxIter;
     float tolerance;
 
-    // Get input parameters
+    // Get GPU ID
     std::cout << "Enter the GPU ID: ";
     std::cin >> gpuID;
     cudaSetDevice(gpuID);
     std::cout << "Set GPU with device ID = " << gpuID << "\n";
 
-    std::cout << "Enter the size of the cube (L): ";
-    std::cin >> L;
-
+    // Get convergence parameters
     std::cout << "Enter maximum iterations: ";
     std::cin >> maxIter;
 
     std::cout << "Enter convergence tolerance: ";
     std::cin >> tolerance;
 
-    // Allocate and initialize host memory
-    int size = L * L * L * sizeof(float);
-    h_potential = (float*)malloc(size);
-    h_new_potential = (float*)malloc(size);
-    initializePotential(h_potential, L);
-
-    findOptimalConfiguration(L, maxIter, tolerance);
-
-    // Write potential vs distance data
-    FILE *fp = fopen("potential.dat", "w");
-    int center = L/2;
-    for (int i = 1; i < L-1; i++) {
-        float r = sqrt(pow(i-center, 2));
-        float potential = h_potential[i + L*center + L*L*center];
-        fprintf(fp, "%f %f\n", r, potential);
-    }
-    fclose(fp);
-
-    free(h_potential);
-    free(h_new_potential);
+    // Test all L sizes
+    testAllLSizes(maxIter, tolerance);
 
     cudaDeviceReset();
     return 0;
