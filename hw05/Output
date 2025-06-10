@@ -8,41 +8,35 @@ Max Iterations: 1000, Tolerance: 1.0e-06
 Running on GPU 0:
 Block  KTime(ms)    TTime(ms)    Iters    MaxError
 ----------------------------------------------------
-   8     159.925     160.669     1001    1.22e+02
-  16     115.982     116.707     1001    1.24e+02
-  24     111.869     112.594     1001    1.24e+02
-  32      93.959      94.714     1001    1.25e+02
-  48       0.101       0.879        1    0.00e+00
-  64       0.100       0.829        1    0.00e+00
-  96       0.100       0.829        1    0.00e+00
- 128       0.101       0.833        1    0.00e+00
+   8     187.331     188.052     1001    2.46e+02
+  16     133.042     133.733     1001    2.54e+02
+  32     106.874     107.629     1001    2.57e+02
+  64       0.100       0.878        1    0.00e+00
+ 128       0.100       0.836        1    0.00e+00
 
 Dual-GPU Version (GPU 0 & 1):
 Block  KTime(ms)    TTime(ms)    Iters    MaxError
 ----------------------------------------------------
-   8      89.320      89.862     1001    1.98e+02
-  16      72.291      72.817     1001    1.98e+02
-  24      79.270      79.786     1001    1.98e+02
-  32      72.644      73.159     1001    1.98e+02
-  48       0.128       0.635        1    2.73e+02
-  64       0.127       0.636        1    2.73e+02
-  96       0.128       0.625        1    2.73e+02
- 128       0.126       0.627        1    2.73e+02
+   8       4.381       4.384        1    0.00e+00
+  16       0.004       0.005        1    0.00e+00
+  32       0.004       0.004        1    0.00e+00
+  64       0.003       0.004        1    0.00e+00
+ 128       0.003       0.004        1    0.00e+00
 
 === Best Single-GPU Configuration ===
-Block Size: 64
+Block Size: 128
 Kernel Time: 0.100 ms
-Total Time: 0.829 ms
+Total Time: 0.836 ms
 Iterations: 1
 Max Error: 0.00e+00
 
 === Best Dual-GPU Configuration ===
 Block Size: 128
-Kernel Time: 0.126 ms
-Total Time: 0.627 ms
+Kernel Time: 0.003 ms
+Total Time: 0.004 ms
 Iterations: 1
-Max Error: 2.73e+02
+Max Error: 0.00e+00
 
 === Performance Comparison ===
-Speedup (Kernel): 0.79x
-Speedup (Total): 1.32x
+Speedup (Kernel): 32.26x
+Speedup (Total): 204.13x

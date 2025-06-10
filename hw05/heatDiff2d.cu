@@ -57,19 +57,24 @@ __global__ void jacobi_kernel(
     int i = blockIdx.x * blockDim.x + threadIdx.x;
     int j = start_row + blockIdx.y * blockDim.y + threadIdx.y;
 
-    if (i > 0 && i < GRID_SIZE-1 && j >= start_row && j < end_row) {
-        float new_temp = 0.25f * (
-            T_old[j*GRID_SIZE + (i+1)] +
-            T_old[j*GRID_SIZE + (i-1)] +
-            T_old[(j+1)*GRID_SIZE + i] +
-            T_old[(j-1)*GRID_SIZE + i]
-        );
+    if (i > 0 && i < GRID_SIZE-1 && j > 0 && j < GRID_SIZE-1) {
+        if (j == 0) {  // Top edge
+            T_new[j*GRID_SIZE + i] = TOP_TEMP;
+        } else if (j == GRID_SIZE-1 || i == 0 || i == GRID_SIZE-1) {  // Other edges
+            T_new[j*GRID_SIZE + i] = OTHER_TEMP;
+        } else {
+            float new_temp = 0.25f * (
+                T_old[j*GRID_SIZE + (i+1)] +
+                T_old[j*GRID_SIZE + (i-1)] +
+                T_old[(j+1)*GRID_SIZE + i] +
+                T_old[(j-1)*GRID_SIZE + i]
+            );
+            T_new[j*GRID_SIZE + i] = new_temp;
 
-        T_new[j*GRID_SIZE + i] = new_temp;
-
-        // Check convergence
-        if (fabsf(new_temp - T_old[j*GRID_SIZE + i]) > tolerance) {
-            *converged = false;
+            // Check convergence
+            if (fabsf(new_temp - T_old[j*GRID_SIZE + i]) > tolerance) {
+                atomicExch((int*)converged, 0);
+            }
         }
     }
 }
@@ -102,14 +107,17 @@ TestResult runTest1GPU(int gpuID, int blockSize, int maxIter, float tolerance) {
     // Main iteration loop
     int iter;
     bool h_converged;
-    for (iter = 0; iter < maxIter; iter++) {
+    bool is_converged = false;
+    for (iter = 0; iter < maxIter && !is_converged; iter++) {
         h_converged = true;
         cudaMemcpy(d_converged, &h_converged, sizeof(bool), cudaMemcpyHostToDevice);
 
         jacobi_kernel<<<numBlocks, threadsPerBlock>>>(
             d_temp_next, d_temp_current, d_converged, tolerance, 0, GRID_SIZE);
 
+        cudaDeviceSynchronize();
         cudaMemcpy(&h_converged, d_converged, sizeof(bool), cudaMemcpyDeviceToHost);
+        is_converged = h_converged;
 
         // Swap pointers
         float *temp = d_temp_current;
@@ -209,7 +217,8 @@ TestResult runTest2GPU(int gpu0, int gpu1, int blockSize, int maxIter, float tol
 
     int iter;
     bool h_converged0, h_converged1;
-    for (iter = 0; iter < maxIter; iter++) {
+    bool is_converged = false;
+    for (iter = 0; iter < maxIter && !is_converged; iter++) {
         h_converged0 = h_converged1 = true;
 
         #pragma omp parallel num_threads(2)
@@ -321,6 +330,7 @@ void findOptimalConfiguration(bool run_both, int gpu0, int gpu1, int maxIter, fl
     printf("\n=== Heat Diffusion Solver (1024x1024) ===\n");
     printf("Mode: %s\n", run_both ? "Dual-GPU" : "Single-GPU");
     printf("Max Iterations: %d, Tolerance: %.1e\n", maxIter, tolerance);
+    printf("Boundary Conditions: Top=%.1fK, Others=%.1fK\n", TOP_TEMP, OTHER_TEMP);
 
     // Test different block sizes (powers of 2)
     int block_sizes[] = {8, 16, 32, 64, 128};
