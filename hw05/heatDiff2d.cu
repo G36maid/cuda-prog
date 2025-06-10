@@ -55,7 +55,7 @@ __global__ void jacobi_kernel(
     int end_row
 ) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
-    int j = blockIdx.y * blockDim.y + threadIdx.y + start_row;
+    int j = start_row + blockIdx.y * blockDim.y + threadIdx.y;
 
     if (i > 0 && i < GRID_SIZE-1 && j > start_row && j < end_row-1) {
         float new_temp = 0.25f * (
@@ -80,6 +80,10 @@ TestResult runTest1GPU(int gpuID, int blockSize, int maxIter, float tolerance) {
 
     cudaSetDevice(gpuID);
 
+    // Ensure block size doesn't exceed device limits
+    if (blockSize > 32) {
+        blockSize = 32;  // Limit block size for stability
+    }
     dim3 threadsPerBlock(blockSize, blockSize);
     dim3 numBlocks((GRID_SIZE + blockSize - 1) / blockSize,
                    (GRID_SIZE + blockSize - 1) / blockSize);
@@ -174,6 +178,9 @@ TestResult runTest2GPU(int gpu0, int gpu1, int blockSize, int maxIter, float tol
     size_t size_per_gpu = rows_per_gpu * GRID_SIZE * sizeof(float);
     size_t full_size = GRID_SIZE * GRID_SIZE * sizeof(float);
 
+    if (blockSize > 32) {
+        blockSize = 32;  // Limit block size for stability
+    }
     dim3 threadsPerBlock(blockSize, blockSize);
     dim3 numBlocks((GRID_SIZE + blockSize - 1) / blockSize,
                    (rows_per_gpu + blockSize - 1) / blockSize);
@@ -316,7 +323,7 @@ void findOptimalConfiguration(bool run_both, int gpu0, int gpu1, int maxIter, fl
     printf("Max Iterations: %d, Tolerance: %.1e\n", maxIter, tolerance);
 
     // Test different block sizes
-    int block_sizes[] = {8, 16, 24, 32, 48, 64, 96, 128};
+    int block_sizes[] = {8, 16, 24, 32};
 
     printf("\nRunning on GPU %d:\n", gpu0);
     printf("Block  KTime(ms)    TTime(ms)    Iters    MaxError\n");
