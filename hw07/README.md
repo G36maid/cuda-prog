@@ -32,11 +32,12 @@ $$
 N = 2^n, \quad n = 2, 3, \ldots, 16
 $$
 
-Write **CUDA code** to perform this Monte Carlo integration with **multi-GPUs**.
-Test your code with **one and two GPUs**, by comparing GPU and CPU results.
-You may start by writing your CUDA code for one GPU.
-
----
+Write CUDA code to perform this Monte Carlo integration with multi-GPUs.
+Test your code with
+one and two GPUs,
+by comparing GPU and CPU results.
+You may start by
+writing your CUDA code for one GPU
 
 ### Submission Guidelines
 
