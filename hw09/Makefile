@@ -6,7 +6,7 @@ CPP     := g++
 CFLAGS  := -O3 -Wall -g
 NVCC    := $(CUDIR)/bin/nvcc
 NVFLAGS := -O3 -I$(CUDIR)/include -m64 -arch=compute_61 -code=sm_61 -Xptxas -v
-OMPFLAGS := -Xcompiler -fopenmp -lgomp
+OMPFLAGS := -Xcompiler -fopenmp -lgomp -lcufft
 
 BIN     := poisson_3d
 LIB     :=
