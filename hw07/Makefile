@@ -13,7 +13,7 @@ LIB     :=
 
 all: $(BIN)
 
-$(BIN): heatDiff2d.cu
+$(BIN): Monte_Carlo_10d.cu
 	$(NVCC) -o $(BIN) $(NVFLAGS) $(OMPFLAGS) Monte_Carlo_10d.cu $(LIB)
 
 clean:
