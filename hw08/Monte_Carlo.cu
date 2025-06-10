@@ -161,7 +161,7 @@ public:
             }
         }
 
-        return {(double)energy / N, (double)magnetization / N};
+        return std::make_pair((double)energy / N, (double)magnetization / N);
     }
 };
 
@@ -232,7 +232,7 @@ public:
         CUDA_CHECK(cudaMemcpy(&h_energy, d_energy_sum, sizeof(int), cudaMemcpyDeviceToHost));
         CUDA_CHECK(cudaMemcpy(&h_magnetization, d_mag_sum, sizeof(int), cudaMemcpyDeviceToHost));
 
-        return {(double)h_energy / N, (double)h_magnetization / N};
+        return std::make_pair((double)h_energy / N, (double)h_magnetization / N);
     }
 
     double benchmark_performance(float beta, int steps = 1000) {
@@ -284,12 +284,14 @@ public:
         #pragma omp parallel for reduction(+:total_energy,total_magnetization)
         for (int i = 0; i < num_gpus; ++i) {
             CUDA_CHECK(cudaSetDevice(i));
-            auto [energy, mag] = gpus[i]->get_observables();
+            std::pair<double, double> result = gpus[i]->get_observables();
+            double energy = result.first;
+            double mag = result.second;
             total_energy += energy;
             total_magnetization += mag;
         }
 
-        return {total_energy / num_gpus, total_magnetization / num_gpus};
+        return std::make_pair(total_energy / num_gpus, total_magnetization / num_gpus);
     }
 
     double benchmark_performance(float beta, int steps = 1000) {
@@ -396,7 +398,9 @@ void temperature_scan(bool use_multi_gpu = false) {
                 for (int j = 0; j < MEASURE_INTERVAL; ++j) {
                     ising.metropolis_step(beta);
                 }
-                auto [energy, mag] = ising.get_observables();
+                std::pair<double, double> result = ising.get_observables();
+                double energy = result.first;
+                double mag = result.second;
                 energies.push_back(energy);
                 magnetizations.push_back(std::abs(mag));
             }
@@ -413,7 +417,9 @@ void temperature_scan(bool use_multi_gpu = false) {
                 for (int j = 0; j < MEASURE_INTERVAL; ++j) {
                     ising.metropolis_step(beta);
                 }
-                auto [energy, mag] = ising.get_observables();
+                std::pair<double, double> result = ising.get_observables();
+                double energy = result.first;
+                double mag = result.second;
                 energies.push_back(energy);
                 magnetizations.push_back(std::abs(mag));
             }
@@ -453,19 +459,25 @@ void compare_gpu_cpu() {
     }
     auto end = std::chrono::high_resolution_clock::now();
     double cpu_time = std::chrono::duration<double>(end - start).count();
-    auto [cpu_energy, cpu_mag] = cpu_ising.get_observables();
+    std::pair<double, double> cpu_result = cpu_ising.get_observables();
+    double cpu_energy = cpu_result.first;
+    double cpu_mag = cpu_result.second;
 
     // 單 GPU 測試
     std::cout << "Running single GPU simulation...\n";
     IsingGPU single_gpu(dim3(16, 16));
     double single_gpu_time = single_gpu.benchmark_performance(beta, test_steps);
-    auto [single_energy, single_mag] = single_gpu.get_observables();
+    std::pair<double, double> single_result = single_gpu.get_observables();
+    double single_energy = single_result.first;
+    double single_mag = single_result.second;
 
     // 雙 GPU 測試
     std::cout << "Running dual GPU simulation...\n";
     MultiGPUIsingModel dual_gpu(2, dim3(16, 16));
     double dual_gpu_time = dual_gpu.benchmark_performance(beta, test_steps);
-    auto [dual_energy, dual_mag] = dual_gpu.get_observables();
+    std::pair<double, double> dual_result = dual_gpu.get_observables();
+    double dual_energy = dual_result.first;
+    double dual_mag = dual_result.second;
 
     // 結果比較
     std::cout << "\nPerformance Comparison:\n";
