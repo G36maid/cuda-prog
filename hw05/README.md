@@ -115,6 +115,44 @@ For such multi-GPU applications, it is preferable to rely on global memory
 access with cudaMemcpyPeer or unified memory, combined with explicit
 memory management and synchronization.
 
+## Results and Discussion
+
+### Experimental Results
+
+The program was executed five times using both single-GPU and dual-GPU configurations, with block sizes of 8, 16, and 32. The results were consistent across runs. Representative results:
+
+#### Single-GPU (Best Block Size: 32)
+- Kernel Time: ~141–151 ms
+- Total Time: ~142–151 ms
+- Iterations: 1001
+- Max Error: ~1.21e+02
+
+#### Dual-GPU (Best Block Size: 8 or 16)
+- Kernel Time: ~97–101 ms
+- Total Time: ~98–101 ms
+- Iterations: 1001
+- Max Error: ~1.55e+02
+
+#### Speedup
+- Kernel Speedup: ~1.43x–1.52x
+- Total Speedup: ~1.43x–1.52x
+
+### Findings on Block Size
+
+- Block sizes tested: 8, 16, 32
+- Best performance for single-GPU: block size 32
+- Best performance for dual-GPU: block size 8 or 16
+- **Large block sizes (block > 64):**
+  - The program failed to launch kernels or encountered errors when block size exceeded 64 (e.g., 64x64 = 4096 threads per block, which is above the hardware limit).
+  - Large block sizes can also cause inefficient resource usage and register spilling, leading to degraded performance or launch failures.
+
+### Additional Notes
+
+- All runs converged within 1001 iterations for the given tolerance.
+- The maximum error compared to the analytical approximation was consistent.
+- Dual-GPU runs used `cudaMemcpyPeer` for halo exchange.
+- The program was stable and produced consistent results for block sizes up to 32.
+
 ## Submission Guidelines
 As usual, your homework report should include your source codes,
 results, and discussions (without any executable files). The discussion
