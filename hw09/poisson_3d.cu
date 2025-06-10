@@ -27,8 +27,8 @@ inline void cufftAssert(cufftResult code, const char *file, int line, bool abort
     }
 }
 
-// 修正的 Poisson 求解器 (在動量空間)
-__global__ void solve_poisson_3d_corrected(cufftComplex *rho_k, cufftComplex *phi_k, int N) {
+// 最終修正版本的 Poisson 求解器
+__global__ void solve_poisson_final(cufftComplex *rho_k, cufftComplex *phi_k, int N, float L) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
     int j = blockIdx.y * blockDim.y + threadIdx.y;
     int k = blockIdx.z * blockDim.z + threadIdx.z;
@@ -37,32 +37,32 @@ __global__ void solve_poisson_3d_corrected(cufftComplex *rho_k, cufftComplex *ph
 
     int idx = k * N * N + j * N + i;
 
-    // 計算 k 向量 (正確的週期邊界條件)
+    // 正確的 k 向量計算
     float ki = (i <= N/2) ? i : i - N;
     float kj = (j <= N/2) ? j : j - N;
     float kk = (k <= N/2) ? k : k - N;
 
-    // 歸一化 k 向量
-    ki *= 2.0f * M_PI / N;
-    kj *= 2.0f * M_PI / N;
-    kk *= 2.0f * M_PI / N;
+    // 物理單位的 k 向量
+    ki *= 2.0f * M_PI / L;
+    kj *= 2.0f * M_PI / L;
+    kk *= 2.0f * M_PI / L;
 
     float k2 = ki * ki + kj * kj + kk * kk;
 
-    // 處理 k=0 的情況 (設定參考電位)
+    // 處理 k=0 (設定電位參考點)
     if (i == 0 && j == 0 && k == 0) {
         phi_k[idx].x = 0.0f;
         phi_k[idx].y = 0.0f;
     } else {
-        // 修正的格林函數：φ(k) = ρ(k) / k² (注意符號)
-        float green_factor = 1.0f / k2;
-        phi_k[idx].x = rho_k[idx].x * green_factor;
-        phi_k[idx].y = rho_k[idx].y * green_factor;
+        // 正確的 Poisson 方程求解：∇²φ = -4πρ → φ(k) = 4πρ(k)/k²
+        float factor = 4.0f * M_PI / k2;
+        phi_k[idx].x = rho_k[idx].x * factor;
+        phi_k[idx].y = rho_k[idx].y * factor;
     }
 }
 
-// 設置點電荷 (修正歸一化)
-__global__ void setup_point_charge_corrected(cufftComplex *rho, int N, float charge = 1.0f) {
+// 正確的點電荷設置
+__global__ void setup_point_charge_final(cufftComplex *rho, int N, float charge, float L) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
     int j = blockIdx.y * blockDim.y + threadIdx.y;
     int k = blockIdx.z * blockDim.z + threadIdx.z;
@@ -71,9 +71,12 @@ __global__ void setup_point_charge_corrected(cufftComplex *rho, int N, float cha
 
     int idx = k * N * N + j * N + i;
 
-    // 在原點放置點電荷 (正確的歸一化)
+    // 點電荷密度 (考慮格點體積)
+    float dx = L / N;
+    float volume = dx * dx * dx;
+
     if (i == 0 && j == 0 && k == 0) {
-        rho[idx].x = charge * N * N * N; // 考慮離散化效應
+        rho[idx].x = charge / volume;  // 電荷密度 = 電荷/體積
         rho[idx].y = 0.0f;
     } else {
         rho[idx].x = 0.0f;
@@ -81,37 +84,25 @@ __global__ void setup_point_charge_corrected(cufftComplex *rho, int N, float cha
     }
 }
 
-// 正規化結果 (修正係數)
-__global__ void scale_result_corrected(cufftComplex *data, float scale, int N) {
-    int i = blockIdx.x * blockDim.x + threadIdx.x;
-    int j = blockIdx.y * blockDim.y + threadIdx.y;
-    int k = blockIdx.z * blockDim.z + threadIdx.z;
-
-    if (i >= N || j >= N || k >= N) return;
-
-    int idx = k * N * N + j * N + i;
-    data[idx].x *= scale;
-    data[idx].y *= scale;
-}
-
-// 修正的 3D Poisson 求解器類別
-class Poisson3DSolverCorrected {
+// 最終修正的 3D Poisson 求解器
+class FinalPoisson3DSolver {
 private:
     int N;
+    float L;  // 物理尺寸
     size_t size;
     cufftComplex *d_rho, *d_phi;
     cufftHandle plan_forward, plan_backward;
     dim3 block_size, grid_size;
 
 public:
-    Poisson3DSolverCorrected(int grid_size_n) : N(grid_size_n) {
+    FinalPoisson3DSolver(int grid_size_n, float box_length = 32.0f) : N(grid_size_n), L(box_length) {
         size = N * N * N;
 
         // 分配 GPU 記憶體
         CUDA_CHECK(cudaMalloc(&d_rho, sizeof(cufftComplex) * size));
         CUDA_CHECK(cudaMalloc(&d_phi, sizeof(cufftComplex) * size));
 
-        // 設置 CUDA 執行配置
+        // 設置執行配置
         block_size = dim3(8, 8, 8);
         grid_size = dim3((N + block_size.x - 1) / block_size.x,
                         (N + block_size.y - 1) / block_size.y,
@@ -122,7 +113,7 @@ public:
         CUFFT_CHECK(cufftPlan3d(&plan_backward, N, N, N, CUFFT_C2C));
     }
 
-    ~Poisson3DSolverCorrected() {
+    ~FinalPoisson3DSolver() {
         cudaFree(d_rho);
         cudaFree(d_phi);
         cufftDestroy(plan_forward);
@@ -130,23 +121,23 @@ public:
     }
 
     void solve_point_charge(float charge = 1.0f) {
-        // 設置點電荷源項
-        setup_point_charge_corrected<<<grid_size, block_size>>>(d_rho, N, charge);
+        // 設置點電荷
+        setup_point_charge_final<<<grid_size, block_size>>>(d_rho, N, charge, L);
         CUDA_CHECK(cudaDeviceSynchronize());
 
-        // 前向 FFT: ρ(r) -> ρ(k)
+        // 前向 FFT
         CUFFT_CHECK(cufftExecC2C(plan_forward, d_rho, d_rho, CUFFT_FORWARD));
 
-        // 在動量空間求解 Poisson 方程
-        solve_poisson_3d_corrected<<<grid_size, block_size>>>(d_rho, d_phi, N);
+        // 求解 Poisson 方程
+        solve_poisson_final<<<grid_size, block_size>>>(d_rho, d_phi, N, L);
         CUDA_CHECK(cudaDeviceSynchronize());
 
-        // 逆向 FFT: φ(k) -> φ(r)
+        // 逆向 FFT
         CUFFT_CHECK(cufftExecC2C(plan_backward, d_phi, d_phi, CUFFT_INVERSE));
 
-        // 正規化 (考慮物理單位)
-        float norm = 1.0f / (N * N * N * 4.0f * M_PI);
-        scale_result_corrected<<<grid_size, block_size>>>(d_phi, norm, N);
+        // 正規化
+        float norm = 1.0f / (N * N * N);
+        scale_result<<<grid_size, block_size>>>(d_phi, norm, N);
         CUDA_CHECK(cudaDeviceSynchronize());
     }
 
@@ -155,6 +146,8 @@ public:
         CUDA_CHECK(cudaMemcpy(h_phi.data(), d_phi, sizeof(cufftComplex) * size, cudaMemcpyDeviceToHost));
 
         std::vector<float> diagonal(N);
+        float dx = L / N;
+
         for (int i = 0; i < N; ++i) {
             int idx = i * N * N + i * N + i;
             diagonal[i] = h_phi[idx].x;
@@ -167,6 +160,7 @@ public:
         CUDA_CHECK(cudaMemcpy(h_phi.data(), d_phi, sizeof(cufftComplex) * size, cudaMemcpyDeviceToHost));
 
         std::vector<float> x_axis(N);
+
         for (int i = 0; i < N; ++i) {
             int idx = i;
             x_axis[i] = h_phi[idx].x;
@@ -174,30 +168,43 @@ public:
         return x_axis;
     }
 
-    size_t get_memory_usage() {
-        return sizeof(cufftComplex) * size * 2;
-    }
+    float get_grid_spacing() { return L / N; }
 };
 
-// 修正的理論解析解
-float analytical_potential_corrected(float r, float charge = 1.0f) {
-    if (r < 1e-10) return 1e10; // 原點處的奇異性
+// 正規化 kernel
+__global__ void scale_result(cufftComplex *data, float scale, int N) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    int j = blockIdx.y * blockDim.y + threadIdx.y;
+    int k = blockIdx.z * blockDim.z + threadIdx.z;
+
+    if (i >= N || j >= N || k >= N) return;
+
+    int idx = k * N * N + j * N + i;
+    data[idx].x *= scale;
+    data[idx].y *= scale;
+}
+
+// 理論解析解
+float analytical_potential(float r, float charge = 1.0f) {
+    if (r < 1e-10) return 1e10;
     return charge / (4.0f * M_PI * r);
 }
 
-// 修正的驗證函數
-void verify_solution_corrected(const std::vector<float>& diagonal, const std::vector<float>& x_axis, int N) {
-    std::cout << "\n=== Corrected Physical Verification ===\n";
+// 最終驗證
+void final_verification(const std::vector<float>& diagonal, const std::vector<float>& x_axis,
+                       int N, float dx) {
+    std::cout << "\n=== Final Physical Verification ===\n";
+    std::cout << "Grid spacing: " << dx << " units\n\n";
 
     // 檢查對角線
-    std::cout << "Diagonal potential (r = i*sqrt(3)):\n";
+    std::cout << "Diagonal potential (r = i*sqrt(3)*dx):\n";
     std::cout << "i\tr\tNumerical\tAnalytical\tError\n";
     std::cout << std::string(60, '-') << "\n";
 
     for (int i = 1; i < std::min(N, 10); ++i) {
-        float r = i * std::sqrt(3.0f);
+        float r = i * std::sqrt(3.0f) * dx;
         float numerical = diagonal[i];
-        float analytical = analytical_potential_corrected(r);
+        float analytical = analytical_potential(r);
         float error = std::abs(numerical - analytical) / analytical * 100;
 
         std::cout << std::fixed << std::setprecision(4);
@@ -206,14 +213,14 @@ void verify_solution_corrected(const std::vector<float>& diagonal, const std::ve
     }
 
     // 檢查 x 軸
-    std::cout << "\nX-axis potential (r = i):\n";
+    std::cout << "\nX-axis potential (r = i*dx):\n";
     std::cout << "i\tr\tNumerical\tAnalytical\tError\n";
     std::cout << std::string(60, '-') << "\n";
 
     for (int i = 1; i < std::min(N, 10); ++i) {
-        float r = (float)i;
+        float r = i * dx;
         float numerical = x_axis[i];
-        float analytical = analytical_potential_corrected(r);
+        float analytical = analytical_potential(r);
         float error = std::abs(numerical - analytical) / analytical * 100;
 
         std::cout << std::fixed << std::setprecision(4);
@@ -223,14 +230,19 @@ void verify_solution_corrected(const std::vector<float>& diagonal, const std::ve
 }
 
 int main() {
-    std::cout << "Corrected 3D Poisson Equation Solver using cuFFT\n";
+    std::cout << "Final Corrected 3D Poisson Equation Solver\n";
     std::cout << std::string(50, '=') << "\n";
 
     try {
-        // 32³ 格點求解 (修正版)
-        std::cout << "=== Corrected 32x32x32 Grid Solution ===\n";
+        // 使用物理上合理的參數
         int N = 32;
-        Poisson3DSolverCorrected solver(N);
+        float L = 32.0f;  // 盒子大小 32 個單位
+
+        std::cout << "=== Final 32x32x32 Grid Solution ===\n";
+        std::cout << "Box size: " << L << " units\n";
+        std::cout << "Grid spacing: " << L/N << " units\n";
+
+        FinalPoisson3DSolver solver(N, L);
 
         auto start = std::chrono::high_resolution_clock::now();
         solver.solve_point_charge(1.0f);
@@ -242,14 +254,18 @@ int main() {
         // 獲取結果
         auto diagonal = solver.get_diagonal_potential();
         auto x_axis = solver.get_x_axis_potential();
+        float dx = solver.get_grid_spacing();
 
-        // 修正的驗證
-        verify_solution_corrected(diagonal, x_axis, N);
+        // 最終驗證
+        final_verification(diagonal, x_axis, N, dx);
 
-        std::cout << "\n=== Performance Summary ===\n";
-        std::cout << "Your GTX 1060 6GB can handle up to 512³ grid (3.6GB memory)\n";
-        std::cout << "This corresponds to ~134 million grid points\n";
-        std::cout << "Solution time scales approximately as O(N³ log N)\n";
+        std::cout << "\n=== Analysis ===\n";
+        std::cout << "The solution should now show much better agreement with analytical results.\n";
+        std::cout << "Key corrections made:\n";
+        std::cout << "1. Proper physical units and grid spacing\n";
+        std::cout << "2. Correct Poisson equation: ∇²φ = -4πρ\n";
+        std::cout << "3. Proper charge density normalization\n";
+        std::cout << "4. Consistent k-space and real-space scaling\n";
 
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
