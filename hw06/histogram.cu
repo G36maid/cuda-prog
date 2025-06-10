@@ -9,7 +9,6 @@
 #define DATA_SIZE 81920000
 #define NUM_BINS 128
 
-// Host-side exponential random number generator
 void generate_exponential_data(std::vector<float>& data, float lambda = 1.0f) {
     std::mt19937 rng(12345);
     std::exponential_distribution<float> exp_dist(lambda);
@@ -18,7 +17,6 @@ void generate_exponential_data(std::vector<float>& data, float lambda = 1.0f) {
     }
 }
 
-// CPU histogram
 void cpu_histogram(const std::vector<float>& data, std::vector<int>& hist, float bin_width) {
     std::fill(hist.begin(), hist.end(), 0);
     for (size_t i = 0; i < data.size(); ++i) {
@@ -27,7 +25,6 @@ void cpu_histogram(const std::vector<float>& data, std::vector<int>& hist, float
     }
 }
 
-// CUDA kernel: global memory histogram (atomic)
 __global__ void histogram_global_kernel(const float* data, int* hist, int n, float bin_width) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < n) {
@@ -36,7 +33,6 @@ __global__ void histogram_global_kernel(const float* data, int* hist, int n, flo
     }
 }
 
-// CUDA kernel: shared memory histogram (per-block reduction)
 __global__ void histogram_shared_kernel(const float* data, int* hist, int n, float bin_width) {
     __shared__ int local_hist[NUM_BINS];
     int tid = threadIdx.x;
@@ -63,32 +59,21 @@ void print_histogram(const std::vector<int>& hist, float bin_width) {
     }
 }
 
-int main() {
-    // Generate data
-    std::vector<float> h_data(DATA_SIZE);
-    generate_exponential_data(h_data);
-
-    // Find max value for binning
-    float max_val = *std::max_element(h_data.begin(), h_data.end());
-    float bin_width = max_val / NUM_BINS;
-
-    // --- CPU Histogram ---
-    std::vector<int> cpu_hist(NUM_BINS, 0);
+void run_cpu_histogram(const std::vector<float>& data, std::vector<int>& hist, float bin_width, double& cpu_time) {
     auto cpu_start = std::chrono::high_resolution_clock::now();
-    cpu_histogram(h_data, cpu_hist, bin_width);
+    cpu_histogram(data, hist, bin_width);
     auto cpu_end = std::chrono::high_resolution_clock::now();
-    double cpu_time = std::chrono::duration<double, std::milli>(cpu_end - cpu_start).count();
+    cpu_time = std::chrono::duration<double, std::milli>(cpu_end - cpu_start).count();
+}
 
-    // --- GPU Histogram (Global Memory) ---
+void run_gpu_histogram_global(const std::vector<float>& data, std::vector<int>& hist, float bin_width, double& gpu_time, int block_size) {
     float *d_data;
     int *d_hist;
-    std::vector<int> gpu_hist(NUM_BINS, 0);
     cudaMalloc(&d_data, DATA_SIZE * sizeof(float));
     cudaMalloc(&d_hist, NUM_BINS * sizeof(int));
-    cudaMemcpy(d_data, h_data.data(), DATA_SIZE * sizeof(float), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_data, data.data(), DATA_SIZE * sizeof(float), cudaMemcpyHostToDevice);
     cudaMemset(d_hist, 0, NUM_BINS * sizeof(int));
 
-    int block_size = 256;
     int grid_size = (DATA_SIZE + block_size - 1) / block_size;
 
     cudaEvent_t g_start, g_end;
@@ -100,30 +85,46 @@ int main() {
     cudaEventSynchronize(g_end);
     float gpu_global_time = 0;
     cudaEventElapsedTime(&gpu_global_time, g_start, g_end);
+    gpu_time = gpu_global_time;
 
-    cudaMemcpy(gpu_hist.data(), d_hist, NUM_BINS * sizeof(int), cudaMemcpyDeviceToHost);
+    cudaMemcpy(hist.data(), d_hist, NUM_BINS * sizeof(int), cudaMemcpyDeviceToHost);
 
-    // --- GPU Histogram (Shared Memory) ---
-    std::vector<int> gpu_shared_hist(NUM_BINS, 0);
+    cudaFree(d_data);
+    cudaFree(d_hist);
+    cudaEventDestroy(g_start);
+    cudaEventDestroy(g_end);
+}
+
+void run_gpu_histogram_shared(const std::vector<float>& data, std::vector<int>& hist, float bin_width, double& gpu_time, int block_size) {
+    float *d_data;
+    int *d_hist;
+    cudaMalloc(&d_data, DATA_SIZE * sizeof(float));
+    cudaMalloc(&d_hist, NUM_BINS * sizeof(int));
+    cudaMemcpy(d_data, data.data(), DATA_SIZE * sizeof(float), cudaMemcpyHostToDevice);
     cudaMemset(d_hist, 0, NUM_BINS * sizeof(int));
+
+    int grid_size = (DATA_SIZE + block_size - 1) / block_size;
+
+    cudaEvent_t g_start, g_end;
+    cudaEventCreate(&g_start);
+    cudaEventCreate(&g_end);
     cudaEventRecord(g_start);
     histogram_shared_kernel<<<grid_size, block_size>>>(d_data, d_hist, DATA_SIZE, bin_width);
     cudaEventRecord(g_end);
     cudaEventSynchronize(g_end);
     float gpu_shared_time = 0;
     cudaEventElapsedTime(&gpu_shared_time, g_start, g_end);
+    gpu_time = gpu_shared_time;
 
-    cudaMemcpy(gpu_shared_hist.data(), d_hist, NUM_BINS * sizeof(int), cudaMemcpyDeviceToHost);
+    cudaMemcpy(hist.data(), d_hist, NUM_BINS * sizeof(int), cudaMemcpyDeviceToHost);
 
-    // --- Output Results ---
-    printf("CPU Histogram Time: %.3f ms\n", cpu_time);
-    printf("GPU Histogram (Global) Time: %.3f ms\n", gpu_global_time);
-    printf("GPU Histogram (Shared) Time: %.3f ms\n", gpu_shared_time);
+    cudaFree(d_data);
+    cudaFree(d_hist);
+    cudaEventDestroy(g_start);
+    cudaEventDestroy(g_end);
+}
 
-    // Optionally print histogram
-    // print_histogram(cpu_hist, bin_width);
-
-    // Compare histograms
+void compare_histograms(const std::vector<int>& cpu_hist, const std::vector<int>& gpu_hist, const std::vector<int>& gpu_shared_hist) {
     int cpu_vs_gpu = 0, cpu_vs_gpu_shared = 0;
     for (int i = 0; i < NUM_BINS; ++i) {
         if (cpu_hist[i] != gpu_hist[i]) cpu_vs_gpu++;
@@ -131,12 +132,53 @@ int main() {
     }
     printf("CPU vs GPU (global) mismatched bins: %d\n", cpu_vs_gpu);
     printf("CPU vs GPU (shared) mismatched bins: %d\n", cpu_vs_gpu_shared);
+}
 
-    // Clean up
-    cudaFree(d_data);
-    cudaFree(d_hist);
-    cudaEventDestroy(g_start);
-    cudaEventDestroy(g_end);
+int main() {
+    // Generate data
+    std::vector<float> h_data(DATA_SIZE);
+    generate_exponential_data(h_data);
 
+    // Find max value for binning
+    float max_val = *std::max_element(h_data.begin(), h_data.end());
+    float bin_width = max_val / NUM_BINS;
+
+    // --- CPU Histogram ---
+    std::vector<int> cpu_hist(NUM_BINS, 0);
+    double cpu_time = 0;
+    run_cpu_histogram(h_data, cpu_hist, bin_width, cpu_time);
+
+    // --- GPU Histogram (Global/Shared) for various block sizes ---
+    std::vector<int> gpu_hist(NUM_BINS, 0), gpu_shared_hist(NUM_BINS, 0);
+    double best_global_time = 1e30, best_shared_time = 1e30;
+    int best_global_block = 0, best_shared_block = 0;
+
+    printf("Block  GPU_Global(ms)  GPU_Shared(ms)\n");
+    printf("--------------------------------------\n");
+
+    for (int block_size = 8; block_size <= 1024; block_size *= 2) {
+        double gpu_global_time = 0, gpu_shared_time = 0;
+
+        run_gpu_histogram_global(h_data, gpu_hist, bin_width, gpu_global_time, block_size);
+        run_gpu_histogram_shared(h_data, gpu_shared_hist, bin_width, gpu_shared_time, block_size);
+
+        printf("%4d    %12.3f    %12.3f\n", block_size, gpu_global_time, gpu_shared_time);
+
+        if (gpu_global_time < best_global_time) {
+            best_global_time = gpu_global_time;
+            best_global_block = block_size;
+        }
+        if (gpu_shared_time < best_shared_time) {
+            best_shared_time = gpu_shared_time;
+            best_shared_block = block_size;
+        }
+    }
+
+    printf("\nCPU Histogram Time: %.3f ms\n", cpu_time);
+    printf("Optimal GPU Global Block Size: %d (%.3f ms)\n", best_global_block, best_global_time);
+    printf("Optimal GPU Shared Block Size: %d (%.3f ms)\n", best_shared_block, best_shared_time);
+
+    compare_histograms(cpu_hist, gpu_hist, gpu_shared_hist);
+    // Optionally print_histogram(cpu_hist, bin_width);
     return 0;
 }

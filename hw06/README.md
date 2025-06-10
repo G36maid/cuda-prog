@@ -4,10 +4,11 @@ April, 2025
 1. Histogram of a data set with exponential distribution
 Write a pseudo-random number generator to generate random
 numbers in (0,$\infty$ ) with the exponential distribution exp(-x), and use it
-to generate a data set of 81920000 entries. Compare the histograms
-computed by CPU, GPU with global memory, and GPU with shared
-memory, as well as their speeds. Plot the histogram, together with the
-curve of the theoretical probability distribution.
+to generate a data set of 81920000 entries.
+
+Compare the histograms computed by CPU, GPU with global memory, and GPU with shared memory, as well as their speeds.
+
+Plot the histogram, together with the curve of the theoretical probability distribution.
 Also, to determine the optimal block sizes for this problem.
 
 ## Submission Guidelines
