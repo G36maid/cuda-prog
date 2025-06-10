@@ -216,20 +216,19 @@ void findOptimalConfiguration(int N) {
     printf("Vector Size: %d (%.1fM elements)\n", N, N/1000000.0);
     printf("CPU Reference: Time=%.3f ms, GFLOPS=%.2f\n",
            cpu_time, (2.0 * N) / (cpu_time * 1000000.0));
+
+    printf("\nElements per GPU: %d\n", N/2);
     printf("\nBlock   Grid   KTime(ms)   TTime(ms)   GFLOPS    RelError\n");
     printf("----------------------------------------------------------\n");
 
     // Test different block sizes (powers of 2)
     int block_sizes[] = {32, 64, 128, 256, 512, 1024};
 
-    // Test different grid sizes for each block size
     for (int block_size : block_sizes) {
-        // For dual GPU, each GPU processes N/2 elements
-        // Calculate grid size based on elements per thread
-        int elements_per_thread = 256;  // Each thread processes 256 elements
-        int total_threads_needed = (N/2 + elements_per_thread - 1) / elements_per_thread;
-        int base_grid_size = (total_threads_needed + block_size - 1) / block_size;
-        base_grid_size = std::min(1024, base_grid_size); // Limit max blocks for efficiency
+        // Calculate grid sizes based on elements per GPU
+        int elements_per_gpu = N/2;
+        int threads_per_gpu = 8192; // Target total threads per GPU
+        int base_grid_size = std::max(1, std::min(512, threads_per_gpu / block_size));
 
         int grid_sizes[] = {
             base_grid_size,
