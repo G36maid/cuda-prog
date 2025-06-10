@@ -14,60 +14,88 @@ value of $\omega$ can be fixed to 1.
 
 ## Heat Diffusion Equation
 
-### Mathematical Formulation
+### Mathematical Foundation
 
-For steady-state two-dimensional heat conduction, the temperature distribution T(x,y) satisfies the two-dimensional Laplace equation:
+For steady-state heat conduction in a 2D domain, the temperature distribution satisfies the Laplace equation:
 
-$$\frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} = 0$$
+$$\nabla^2 T = \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} = 0$$
 
-Or equivalently:
+where $T(x,y)$ represents the temperature at position $(x,y)$.
 
-$$\nabla^2 T = 0$$
+### Numerical Discretization
 
-### Boundary Conditions
+Using finite difference method with central differences on a uniform grid with spacing $h$:
 
-Based on the problem description:
-- Top boundary: T(x, L) = 400 K
-- Other three boundaries: T(0, y) = T(L, y) = T(x, 0) = 273 K
+$$\frac{\partial^2 T}{\partial x^2} \approx \frac{T_{i+1,j} - 2T_{i,j} + T_{i-1,j}}{h^2}$$
 
-where L is the side length of the square plate.
+$$\frac{\partial^2 T}{\partial y^2} \approx \frac{T_{i,j+1} - 2T_{i,j} + T_{i,j-1}}{h^2}$$
 
-### Numerical Solution Method
+This leads to the five-point stencil formula:
 
-**Finite Difference Discretization**
+$$T_{i,j} = \frac{1}{4}(T_{i+1,j} + T_{i-1,j} + T_{i,j+1} + T_{i,j-1})$$
 
-Using the five-point finite difference stencil for grid point (i,j):
+### Iterative Solution: Jacobi Method
 
-$$T_{i+1,j} + T_{i-1,j} + T_{i,j+1} + T_{i,j-1} - 4T_{i,j} = 0$$
+The Jacobi iteration scheme updates all grid points simultaneously:
 
-**Iterative Solution with SOR**
+$$T_{i,j}^{(k+1)} = \frac{1}{4}(T_{i+1,j}^{(k)} + T_{i-1,j}^{(k)} + T_{i,j+1}^{(k)} + T_{i,j-1}^{(k)})$$
 
-Successive Over-Relaxation (SOR) method for iterative solving:
+where superscript $(k)$ denotes the iteration number.
 
-$$T_{i,j}^{(k+1)} = (1-\omega)T_{i,j}^{(k)} + \frac{\omega}{4}(T_{i+1,j}^{(k)} + T_{i-1,j}^{(k+1)} + T_{i,j+1}^{(k)} + T_{i,j-1}^{(k+1)})$$
+### CUDA Implementation
 
-Where:
-- T_{i,j}^{(k)} represents temperature at grid point (i,j) during k-th iteration
-- ω is the relaxation factor, fixed to 1 (Gauss-Seidel method)
-- Iteration continues until convergence criteria is met
+**Jacobi Kernel:**
+```cuda
+__global__ void jacobi_kernel(
+    float* T_new,
+    const float* T_old,
+    int width, int height
+){
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    int j = blockIdx.y * blockDim.y + threadIdx.y;
 
-**Convergence Criteria**
+    if (i > 0 && i < width-1 && j > 0 && j < height-1) {
+        T_new[j*width + i] = 0.25f * (
+            T_old[j*width + (i+1)] +
+            T_old[j*width + (i-1)] +
+            T_old[(j+1)*width + i] +
+            T_old[(j-1)*width + i]
+        );
+    }
+}
+```
 
-Convergence is achieved when the maximum temperature difference between consecutive iterations is below a threshold:
+**Boundary Conditions:**
+- Top edge: $T = 400$ K
+- Left, right, bottom edges: $T = 273$ K
 
+**Convergence Criterion:**
 $$\max_{i,j} |T_{i,j}^{(k+1)} - T_{i,j}^{(k)}| < \epsilon$$
 
-where ε is the predefined convergence tolerance (e.g., 10^{-6}).
+where $\epsilon = 10^{-6}$ is the tolerance.
 
-## Implementation Considerations
+### Multi-GPU Strategy
 
-### CUDA Optimization Strategies
+For multi-GPU implementation:
 
-- **Memory Access Patterns**: Optimize coalesced memory access for better performance
-- **Block Size Tuning**: Experiment with different block dimensions to find optimal configuration
-- **Shared Memory Usage**: Utilize shared memory for frequently accessed neighboring values
+1. **Domain Decomposition**: Split the 1024×1024 grid horizontally between GPUs
+2. **Boundary Exchange**: Use `cudaMemcpyPeer` for halo region communication
+3. **Synchronization**: Coordinate iterations across devices
 
+**Performance Optimization:**
+- Test block sizes: 16×16, 32×32, 64×64, and more
+- Use shared memory for stencil operations
+- Overlap computation with communication
 
+maybe can use cudaMemcpyPeer to Exchange boundary data between GPUs
+```
+# spilt
++-------------------+
+| GPU 0            |
+|===================| <-- boundary
+| GPU 1            |
++-------------------+
+```
 ## Remarks on using texture for multiGPUs
 ### Texture Objects and Peer Access in CUDA
 
@@ -94,6 +122,6 @@ file should be prepared with a typesetting system, e.g., LaTeX, Word,
 etc., and it is converted to a PDF file. All files should be zipped into one
 gzipped tar file, with a file name containing your student number and
 the problem set number (e.g., r05202043_ps5.tar.gz). Please send
-your homework with the title “your_student_number_HW5” to
+your homework with the title "your_student_number_HW5" to
 twchiu@phys.ntu.edu.tw before 17:00, June 11, 2025 (deadline for all
 problem sets).
