@@ -1,0 +1,6 @@
+0
+1
+
+=============
+GPU_ID     first GPU device number to be assigned by condor
+GPU_ID     second GPU device number (same as first for single GPU)
