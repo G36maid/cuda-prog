@@ -312,12 +312,13 @@ void findOptimalConfiguration(bool run_both, int gpu0, int gpu1, int maxIter, fl
     std::vector<TestResult> results_1gpu, results_2gpu;
 
     printf("\n=== Heat Diffusion Solver (1024x1024) ===\n");
+    printf("Mode: %s\n", run_both ? "Dual-GPU" : "Single-GPU");
     printf("Max Iterations: %d, Tolerance: %.1e\n", maxIter, tolerance);
 
     // Test different block sizes
     int block_sizes[] = {8, 16, 24, 32, 48, 64, 96, 128};
 
-    printf("\nSingle-GPU Version (GPU %d):\n", gpu0);
+    printf("\nRunning on GPU %d:\n", gpu0);
     printf("Block  KTime(ms)    TTime(ms)    Iters    MaxError\n");
     printf("----------------------------------------------------\n");
 
@@ -390,19 +391,13 @@ int main() {
     float tolerance;
     bool run_both;
 
-    // Get input parameters
-    std::cout << "Run both 1-GPU and 2-GPU versions? (1/0): ";
-    std::cin >> run_both;
+    // Get GPU IDs
+    std::cout << "Enter two GPU IDs (space separated): ";
+    std::cin >> gpu0 >> gpu1;
+    printf("\nUsing GPUs: %d and %d\n", gpu0, gpu1);
 
-    std::cout << "Enter first GPU ID: ";
-    std::cin >> gpu0;
-
-    if (run_both) {
-        std::cout << "Enter second GPU ID: ";
-        std::cin >> gpu1;
-    } else {
-        gpu1 = gpu0;  // Not used in 1-GPU mode
-    }
+    // If GPU IDs are the same, run only single GPU version
+    run_both = (gpu0 != gpu1);
 
     std::cout << "Enter maximum iterations: ";
     std::cin >> maxIter;

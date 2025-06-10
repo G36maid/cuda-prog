@@ -1,10 +1,10 @@
-1
 0
+1
 1000
 1e-6
 
 =============
-run_both   run both 1-GPU and 2-GPU versions? (1=yes, 0=no)
-GPU_ID     device number to be assigned by condor
+GPU_ID     first GPU device number to be assigned by condor
+GPU_ID     second GPU device number (same as first for single GPU)
 max_iter   maximum iterations for convergence
 tolerance  convergence tolerance (e.g. 1e-6)
