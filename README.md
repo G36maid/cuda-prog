@@ -60,13 +60,13 @@ temperature along the top edge of the plate is at 400 K, while the
 remainder of the circumference is at 273 K. Write a CUDA code for
 multi-GPUs to solve this problem. Test your code with one and two
 GPUs. Also, to determine the optimal block size for this problem. The
-value of  can be fixed to 1.
+value of $\omega$ can be fixed to 1.
 
 ## HW06
 
 1. Histogram of a data set with exponential distribution
 Write a pseudo-random number generator to generate random
-numbers in (0,) with the exponential distribution exp(-x), and use it
+numbers in (0,$\infty$) with the exponential distribution exp(-x), and use it
 to generate a data set of 81920000 entries. Compare the histograms
 computed by CPU, GPU with global memory, and GPU with shared
 memory, as well as their speeds. Plot the histogram, together with the
