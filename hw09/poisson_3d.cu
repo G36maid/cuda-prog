@@ -27,6 +27,19 @@ inline void cufftAssert(cufftResult code, const char *file, int line, bool abort
     }
 }
 
+// 正規化 kernel (移到前面定義)
+__global__ void scale_result(cufftComplex *data, float scale, int N) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    int j = blockIdx.y * blockDim.y + threadIdx.y;
+    int k = blockIdx.z * blockDim.z + threadIdx.z;
+
+    if (i >= N || j >= N || k >= N) return;
+
+    int idx = k * N * N + j * N + i;
+    data[idx].x *= scale;
+    data[idx].y *= scale;
+}
+
 // 最終修正版本的 Poisson 求解器
 __global__ void solve_poisson_final(cufftComplex *rho_k, cufftComplex *phi_k, int N, float L) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
@@ -146,7 +159,6 @@ public:
         CUDA_CHECK(cudaMemcpy(h_phi.data(), d_phi, sizeof(cufftComplex) * size, cudaMemcpyDeviceToHost));
 
         std::vector<float> diagonal(N);
-        float dx = L / N;
 
         for (int i = 0; i < N; ++i) {
             int idx = i * N * N + i * N + i;
@@ -169,20 +181,11 @@ public:
     }
 
     float get_grid_spacing() { return L / N; }
+
+    size_t get_memory_usage() {
+        return sizeof(cufftComplex) * size * 2;
+    }
 };
-
-// 正規化 kernel
-__global__ void scale_result(cufftComplex *data, float scale, int N) {
-    int i = blockIdx.x * blockDim.x + threadIdx.x;
-    int j = blockIdx.y * blockDim.y + threadIdx.y;
-    int k = blockIdx.z * blockDim.z + threadIdx.z;
-
-    if (i >= N || j >= N || k >= N) return;
-
-    int idx = k * N * N + j * N + i;
-    data[idx].x *= scale;
-    data[idx].y *= scale;
-}
 
 // 理論解析解
 float analytical_potential(float r, float charge = 1.0f) {
@@ -229,11 +232,57 @@ void final_verification(const std::vector<float>& diagonal, const std::vector<fl
     }
 }
 
+// 測試最大格點大小
+void test_maximum_grid_size() {
+    std::cout << "\n=== Maximum Grid Size Test ===\n";
+
+    size_t free_memory, total_memory;
+    CUDA_CHECK(cudaMemGetInfo(&free_memory, &total_memory));
+    std::cout << "Available GPU memory: " << free_memory / (1024*1024) << " MB\n";
+
+    std::vector<int> test_sizes = {64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, 480, 512};
+
+    std::cout << "Grid Size\tMemory (MB)\tTime (s)\tStatus\n";
+    std::cout << std::string(50, '-') << "\n";
+
+    for (int N : test_sizes) {
+        try {
+            FinalPoisson3DSolver solver(N);
+            size_t memory_usage = solver.get_memory_usage();
+
+            if (memory_usage > free_memory) {
+                std::cout << N << "³\t\t" << memory_usage/(1024*1024) << "\t\t-\t\tMemory exceeded\n";
+                break;
+            }
+
+            auto start = std::chrono::high_resolution_clock::now();
+            solver.solve_point_charge(1.0f);
+            auto end = std::chrono::high_resolution_clock::now();
+            double time = std::chrono::duration<double>(end - start).count();
+
+            std::cout << N << "³\t\t" << memory_usage/(1024*1024) << "\t\t"
+                      << std::fixed << std::setprecision(3) << time << "\t\tSuccess\n";
+
+        } catch (...) {
+            std::cout << N << "³\t\t-\t\t-\t\tFailed\n";
+            break;
+        }
+    }
+}
+
 int main() {
     std::cout << "Final Corrected 3D Poisson Equation Solver\n";
     std::cout << std::string(50, '=') << "\n";
 
     try {
+        // 檢查 GPU 資訊
+        int device;
+        cudaDeviceProp prop;
+        CUDA_CHECK(cudaGetDevice(&device));
+        CUDA_CHECK(cudaGetDeviceProperties(&prop, device));
+        std::cout << "GPU: " << prop.name << "\n";
+        std::cout << "Global Memory: " << prop.totalGlobalMem / (1024*1024) << " MB\n\n";
+
         // 使用物理上合理的參數
         int N = 32;
         float L = 32.0f;  // 盒子大小 32 個單位
@@ -258,6 +307,9 @@ int main() {
 
         // 最終驗證
         final_verification(diagonal, x_axis, N, dx);
+
+        // 測試最大格點大小
+        test_maximum_grid_size();
 
         std::cout << "\n=== Analysis ===\n";
         std::cout << "The solution should now show much better agreement with analytical results.\n";
