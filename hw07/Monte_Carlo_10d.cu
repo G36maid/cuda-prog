@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include <vector>
 #include <random>
 #include <cmath>
@@ -9,6 +8,8 @@
 #include <sstream>
 #include <iomanip>
 #include <cassert>
+#include <thread>
+#include <future>
 
 constexpr int NDIM = 10;
 constexpr int N_MIN = 2;
@@ -106,30 +107,77 @@ void monte_carlo_gpu(int gpu_id, size_t N, double& mean, double& stddev, unsigne
     stddev = std::sqrt((sum2 / N - mean * mean) / N);
 }
 
-// Read GPU ID from stdin
-int read_gpu_id_from_stdin() {
-    std::string line;
-    int gpu_id = 0;
-    while (std::getline(std::cin, line)) {
-        // Skip comments and empty lines
-        if (line.empty() || line[0] == '=' || line[0] == '#') continue;
-        std::istringstream iss(line);
-        int id;
-        if (iss >> id) {
-            gpu_id = id;
-            break;
-        }
+// Dual GPU Monte Carlo integration
+void monte_carlo_dual_gpu(int gpu1_id, int gpu2_id, size_t N, double& mean, double& stddev, unsigned long long seed = DEFAULT_SEED) {
+    // Split work between two GPUs
+    size_t N1 = N / 2;
+    size_t N2 = N - N1;
+
+    double mean1, stddev1, mean2, stddev2;
+
+    // Launch computations on both GPUs concurrently using threads
+    auto gpu1_task = std::async(std::launch::async, [&]() {
+        monte_carlo_gpu(gpu1_id, N1, mean1, stddev1, seed);
+    });
+
+    auto gpu2_task = std::async(std::launch::async, [&]() {
+        monte_carlo_gpu(gpu2_id, N2, mean2, stddev2, seed + 1000000);
+    });
+
+    // Wait for both tasks to complete
+    gpu1_task.wait();
+    gpu2_task.wait();
+
+    // Combine results
+    double sum1 = mean1 * N1;
+    double sum2 = mean2 * N2;
+    double sum2_1 = (stddev1 * stddev1 * N1 + mean1 * mean1) * N1;
+    double sum2_2 = (stddev2 * stddev2 * N2 + mean2 * mean2) * N2;
+
+    mean = (sum1 + sum2) / N;
+    stddev = std::sqrt(((sum2_1 + sum2_2) / N - mean * mean) / N);
+}
+
+// Get available GPU count
+int get_gpu_count() {
+    int device_count;
+    CUDA_CHECK(cudaGetDeviceCount(&device_count));
+    return device_count;
+}
+
+// Display GPU information
+void display_gpu_info() {
+    int device_count = get_gpu_count();
+    std::cout << "Available GPUs: " << device_count << "\n";
+
+    for (int i = 0; i < device_count; ++i) {
+        cudaDeviceProp prop;
+        CUDA_CHECK(cudaGetDeviceProperties(&prop, i));
+        std::cout << "GPU " << i << ": " << prop.name
+                  << " (Compute Capability: " << prop.major << "." << prop.minor << ")\n";
     }
-    return gpu_id;
+    std::cout << "\n";
 }
 
 struct ResultRow {
     size_t N;
     double cpu_mean, cpu_stddev, cpu_time;
-    double gpu_mean, gpu_stddev, gpu_time;
+    double gpu1_mean, gpu1_stddev, gpu1_time;
+    double gpu2_mean, gpu2_stddev, gpu2_time;
+    double dual_gpu_mean, dual_gpu_stddev, dual_gpu_time;
 };
 
-void run_single_gpu_benchmark(int gpu_id) {
+void run_comprehensive_benchmark() {
+    int gpu_count = get_gpu_count();
+    if (gpu_count < 2) {
+        std::cerr << "Warning: Less than 2 GPUs available. Dual GPU benchmark will use GPU 0 twice.\n";
+    }
+
+    int gpu1_id = 0;
+    int gpu2_id = (gpu_count > 1) ? 1 : 0;
+
+    display_gpu_info();
+
     std::vector<ResultRow> results;
 
     for (int n = N_MIN; n <= N_MAX; ++n) {
@@ -137,49 +185,100 @@ void run_single_gpu_benchmark(int gpu_id) {
         ResultRow row;
         row.N = N;
 
+        std::cout << "Processing N = " << N << "..." << std::flush;
+
         // CPU
         auto t1 = std::chrono::high_resolution_clock::now();
         monte_carlo_cpu(N, row.cpu_mean, row.cpu_stddev, DEFAULT_SEED + n);
         auto t2 = std::chrono::high_resolution_clock::now();
         row.cpu_time = std::chrono::duration<double>(t2 - t1).count();
 
-        // GPU
+        // GPU 1
         auto t3 = std::chrono::high_resolution_clock::now();
-        monte_carlo_gpu(gpu_id, N, row.gpu_mean, row.gpu_stddev, DEFAULT_SEED + n);
+        monte_carlo_gpu(gpu1_id, N, row.gpu1_mean, row.gpu1_stddev, DEFAULT_SEED + n);
         auto t4 = std::chrono::high_resolution_clock::now();
-        row.gpu_time = std::chrono::duration<double>(t4 - t3).count();
+        row.gpu1_time = std::chrono::duration<double>(t4 - t3).count();
+
+        // GPU 2 (if available)
+        auto t5 = std::chrono::high_resolution_clock::now();
+        monte_carlo_gpu(gpu2_id, N, row.gpu2_mean, row.gpu2_stddev, DEFAULT_SEED + n + 100);
+        auto t6 = std::chrono::high_resolution_clock::now();
+        row.gpu2_time = std::chrono::duration<double>(t6 - t5).count();
+
+        // Dual GPU
+        auto t7 = std::chrono::high_resolution_clock::now();
+        monte_carlo_dual_gpu(gpu1_id, gpu2_id, N, row.dual_gpu_mean, row.dual_gpu_stddev, DEFAULT_SEED + n + 200);
+        auto t8 = std::chrono::high_resolution_clock::now();
+        row.dual_gpu_time = std::chrono::duration<double>(t8 - t7).count();
 
         results.push_back(row);
+        std::cout << " Done\n";
     }
 
-    // Write results to stdout
-    std::cout << "Monte Carlo 10D Integration Results\n\n";
-    std::cout << "GPU ID: " << gpu_id << "\n\n";
-    std::cout << std::setw(10) << "N"
-              << std::setw(15) << "CPU Mean"
-              << std::setw(15) << "CPU Stddev"
-              << std::setw(15) << "CPU Time(s)"
-              << std::setw(15) << "GPU Mean"
-              << std::setw(15) << "GPU Stddev"
-              << std::setw(15) << "GPU Time(s)"
-              << "\n";
-    std::cout << std::string(100, '-') << "\n";
+    // Display comprehensive results
+    std::cout << "\n" << std::string(120, '=') << "\n";
+    std::cout << "Monte Carlo 10D Integration Comprehensive Benchmark Results\n";
+    std::cout << std::string(120, '=') << "\n\n";
 
-    std::cout << std::fixed << std::setprecision(8);
+    std::cout << std::setw(10) << "N"
+              << std::setw(12) << "CPU Mean"
+              << std::setw(12) << "CPU Time(s)"
+              << std::setw(12) << "GPU1 Mean"
+              << std::setw(12) << "GPU1 Time(s)"
+              << std::setw(12) << "GPU2 Mean"
+              << std::setw(12) << "GPU2 Time(s)"
+              << std::setw(12) << "Dual Mean"
+              << std::setw(12) << "Dual Time(s)"
+              << std::setw(12) << "Speedup"
+              << "\n";
+    std::cout << std::string(120, '-') << "\n";
+
+    std::cout << std::fixed << std::setprecision(6);
     for (const auto& row : results) {
+        double speedup = row.cpu_time / row.dual_gpu_time;
         std::cout << std::setw(10) << row.N
-                  << std::setw(15) << row.cpu_mean
-                  << std::setw(15) << row.cpu_stddev
-                  << std::setw(15) << row.cpu_time
-                  << std::setw(15) << row.gpu_mean
-                  << std::setw(15) << row.gpu_stddev
-                  << std::setw(15) << row.gpu_time
+                  << std::setw(12) << row.cpu_mean
+                  << std::setw(12) << row.cpu_time
+                  << std::setw(12) << row.gpu1_mean
+                  << std::setw(12) << row.gpu1_time
+                  << std::setw(12) << row.gpu2_mean
+                  << std::setw(12) << row.gpu2_time
+                  << std::setw(12) << row.dual_gpu_mean
+                  << std::setw(12) << row.dual_gpu_time
+                  << std::setw(12) << speedup << "x"
                   << "\n";
+    }
+
+    // Performance analysis
+    std::cout << "\n" << std::string(60, '=') << "\n";
+    std::cout << "Performance Analysis\n";
+    std::cout << std::string(60, '=') << "\n";
+
+    if (!results.empty()) {
+        const auto& last_result = results.back();
+        double cpu_vs_gpu1 = last_result.cpu_time / last_result.gpu1_time;
+        double cpu_vs_dual = last_result.cpu_time / last_result.dual_gpu_time;
+        double gpu1_vs_dual = last_result.gpu1_time / last_result.dual_gpu_time;
+
+        std::cout << std::fixed << std::setprecision(2);
+        std::cout << "For largest problem size (N = " << last_result.N << "):\n";
+        std::cout << "CPU vs Single GPU speedup: " << cpu_vs_gpu1 << "x\n";
+        std::cout << "CPU vs Dual GPU speedup: " << cpu_vs_dual << "x\n";
+        std::cout << "Single GPU vs Dual GPU speedup: " << gpu1_vs_dual << "x\n";
+        std::cout << "Dual GPU efficiency: " << (gpu1_vs_dual / 2.0 * 100) << "%\n";
     }
 }
 
 int main() {
-    int gpu_id = read_gpu_id_from_stdin();
-    run_single_gpu_benchmark(gpu_id);
+    std::cout << "Monte Carlo 10D Integration - Multi-GPU Benchmark\n";
+    std::cout << std::string(50, '=') << "\n\n";
+
+    try {
+        run_comprehensive_benchmark();
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 1;
+    }
+
     return 0;
 }
