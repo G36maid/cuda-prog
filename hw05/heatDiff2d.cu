@@ -55,14 +55,15 @@ __global__ void jacobi_kernel(
     int end_row
 ) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
-    int j = start_row + blockIdx.y * blockDim.y + threadIdx.y;
+    int j = blockIdx.y * blockDim.y + threadIdx.y + start_row;
 
-    if (i > 0 && i < GRID_SIZE-1 && j > 0 && j < GRID_SIZE-1) {
+    // Handle boundary conditions first
+    if (i < GRID_SIZE && j < GRID_SIZE) {
         if (j == 0) {  // Top edge
             T_new[j*GRID_SIZE + i] = TOP_TEMP;
         } else if (j == GRID_SIZE-1 || i == 0 || i == GRID_SIZE-1) {  // Other edges
             T_new[j*GRID_SIZE + i] = OTHER_TEMP;
-        } else {
+        } else if (i > 0 && i < GRID_SIZE-1 && j > 0 && j < GRID_SIZE-1) {  // Interior points
             float new_temp = 0.25f * (
                 T_old[j*GRID_SIZE + (i+1)] +
                 T_old[j*GRID_SIZE + (i-1)] +
@@ -71,9 +72,9 @@ __global__ void jacobi_kernel(
             );
             T_new[j*GRID_SIZE + i] = new_temp;
 
-            // Check convergence
-            if (fabsf(new_temp - T_old[j*GRID_SIZE + i]) > tolerance) {
-                atomicExch((int*)converged, 0);
+            // Check convergence using double precision for accuracy
+            if (fabs((double)new_temp - (double)T_old[j*GRID_SIZE + i]) > tolerance) {
+                *converged = false;
             }
         }
     }
@@ -146,7 +147,18 @@ TestResult runTest1GPU(int gpuID, int blockSize, int maxIter, float tolerance) {
             max_diff = std::max(max_diff, diff);
         }
     }
-    result.maxError = max_diff;
+    // Calculate analytical solution error
+    float analytical_error = 0.0f;
+    for (int j = 1; j < GRID_SIZE-1; j++) {
+        for (int i = 1; i < GRID_SIZE-1; i++) {
+            // Simple analytical approximation for comparison
+            float y_norm = static_cast<float>(j) / (GRID_SIZE - 1);
+            float expected = OTHER_TEMP + (TOP_TEMP - OTHER_TEMP) * (1.0f - y_norm);
+            float error = fabs(h_temp_current[j*GRID_SIZE + i] - expected);
+            analytical_error = std::max(analytical_error, error);
+        }
+    }
+    result.maxError = analytical_error;
 
     // Cleanup
     cudaFree(d_temp_current);
@@ -332,8 +344,8 @@ void findOptimalConfiguration(bool run_both, int gpu0, int gpu1, int maxIter, fl
     printf("Max Iterations: %d, Tolerance: %.1e\n", maxIter, tolerance);
     printf("Boundary Conditions: Top=%.1fK, Others=%.1fK\n", TOP_TEMP, OTHER_TEMP);
 
-    // Test different block sizes (powers of 2)
-    int block_sizes[] = {8, 16, 32, 64, 128};
+    // Test different block sizes (powers of 2, limited to reasonable sizes)
+    int block_sizes[] = {8, 16, 32};
 
     printf("\nRunning on GPU %d:\n", gpu0);
     printf("Block  KTime(ms)    TTime(ms)    Iters    MaxError\n");

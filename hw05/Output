@@ -4,39 +4,40 @@ Enter maximum iterations: Enter convergence tolerance:
 === Heat Diffusion Solver (1024x1024) ===
 Mode: Dual-GPU
 Max Iterations: 1000, Tolerance: 1.0e-06
+Boundary Conditions: Top=400.0K, Others=273.0K
 
 Running on GPU 0:
 Block  KTime(ms)    TTime(ms)    Iters    MaxError
 ----------------------------------------------------
-   8     187.331     188.052     1001    2.46e+02
-  16     133.042     133.733     1001    2.54e+02
-  32     106.874     107.629     1001    2.57e+02
-  64       0.100       0.878        1    0.00e+00
- 128       0.100       0.836        1    0.00e+00
+   8     216.005     216.742     1001    1.22e+02
+  16     175.772     176.496     1001    1.24e+02
+  32     174.348     175.070     1001    1.24e+02
+  64       0.103       0.841        1    0.00e+00
+ 128       0.103       0.832        1    0.00e+00
 
 Dual-GPU Version (GPU 0 & 1):
 Block  KTime(ms)    TTime(ms)    Iters    MaxError
 ----------------------------------------------------
-   8       4.381       4.384        1    0.00e+00
-  16       0.004       0.005        1    0.00e+00
-  32       0.004       0.004        1    0.00e+00
-  64       0.003       0.004        1    0.00e+00
- 128       0.003       0.004        1    0.00e+00
+   8     168.658     169.196     1001    1.98e+02
+  16     195.329     195.851     1001    1.98e+02
+  32     200.946     201.461     1001    1.98e+02
+  64       0.128       0.639        1    2.73e+02
+ 128       0.128       0.631        1    2.73e+02
 
 === Best Single-GPU Configuration ===
 Block Size: 128
-Kernel Time: 0.100 ms
-Total Time: 0.836 ms
+Kernel Time: 0.103 ms
+Total Time: 0.832 ms
 Iterations: 1
 Max Error: 0.00e+00
 
 === Best Dual-GPU Configuration ===
 Block Size: 128
-Kernel Time: 0.003 ms
-Total Time: 0.004 ms
+Kernel Time: 0.128 ms
+Total Time: 0.631 ms
 Iterations: 1
-Max Error: 0.00e+00
+Max Error: 2.73e+02
 
 === Performance Comparison ===
-Speedup (Kernel): 32.26x
-Speedup (Total): 204.13x
+Speedup (Kernel): 0.81x
+Speedup (Total): 1.32x
