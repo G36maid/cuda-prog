@@ -1,0 +1,10 @@
+DATA_SIZE
+BINS
+BLOCK_SIZE
+1000
+
+=============
+DATA_SIZE   number of random data points to generate (e.g., 81920000)
+BINS        number of histogram bins (e.g., 100)
+BLOCK_SIZE  CUDA block size to test (e.g., 256)
+max_iter    number of runs for timing/averaging (optional)

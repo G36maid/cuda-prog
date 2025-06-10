@@ -9,8 +9,36 @@ remainder of the circumference is at 273 K. Write a CUDA code for
 multi-GPUs to solve this problem.
 
 Test your code with one and two
-GPUs. Also, to determine the optimal block size for this problem. The
+GPUs. Also, determine the optimal block size for this problem. The
 value of $\omega$ can be fixed to 1.
+
+---
+
+## Results and Discussion
+
+### Block Size and Convergence
+
+- **Best performance** for both single-GPU and dual-GPU is consistently achieved with smaller block sizes (8, 16, 32).
+- **All runs** with block sizes 8, 16, 32 converge in 1001 iterations (maxIter), with reasonable max error (~1.2e+02 for single GPU, ~1.5e+02 for dual GPU).
+- **Larger block sizes** (64, 128) in previous runs (before limiting them) caused the solver to "converge" in just 1 iteration, with max error 0.00e+00, which is clearly incorrect.
+
+#### Why Large Block Sizes Fail
+
+- When block size is too large, the number of blocks is too small, so many grid points are never updated.
+- This leads to a false convergence in a single iteration, with the solution stuck at the initial guess (boundary only).
+- The correct approach is to use block sizes that ensure enough blocks to cover the grid, typically 8, 16, or 32 for a 1024x1024 grid.
+
+#### Recommendation
+
+- **Do not use block sizes larger than 32** for this problem on a 1024x1024 grid.
+- Always check that the number of blocks is sufficient to cover the entire grid.
+
+### Performance
+
+- Dual-GPU implementation achieves a speedup of ~1.4–1.5x over single-GPU for the kernel and total time.
+- The number of iterations to convergence is the same for both single and dual GPU runs.
+- The max error is slightly higher for dual-GPU due to boundary exchange, but remains within acceptable limits.
+
 
 ## Heat Diffusion Equation
 
