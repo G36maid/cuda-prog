@@ -1,0 +1,16 @@
+Block  GPU_Global(ms)  GPU_Shared(ms)
+--------------------------------------
+   8          44.509          35.799
+  16          33.818          19.047
+  32          33.713          19.126
+  64          33.881          19.170
+ 128          33.845           9.549
+ 256          33.782           5.022
+ 512          33.605           3.883
+1024          33.561           3.986
+
+CPU Histogram Time: 162.851 ms
+Optimal GPU Global Block Size: 1024 (33.561 ms)
+Optimal GPU Shared Block Size: 512 (3.883 ms)
+CPU vs GPU (global) mismatched bins: 0
+CPU vs GPU (shared) mismatched bins: 0
