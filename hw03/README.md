@@ -6,7 +6,7 @@
 
 ## Problem Statement
 
-Solve the Poisson equation on a 3D lattice with boundary conditions. Consider a cube of size L×L×L with a point charge q=1 at its center (L/2, L/2, L/2), with lattice sites (0, 1, 2, ..., L) in each direction, subject to boundary conditions with potential equal to zero on its entire surface. Find the potential versus the distance r from the point charge, for L=8, 16, 32, 64, 128, 256 respectively. Determine if the potential approaches Coulomb's law in the limit L >> 1.
+Solve the Poisson equation on a 3D lattice with boundary conditions. Consider a cube of size $L \times L \times L$ with a point charge $q=1$ at its center $(L/2, L/2, L/2)$, with lattice sites $(0, 1, 2, ..., L)$ in each direction, subject to boundary conditions with potential equal to zero on its entire surface. Find the potential versus the distance $r$ from the point charge, for $L=8, 16, 32, 64, 128, 256$ respectively. Determine if the potential approaches Coulomb's law in the limit $L \gg 1$.
 
 ## Source Code Analysis
 
@@ -14,9 +14,7 @@ Solve the Poisson equation on a 3D lattice with boundary conditions. Consider a 
 
 The implementation uses the finite difference method to solve the 3D Poisson equation:
 
-```
-∇²φ = -ρ/ε₀
-```
+$\nabla^2\phi = -\rho/\epsilon_0$
 
 
 #### **Core Algorithm: 6-Point Stencil**
@@ -91,27 +89,27 @@ The results reveal a critical issue with the convergence detection algorithm. Mo
 
 | L Size | Optimal Block | Grid Size | Kernel Time (ms) | Iterations | Max Error |
 | :-- | :-- | :-- | :-- | :-- | :-- |
-| 8 | 16³ | 1³ | 0.012 | 1 | 7.96×10⁻² |
-| 16 | 12³ | 2³ | 0.015 | 1 | 7.96×10⁻² |
-| 32 | 16³ | 2³ | 0.023 | 1 | 7.96×10⁻² |
-| 64 | 12³ | 6³ | 0.098 | 1 | 7.96×10⁻² |
-| 128 | 16³ | 8³ | 0.099 | 1 | 7.96×10⁻² |
-| 256 | 12³ | 22³ | 0.101 | 1 | 7.96×10⁻² |
+| 8 | $16^3$ | $1^3$ | 0.012 | 1 | $7.96\times10^{-2}$ |
+| 16 | $12^3$ | $2^3$ | 0.015 | 1 | $7.96\times10^{-2}$ |
+| 32 | $16^3$ | $2^3$ | 0.023 | 1 | $7.96\times10^{-2}$ |
+| 64 | $12^3$ | $6^3$ | 0.098 | 1 | $7.96\times10^{-2}$ |
+| 128 | $16^3$ | $8^3$ | 0.099 | 1 | $7.96\times10^{-2}$ |
+| 256 | $12^3$ | $22^3$ | 0.101 | 1 | $7.96\times10^{-2}$ |
 
 #### **Block Size Performance Characteristics**
 
-**Small Block Sizes (2×2×2 to 4×4×4)**:
+**Small Block Sizes ($2\times2\times2$ to $4\times4\times4$)**:
 
 - **Poor Performance**: Extremely long execution times (up to 7500ms for L=256)
 - **High Iteration Count**: Millions of iterations before convergence
 - **Low GPU Utilization**: Insufficient parallelism to saturate GPU resources
 
-**Medium Block Sizes (6×6×6 to 10×10×10)**:
+**Medium Block Sizes ($6\times6\times6$ to $10\times10\times10$)**:
 
 - **Transition Zone**: Some configurations show proper convergence behavior
 - **Variable Performance**: Inconsistent results across different L values
 
-**Large Block Sizes (12×12×12 to 16×16×16)**:
+**Large Block Sizes ($12\times12\times12$ to $16\times16\times16$)**:
 
 - **Optimal Performance**: Sub-millisecond execution times
 - **Suspicious Convergence**: All show 1 iteration, indicating algorithmic issues
@@ -122,11 +120,11 @@ The results reveal a critical issue with the convergence detection algorithm. Mo
 
 #### **Convergence Detection Problem**
 
-The identical error values (7.96×10⁻²) across all L sizes and the premature convergence suggest:
+The identical error values ($7.96\times10^{-2}$) across all L sizes and the premature convergence suggest:
 
 1. **Global Convergence Flag Issue**: The `*convergence = false` operation may not be working correctly across all threads
 2. **Race Condition**: Multiple threads writing to the same convergence flag without proper synchronization
-3. **Tolerance Setting**: The tolerance (1×10⁻⁶) may be inappropriate for the problem scale
+3. **Tolerance Setting**: The tolerance ($1\times10^{-6}$) may be inappropriate for the problem scale
 
 #### **Recommended Fixes**
 
@@ -151,24 +149,22 @@ __global__ void poissonKernel(float *potential, float *new_potential,
 
 #### **Theoretical Background**
 
-For a point charge q=1 in free space, Coulomb's law gives:
+For a point charge $q=1$ in free space, Coulomb's law gives:
 
-```
-V(r) = q/(4πε₀r) = 1/(4πr)  (in Gaussian units)
-```
+$V(r) = \frac{q}{4\pi\varepsilon_0r} = \frac{1}{4\pi r}$ (in Gaussian units)
 
 
 #### **Finite Size Effects**
 
 **Boundary Influence**:
 
-- **Near Field (r << L)**: Minimal boundary effects, should approach Coulomb's law
-- **Far Field (r ≈ L/2)**: Strong boundary effects due to zero potential constraint
-- **Convergence Rate**: Expected O(1/L²) convergence to analytical solution
+- **Near Field ($r \ll L$)**: Minimal boundary effects, should approach Coulomb's law
+- **Far Field ($r \approx L/2$)**: Strong boundary effects due to zero potential constraint
+- **Convergence Rate**: Expected $O(1/L^2)$ convergence to analytical solution
 
 **Grid Resolution Effects**:
 
-- **Discretization Error**: O(h²) where h = 1 is the grid spacing
+- **Discretization Error**: $O(h^2)$ where $h = 1$ is the grid spacing
 - **Numerical Dispersion**: High-frequency modes poorly resolved on coarse grids
 
 
@@ -178,7 +174,7 @@ The identical error values across all L sizes indicate the algorithm is not prop
 
 1. **L=8**: Significant deviation from Coulomb's law due to boundary proximity
 2. **L=16,32**: Improved accuracy in central region
-3. **L=64,128,256**: Excellent agreement with 1/(4πr) for r < L/4
+3. **L=64,128,256**: Excellent agreement with $1/(4\pi r)$ for $r < L/4$
 
 ### **Data Output Analysis**
 
@@ -230,18 +226,14 @@ __global__ void computeResidual(float *potential, float *new_potential,
 
 ### **Physical Interpretation**
 
-Despite the implementation issues, the theoretical expectation is clear: as L increases, the numerical solution should converge to Coulomb's law V = 1/(4πr) in regions where r << L. The boundary effects become negligible for large L, and the discrete Laplacian operator approaches the continuous operator.
+Despite the implementation issues, the theoretical expectation is clear: as L increases, the numerical solution should converge to Coulomb's law $V = 1/(4\pi r)$ in regions where $r \ll L$. The boundary effects become negligible for large L, and the discrete Laplacian operator approaches the continuous operator.
 
 ## Conclusion
 
-While the CUDA implementation demonstrates proper 3D parallelization techniques and efficient memory management, critical algorithmic issues prevent meaningful physical analysis. The convergence detection mechanism requires fundamental revision to produce reliable results. Once corrected, the implementation should successfully demonstrate that the finite difference solution approaches Coulomb's law in the limit L >> 1, with convergence rate proportional to 1/L².
+While the CUDA implementation demonstrates proper 3D parallelization techniques and efficient memory management, critical algorithmic issues prevent meaningful physical analysis. The convergence detection mechanism requires fundamental revision to produce reliable results. Once corrected, the implementation should successfully demonstrate that the finite difference solution approaches Coulomb's law in the limit $L \gg 1$, with convergence rate proportional to $1/L^2$.
 
-The performance analysis reveals that medium-to-large block sizes (12³ to 16³) provide optimal GPU utilization, but the numerical accuracy must be validated through proper convergence testing before drawing physical conclusions.
+The performance analysis reveals that medium-to-large block sizes ($12^3$ to $16^3$) provide optimal GPU utilization, but the numerical accuracy must be validated through proper convergence testing before drawing physical conclusions.
 
 ## Submission Guidelines
 
 Submit your homework report including source codes, results, and discussions. Prepare the discussion file using a typesetting system (LaTeX, Word, etc.) and convert to PDF. Compress all files into a gzipped tar file named with your student number and problem set number (e.g., `r05202043_HW3.tar.gz`). Send your homework with the title "your_student_number_HW3" to twchiu@phys.ntu.edu.tw before 17:00, June 11, 2025.
-
-<div style="text-align: center">⁂</div>
-
-[^1]: paste.txt

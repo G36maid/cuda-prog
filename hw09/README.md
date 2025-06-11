@@ -14,7 +14,9 @@ Solve the 3D Poisson equation for a point charge at the origin using cuFFT with 
 
 For a point charge at the origin with periodic boundary conditions, the Poisson equation is:
 
-\$ \nabla^2 \phi(\mathbf{r}) = -4\pi \rho(\mathbf{r}) \$
+$$
+\nabla^2 \phi(\mathbf{r}) = -4\pi \rho(\mathbf{r})
+$$
 
 where $\rho(\mathbf{r}) = q \delta(\mathbf{r})$ for a point charge $q$ at the origin.
 
@@ -22,11 +24,15 @@ where $\rho(\mathbf{r}) = q \delta(\mathbf{r})$ for a point charge $q$ at the or
 
 In Fourier space, the Poisson equation becomes:
 
-\$ -k^2 \tilde{\phi}(\mathbf{k}) = -4\pi \tilde{\rho}(\mathbf{k}) \$
+$$
+-k^2 \tilde{\phi}(\mathbf{k}) = -4\pi \tilde{\rho}(\mathbf{k})
+$$
 
 Therefore:
 
-\$ \tilde{\phi}(\mathbf{k}) = \frac{4\pi \tilde{\rho}(\mathbf{k})}{k^2} \$
+$$
+\tilde{\phi}(\mathbf{k}) = \frac{4\pi \tilde{\rho}(\mathbf{k})}{k^2}
+$$
 
 where $k^2 = k_x^2 + k_y^2 + k_z^2$.
 
@@ -97,7 +103,7 @@ __global__ void solve_poisson_final(cufftComplex *rho_k, cufftComplex *phi_k, in
         phi_k[idx].x = 0.0f;
         phi_k[idx].y = 0.0f;
     } else {
-        // Correct Poisson equation solution: ∇²φ = -4πρ → φ(k) = 4πρ(k)/k²
+        // Correct Poisson equation solution:
         float factor = 4.0f * M_PI / k2;
         phi_k[idx].x = rho_k[idx].x * factor;
         phi_k[idx].y = rho_k[idx].y * factor;
@@ -256,7 +262,7 @@ The significant errors (>200%) between numerical and analytical solutions indica
 **Performance Scaling**:
 
 - **Small Grids** (N < 128): Overhead-dominated, sub-millisecond execution
-- **Medium Grids** (128 ≤ N ≤ 256): Linear scaling with problem size
+- **Medium Grids** (128 <= N <= 256): Linear scaling with problem size
 - **Large Grids** (N > 256): Memory bandwidth becomes limiting factor
 
 
@@ -302,7 +308,7 @@ int idx = k * N * N + j * N + i;  // Linear indexing for 3D arrays
 For a point charge in infinite space: $\phi(r) = \frac{q}{4\pi\epsilon_0 r}$
 
 For periodic boundary conditions, the solution involves Ewald summation:
-\$ \phi(\mathbf{r}) = \sum_{\mathbf{n}} \frac{q}{4\pi\epsilon_0 |\mathbf{r} + \mathbf{n}L|} \$
+$$ \phi(\mathbf{r}) = \sum_{\mathbf{n}} \frac{q}{4\pi\epsilon_0 |\mathbf{r} + \mathbf{n}L|} $$
 
 #### **Convergence Studies**
 
@@ -388,7 +394,7 @@ The CUDA implementation successfully demonstrates efficient 3D Poisson equation 
 
 **Recommendations**:
 
-- **Use higher resolution grids** (≥128³) for better accuracy
+- **Use higher resolution grids** (>=128³) for better accuracy
 - **Implement Ewald summation** for proper periodic boundary treatment
 - **Consider multi-GPU implementation** for larger systems
 - **Add convergence studies** to validate numerical accuracy

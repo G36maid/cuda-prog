@@ -11,10 +11,9 @@ Implement GPU-accelerated Monte Carlo simulation of the 2D Ising model on a toru
 ## Mathematical Foundation
 
 ### **2D Ising Model**
-
 The 2D Ising model describes magnetic spins on a square lattice with Hamiltonian:
 
-\$ H = -J \sum_{\langle i,j \rangle} s_i s_j - B \sum_i s_i \$
+$$H = -J \sum_{\langle i,j \rangle} s_i s_j - B \sum_i s_i $$
 
 where $s_i = \pm 1$ are spin variables, $J$ is the coupling constant, $B$ is the external magnetic field, and the sum is over nearest neighbors.
 
@@ -23,12 +22,12 @@ where $s_i = \pm 1$ are spin variables, $J$ is the coupling constant, $B$ is the
 The Metropolis algorithm updates spins according to:
 
 1. Propose spin flip: $s_i \rightarrow -s_i$
-2. Calculate energy change: $\Delta E = 2s_i \sum_{j} s_j$
+2. Calculate energy change: ${\Delta E = 2s_i \sum_{j} s_j}$
 3. Accept with probability: $P = \min(1, e^{-\beta \Delta E})$
 
 where $\beta = 1/(k_B T)$.
 
-## Source Code Analysis[^1]
+## Source Code Analysis
 
 ### **GPU Kernel Implementation**
 
@@ -187,7 +186,7 @@ public:
 
 #### **Single GPU Results**
 
-| T | ⟨E⟩ | δ⟨E⟩ | ⟨M⟩ | δ⟨M⟩ | Phase |
+| $T$ | $\langle E \rangle$ | $\delta \langle E \rangle$ | $\langle M \rangle$ | $\delta \langle M \rangle$ | Phase |
 | :-- | :-- | :-- | :-- | :-- | :-- |
 | 2.0 | -1.7456 | 0.0001 | 0.9113 | 0.0001 | Ordered |
 | 2.1 | -1.6620 | 0.0001 | 0.8688 | 0.0001 | Ordered |
@@ -233,7 +232,7 @@ The results clearly show the Ising model phase transition:
 
 #### **Multi-GPU Temperature Scan**
 
-| T | ⟨E⟩ | δ⟨E⟩ | ⟨M⟩ | δ⟨M⟩ | Comparison |
+| $T$ | $\langle E \rangle$ | $\delta \langle E \rangle$ | $\langle M \rangle$ | $\delta \langle M \rangle$ | Comparison |
 | :-- | :-- | :-- | :-- | :-- | :-- |
 | 2.0 | -1.7405 | 0.0002 | 0.8161 | 0.0033 | Consistent |
 | 2.1 | -1.6619 | 0.0001 | 0.0053 | 0.0002 | Good |
@@ -313,7 +312,7 @@ cudaMemcpyPeer(boundary_buffer, gpu1, gpu0, size);
 #### **Phase Transition Characteristics**
 
 - **Ordered Phase (T < 2.3)**: High magnetization, low energy fluctuations
-- **Critical Region (T ≈ 2.3)**: Large fluctuations, correlation length divergence
+- **Critical Region ($T \approx 2.3$)**: Large fluctuations, correlation length divergence
 - **Disordered Phase (T > 2.3)**: Low magnetization, thermal disorder dominates
 
 
@@ -321,7 +320,7 @@ cudaMemcpyPeer(boundary_buffer, gpu1, gpu0, size);
 
 For a 200×200 lattice:
 
-- **Correlation Length**: $\xi \sim |T - T_c|^{-\nu}$ with $\nu \approx 1$
+- **Correlation Length**: $$\xi \sim |T - T_c|^{-\nu}$$ with $\nu \approx 1$
 - **Finite Size Scaling**: $\xi \lesssim L$ for accurate critical behavior
 - **Boundary Conditions**: Periodic boundaries minimize finite size effects
 
@@ -375,7 +374,7 @@ The CUDA implementation successfully demonstrates efficient Monte Carlo simulati
 
 **Recommendations**:
 
-1. **Use single GPU** for moderate lattice sizes (≤ 512×512)
+1. **Use single GPU** for moderate lattice sizes (<= 512×512)
 2. **Implement domain decomposition** for larger systems requiring multi-GPU
 3. **Optimize memory access** patterns for better bandwidth utilization
 4. **Consider advanced algorithms** (cluster updates, parallel tempering) for better scaling

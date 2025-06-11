@@ -1,12 +1,10 @@
 # Introduction to CUDA Parallel Programming Homework Assignment 5
 
-- April, 2025
-- NTNU
-- 41173058H
+April, 2025
 
 ## Problem Statement
 
-Solve for the thermal equilibrium temperature distribution on a square plate using a Cartesian grid of 1024×1024. The temperature along the top edge is 400 K, while the remainder of the circumference is at 273 K. Implement a CUDA code for multi-GPUs to solve this problem, test with one and two GPUs, and determine the optimal block size. The relaxation parameter ω is fixed to 1 (standard Jacobi method).
+Solve for the thermal equilibrium temperature distribution on a square plate using a Cartesian grid of $1024 \times 1024$. The temperature along the top edge is $400$ K, while the remainder of the circumference is $273$ K. Implement a CUDA code for multi-GPUs to solve this problem, test with one and two GPUs, and determine the optimal block size. The relaxation parameter $\omega$ is fixed to $1$ (standard Jacobi method).
 
 ## Mathematical Foundation and Numerical Method
 
@@ -14,7 +12,7 @@ Solve for the thermal equilibrium temperature distribution on a square plate usi
 
 For steady-state heat conduction in a 2D domain, the temperature distribution satisfies the Laplace equation:
 
-\$ \nabla^2 T = \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} = 0 \$
+$$ \nabla^2 T = \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} = 0 $$
 
 where T(x,y) represents the temperature at position (x,y).
 
@@ -22,13 +20,13 @@ where T(x,y) represents the temperature at position (x,y).
 
 Using central differences on a uniform grid with spacing h:
 
-\$ \frac{\partial^2 T}{\partial x^2} \approx \frac{T_{i+1,j} - 2T_{i,j} + T_{i-1,j}}{h^2} \$
+$$ \frac{\partial^2 T}{\partial x^2} \approx \frac{T_{i+1,j} - 2T_{i,j} + T_{i-1,j}}{h^2} $$
 
-\$ \frac{\partial^2 T}{\partial y^2} \approx \frac{T_{i,j+1} - 2T_{i,j} + T_{i,j-1}}{h^2} \$
+$$ \frac{\partial^2 T}{\partial y^2} \approx \frac{T_{i,j+1} - 2T_{i,j} + T_{i,j-1}}{h^2} $$
 
 This leads to the five-point stencil formula:
 
-\$ T_{i,j}^{(k+1)} = \frac{1}{4}(T_{i+1,j}^{(k)} + T_{i-1,j}^{(k)} + T_{i,j+1}^{(k)} + T_{i,j-1}^{(k)}) \$
+$$ T_{i,j}^{(k+1)} = \frac{1}{4}(T_{i+1,j}^{(k)} + T_{i-1,j}^{(k)} + T_{i,j+1}^{(k)} + T_{i,j-1}^{(k)}) $$
 
 ## Source Code Analysis
 
@@ -124,7 +122,7 @@ cudaMemcpyPeer(d_temp_next1 + (rows_per_gpu-1)*GRID_SIZE,
 
 - **Grid Size**: 1024×1024 (1,048,576 points)
 - **Boundary Conditions**: Top edge = 400 K, other edges = 273 K
-- **Convergence Tolerance**: 1×10⁻⁶
+- **Convergence Tolerance**: 1×10^(-6)
 - **Maximum Iterations**: 1000
 - **Block Sizes Tested**: 8×8, 16×16, 32×32
 
@@ -189,7 +187,7 @@ cudaMemcpyPeer(d_temp_next1 + (rows_per_gpu-1)*GRID_SIZE,
 #### **Convergence Behavior**
 
 - **Consistent Iterations**: All configurations converge in exactly 1001 iterations
-- **Tolerance Achievement**: Convergence criterion (1×10⁻⁶) reached reliably
+- **Tolerance Achievement**: Convergence criterion (1×10^(-6)) reached reliably
 - **Numerical Stability**: No divergence or oscillation observed
 
 

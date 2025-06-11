@@ -8,9 +8,11 @@
 
 Implement Monte Carlo integration for the 10-dimensional integral:
 
-\$ I = \int_0^1 dx_1 \int_0^1 dx_2 \cdots \int_0^1 dx_{10} \, \frac{1}{1 + x_1^2 + x_2^2 + \cdots + x_{10}^2} \$
+$$
+I = \int_0^1 dx_1 \int_0^1 dx_2 \cdots \int_0^1 dx_{10} \, \frac{1}{1 + x_1^2 + x_2^2 + \cdots + x_{10}^2}
+$$
 
-Using two algorithms: (a) Simple sampling and (b) Importance sampling with Metropolis algorithm. Implement CUDA code for multi-GPU execution and compare performance across CPU, single GPU, and dual GPU configurations for sample sizes N = 2^n, n ∈ [^2][^16].
+Using two algorithms: (a) Simple sampling and (b) Importance sampling with Metropolis algorithm. Implement CUDA code for multi-GPU execution and compare performance across CPU, single GPU, and dual GPU configurations for sample sizes $N = 2^n$, $n \in [2, 16]$.
 
 ## Source Code Analysis
 
@@ -21,7 +23,9 @@ The integrand represents a 10-dimensional function with a characteristic "bell-s
 #### **Simple Monte Carlo Estimator**
 
 For simple sampling, the Monte Carlo estimate is:
-\$ \hat{I} = \frac{1}{N} \sum_{i=1}^{N} f(\mathbf{x}_i) \$
+$$
+\hat{I} = \frac{1}{N} \sum_{i=1}^{N} f(\mathbf{x}_i)
+$$
 
 where $\mathbf{x}_i$ are uniformly distributed random points in the unit hypercube.
 
@@ -208,7 +212,7 @@ Best Performance (N = 65536):
 - **CPU Advantage**: Sequential execution more efficient for small datasets
 
 
-#### **Medium Problem Sizes (4,096 ≤ N ≤ 16,384)**
+#### **Medium Problem Sizes (4,096 <= N <= 16,384)**
 
 - **GPU Becomes Competitive**: Computation time starts to dominate overhead
 - **Scaling Improvement**: Better resource utilization as workload increases
@@ -244,7 +248,7 @@ Best Performance (N = 65536):
 
 The Monte Carlo estimator exhibits the expected convergence behavior:
 
-- **Standard Error**: Decreases as O(1/√N)
+- **Standard Error**: Decreases as $\mathcal{O}\left(\frac{1}{\sqrt{N}}\right)$
 - **Confidence Intervals**: Narrow with increasing sample size
 - **Numerical Stability**: Consistent results across implementations
 
@@ -316,12 +320,11 @@ float random_val = curand_uniform(&state);
 
 
 ### **Importance Sampling Implementation Strategy**
-
-For the Metropolis algorithm with weight function W(x₁,...,x₁₀) = ∏w(xᵢ), where w(x) = Ce^(-ax):
+For the Metropolis algorithm with weight function $W(x_1, \ldots, x_{10}) = \prod w(x_i)$, where $w(x) = C e^{-a x}$:
 
 #### **Normalization Constant**
 
-\$ C = \frac{a}{1 - e^{-a}} \$
+$$ C = \frac{a}{1 - e^{-a}} $$
 
 #### **Metropolis Acceptance Criterion**
 
@@ -339,7 +342,7 @@ __device__ bool metropolis_accept(double current_val, double proposed_val,
 #### **Strong Scaling**
 
 - **Fixed Problem Size**: Performance plateaus due to memory bandwidth
-- **GPU Utilization**: Optimal at N ≥ 32,768 for this hardware
+- **GPU Utilization**: Optimal at N >= 32,768 for this hardware
 - **Multi-GPU Efficiency**: 46% due to coordination overhead
 
 
@@ -373,7 +376,7 @@ The CUDA implementation successfully demonstrates efficient Monte Carlo integrat
 
 - **Single GPU**: Up to 15.77× speedup over CPU
 - **Dual GPU**: 14.57× speedup with 46% parallel efficiency
-- **Optimal Configuration**: N ≥ 32,768 for maximum GPU utilization
+- **Optimal Configuration**: N >= 32,768 for maximum GPU utilization
 
 **Technical Contributions**:
 

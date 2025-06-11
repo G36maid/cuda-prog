@@ -8,27 +8,27 @@
 
 ## Problem Statement
 
-Implement a pseudo-random number generator to generate random numbers in (0,∞) with exponential distribution exp(-x), creating a dataset of 81,920,000 entries. Compare histogram computations using CPU, GPU with global memory, and GPU with shared memory implementations. Analyze their performance characteristics and determine optimal block sizes. Plot the histogram alongside the theoretical probability distribution curve.
+Implement a pseudo-random number generator to generate random numbers in $(0,\infty)$ with exponential distribution $e^{-x}$, creating a dataset of $81,920,000$ entries. Compare histogram computations using CPU, GPU with global memory, and GPU with shared memory implementations. Analyze their performance characteristics and determine optimal block sizes. Plot the histogram alongside the theoretical probability distribution curve.
 
 ## Mathematical Foundation
 
 ### **Exponential Distribution**
 
-The exponential distribution with rate parameter λ has the probability density function:
+The exponential distribution with rate parameter $\lambda$ has the probability density function:
 
-\$ f(x) = \lambda e^{-\lambda x}, \quad x \geq 0 \$
+$$ f(x) = \lambda e^{-\lambda x}, \quad x \geq 0 $$
 
-For λ = 1 (standard exponential distribution):
+For $\lambda = 1$ (standard exponential distribution):
 
-\$ f(x) = e^{-x} \$
+$$ f(x) = e^{-x} $$
 
 ### **Random Number Generation**
 
 The inverse transform method generates exponential random variables using:
 
-\$ X = -\frac{1}{\lambda} \ln(U) \$
+$$ X = -\frac{1}{\lambda} \ln(U) $$
 
-where U is a uniform random variable on [^1].
+where $U$ is a uniform random variable on $(0,1)$.
 
 ## Source Code Analysis
 
@@ -117,7 +117,7 @@ __global__ void histogram_shared_kernel(const float* data, int* hist, int n, flo
 **Optimization Strategy**:
 
 1. **Two-Level Reduction**: Block-local then global aggregation
-2. **Shared Memory Atomics**: Faster than global memory atomics[^1][^2]
+2. **Shared Memory Atomics**: Faster than global memory atomics
 3. **Reduced Global Contention**: Only NUM_BINS global atomic operations per block
 4. **Memory Hierarchy Utilization**: Exploits shared memory bandwidth
 
@@ -147,7 +147,7 @@ __global__ void histogram_shared_kernel(const float* data, int* hist, int n, flo
 
 #### **Why Shared Memory Dramatically Outperforms Global Memory**
 
-**Atomic Operation Efficiency**[^1][^2]:
+**Atomic Operation Efficiency**:
 
 - **Shared Memory Atomics**: ~20-100× faster than global memory atomics
 - **Memory Latency**: Shared memory ~1-2 cycles vs. global memory ~400-800 cycles
@@ -252,7 +252,7 @@ atomicAdd(&hist[tid], local_hist[tid]);  // Minimal global updates
 
 #### **Further Optimization Opportunities**
 
-**Warp-Level Primitives**[^5]:
+**Warp-Level Primitives**:
 
 ```cpp
 // Use warp shuffle for intra-warp reduction
@@ -264,7 +264,7 @@ __device__ int warpReduceSum(int val) {
 }
 ```
 
-**Multi-Pass Strategy**[^3]:
+**Multi-Pass Strategy**:
 
 ```cpp
 // For very large bin counts, use multiple passes
@@ -321,13 +321,12 @@ auto block = cg::this_thread_block();
 
 ### **Expected Distribution Properties**
 
-For exponential distribution with λ = 1:
+For exponential distribution with $\lambda = 1$:
 
-- **Mean**: μ = 1/λ = 1
-- **Variance**: σ² = 1/λ² = 1
-- **Mode**: 0 (maximum at x = 0)
-- **Median**: ln(2) ≈ 0.693
-
+- **Mean**: $\mu = 1/\lambda = 1$
+- **Variance**: $\sigma^2 = 1/\lambda^2 = 1$
+- **Mode**: $0$ (maximum at $x = 0$)
+- **Median**: $\ln(2) \approx 0.693$
 
 ### **Histogram Visualization Strategy**
 
