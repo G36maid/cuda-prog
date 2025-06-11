@@ -1,8 +1,8 @@
-<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" class="logo" width="120"/>
-
 # Introduction to CUDA Parallel Programming Homework Assignment 4
 
-April, 2025
+- March, 2025
+- NTNU
+- 41173058H
 
 ## Problem Statement
 
@@ -319,7 +319,3 @@ The implementation provides a solid foundation for multi-GPU parallel computing 
 ## Submission Guidelines
 
 Submit your homework report including source codes, results, and discussions (without *.exe files). Prepare the discussion file using a typesetting system (LaTeX, Word, etc.) and convert to PDF. Compress all files into a gzipped tar file named with your student number and problem set number (e.g., `r05202043_HW4.tar.gz`). Send your homework with the title "your_student_number_HW4" to twchiu@phys.ntu.edu.tw before 17:00, June 11, 2025.
-
-<div style="text-align: center">⁂</div>
-
-[^1]: paste.txt

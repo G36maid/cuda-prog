@@ -1,6 +1,7 @@
 # Introduction to CUDA Parallel Programming Homework Assignment 1
-March, 2025
-
+- March, 2025
+- NTNU
+- 41173058H
 ## Problem Statement
 
 Write a CPU+GPU implementation for the modified matrix addition operation defined by **c(i,j) = 1/a(i,j) + 1/b(i,j)**. Using input NxN matrices A and B (where N=6400) with entries of random numbers between 0.0 and 1.0, determine the optimal block size by running your code. The implementation should be based on the provided template `vecAdd.cu`.

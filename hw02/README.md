@@ -1,12 +1,12 @@
-
 # Introduction to CUDA Parallel Programming Homework Assignment 2
-March, 2025
-
+- March, 2025
+- NTNU
+- 41173058H
 ## Problem Statement
 
 Write a CPU+GPU implementation for finding the trace of a matrix of real numbers using parallel reduction. The implementation should be based on the provided template `vecDot.cu`. Generate an input N×N matrix using the `RandomInit` routine with N=6400, and determine the optimal block size and grid size for this problem.
 
-**Note**: The current implementation computes vector dot product (A·B) rather than matrix trace. For matrix trace calculation, the operation should be modified to sum diagonal elements: `trace = Σ(A[i][i])` for i=0 to N-1.
+**Note**: The current implementation computes vector dot product (A·B) rather than matrix trace. For matrix trace calculation, the operation should be modified to sum diagonal elements: `trace = $\Sigma$(A[i][i])` for i=0 to N-1.
 
 ## Source Code Analysis
 
@@ -95,12 +95,12 @@ The testing framework systematically evaluates different block and grid size com
 
 | Block Size | Best Grid Size | Kernel Time (ms) | GFLOPS | Relative Error |
 |------------|----------------|------------------|---------|----------------|
-| 32         | 50             | 0.012754        | 1.0036  | 6.08×10⁻⁸     |
-| 64         | 50             | 0.011840        | 1.0811  | 5.30×10⁻⁸     |
-| **128**    | **50**         | **0.011566**    | **1.1067** | **1.40×10⁻⁹** |
-| 256        | 25             | 0.011910        | 1.0747  | 3.94×10⁻⁸     |
-| 512        | 12             | 0.012377        | 1.0342  | 1.07×10⁻⁷     |
-| 1024       | 12             | 0.014264        | 0.8974  | 9.96×10⁻⁸     |
+| 32         | 50             | 0.012754        | 1.0036  | 6.08×10^-8     |
+| 64         | 50             | 0.011840        | 1.0811  | 5.30×10^-8     |
+| **128**    | **50**         | **0.011566**    | **1.1067** | **1.40×10^-9** |
+| 256        | 25             | 0.011910        | 1.0747  | 3.94×10^-8     |
+| 512        | 12             | 0.012377        | 1.0342  | 1.07×10^-7     |
+| 1024       | 12             | 0.014264        | 0.8974  | 9.96×10^-8     |
 
 #### **Optimal Configuration Analysis**
 
@@ -108,7 +108,7 @@ The testing framework systematically evaluates different block and grid size com
 - **Kernel Time**: 0.011566 ms
 - **Total Time**: 0.043848 ms (including memory transfers)
 - **Peak Performance**: 1.106692 GFLOPS
-- **Numerical Accuracy**: 1.401×10⁻⁹ relative error
+- **Numerical Accuracy**: 1.401×10^-9 relative error
 - **Speedup vs CPU**: 0.36x (total time including memory transfers)
 
 ### **Performance Insights**
@@ -146,7 +146,7 @@ The total execution time (43.85 ms) is dominated by memory transfers:
 
 ### **Numerical Accuracy Analysis**
 
-The optimal configuration achieves excellent numerical precision with a relative error of 1.401×10⁻⁹, demonstrating:
+The optimal configuration achieves excellent numerical precision with a relative error of 1.401×10^-9, demonstrating:
 - **Stable Reduction Algorithm**: Binary tree reduction maintains numerical stability
 - **Precision Preservation**: Double-precision accumulation in CPU final sum
 - **Consistent Results**: Low error variance across multiple runs

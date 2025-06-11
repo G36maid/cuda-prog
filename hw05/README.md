@@ -1,6 +1,8 @@
 # Introduction to CUDA Parallel Programming Homework Assignment 5
 
-April, 2025
+- April, 2025
+- NTNU
+- 41173058H
 
 ## Problem Statement
 
