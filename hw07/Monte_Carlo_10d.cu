@@ -5,7 +5,6 @@
 #include <cuda_runtime.h>
 #include <chrono>
 #include <string>
-#include <sstream>
 #include <iomanip>
 #include <cassert>
 #include <omp.h>
@@ -108,15 +107,12 @@ void monte_carlo_single_gpu(size_t N, double& mean, double& stddev, unsigned lon
 
 // Dual GPU Monte Carlo with OpenMP
 void monte_carlo_dual_gpu(size_t N, double& mean, double& stddev, unsigned long long seed = DEFAULT_SEED) {
-    // 分配工作負載
     size_t N1 = N / 2;
     size_t N2 = N - N1;
 
-    // 儲存結果
     double means[2], stddevs[2];
     size_t Ns[2] = {N1, N2};
 
-    // 設定 OpenMP 使用 2 個線程
     omp_set_num_threads(2);
 
     #pragma omp parallel
@@ -149,7 +145,6 @@ void monte_carlo_dual_gpu(size_t N, double& mean, double& stddev, unsigned long 
         stddevs[thread_id] = std::sqrt((sum2 / Ns[thread_id] - means[thread_id] * means[thread_id]) / Ns[thread_id]);
     }
 
-    // 合併結果
     double sum1 = means[0] * N1;
     double sum2 = means[1] * N2;
     double sum2_1 = (stddevs[0] * stddevs[0] * N1 + means[0] * means[0]) * N1;
@@ -197,21 +192,18 @@ void run_benchmark() {
 
         std::cout << "N = " << std::setw(8) << N << " | ";
 
-        // CPU 測試
         auto start = std::chrono::high_resolution_clock::now();
         monte_carlo_cpu(N, result.cpu_mean, result.cpu_stddev, DEFAULT_SEED + n);
         auto end = std::chrono::high_resolution_clock::now();
         result.cpu_time = std::chrono::duration<double>(end - start).count();
         std::cout << "CPU: " << std::setw(8) << std::fixed << std::setprecision(4) << result.cpu_time << "s | ";
 
-        // 單 GPU 測試
         start = std::chrono::high_resolution_clock::now();
         monte_carlo_single_gpu(N, result.single_gpu_mean, result.single_gpu_stddev, DEFAULT_SEED + n);
         end = std::chrono::high_resolution_clock::now();
         result.single_gpu_time = std::chrono::duration<double>(end - start).count();
         std::cout << "1GPU: " << std::setw(8) << result.single_gpu_time << "s | ";
 
-        // 雙 GPU 測試
         start = std::chrono::high_resolution_clock::now();
         monte_carlo_dual_gpu(N, result.dual_gpu_mean, result.dual_gpu_stddev, DEFAULT_SEED + n);
         end = std::chrono::high_resolution_clock::now();
@@ -222,7 +214,6 @@ void run_benchmark() {
         std::cout << "\n";
     }
 
-    // 詳細結果表格
     std::cout << "\n" << std::string(100, '=') << "\n";
     std::cout << "Detailed Benchmark Results\n";
     std::cout << std::string(100, '=') << "\n";
@@ -252,13 +243,12 @@ void run_benchmark() {
                   << "\n";
     }
 
-    // 性能總結
     std::cout << "\n" << std::string(60, '=') << "\n";
     std::cout << "Performance Summary\n";
     std::cout << std::string(60, '=') << "\n";
 
     if (!results.empty()) {
-        const auto& best = results.back(); // 最大問題規模的結果
+        const auto& best = results.back();
         double efficiency = (best.single_gpu_time / best.dual_gpu_time) / 2.0 * 100;
 
         std::cout << std::fixed << std::setprecision(2);
@@ -268,7 +258,7 @@ void run_benchmark() {
         std::cout << "- Dual GPU vs Single GPU: " << (best.single_gpu_time / best.dual_gpu_time) << "x speedup\n";
         std::cout << "- Dual GPU parallel efficiency: " << efficiency << "%\n";
 
-        // // 根據研究結果[1][3]，GPU 在蒙地卡羅計算上通常能達到 35-500 倍的加速比
+
         // if (best.cpu_time / best.dual_gpu_time > 50) {
         //     std::cout << "\n✓ Excellent GPU acceleration achieved!\n";
         // } else if (best.cpu_time / best.dual_gpu_time > 20) {

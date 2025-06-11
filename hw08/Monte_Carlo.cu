@@ -9,11 +9,11 @@
 #include <fstream>
 #include <omp.h>
 
-constexpr int L = 200;              // 格子大小 200x200
-constexpr int N = L * L;            // 總自旋數
-constexpr int WARMUP_STEPS = 10000; // 熱化步數
-constexpr int MC_STEPS = 50000;     // 測量步數
-constexpr int MEASURE_INTERVAL = 10; // 測量間隔
+constexpr int L = 200;
+constexpr int N = L * L;
+constexpr int WARMUP_STEPS = 10000;
+constexpr int MC_STEPS = 50000;
+constexpr int MEASURE_INTERVAL = 10;
 
 #define CUDA_CHECK(ans) { gpuAssert((ans), __FILE__, __LINE__); }
 inline void gpuAssert(cudaError_t code, const char *file, int line, bool abort=true)
@@ -39,13 +39,13 @@ __global__ void ising_metropolis_kernel(
 
     if (idx >= L || idy >= L) return;
 
-    // 棋盤模式：只更新特定的格點
+
     if ((idx + idy) % 2 != parity) return;
 
     int site = idy * L + idx;
     curandState localState = states[site];
 
-    // 計算鄰居 (torus 邊界條件)
+
     int left = idy * L + ((idx - 1 + L) % L);
     int right = idy * L + ((idx + 1) % L);
     int up = ((idy - 1 + L) % L) * L + idx;
@@ -54,14 +54,11 @@ __global__ void ising_metropolis_kernel(
     int current_spin = spins[site];
     int neighbor_sum = spins[left] + spins[right] + spins[up] + spins[down];
 
-    // 計算能量變化
     int delta_E = 2 * current_spin * neighbor_sum;
 
-    // Metropolis 接受準則
     if (delta_E <= 0 || curand_uniform(&localState) < expf(-beta * delta_E)) {
         spins[site] = -current_spin;
 
-        // 原子操作更新總能量和磁化
         atomicAdd(energy_sum, delta_E);
         atomicAdd(mag_sum, -2 * current_spin);
     }
@@ -69,7 +66,6 @@ __global__ void ising_metropolis_kernel(
     states[site] = localState;
 }
 
-// 初始化隨機數生成器
 __global__ void init_curand(curandState* states, unsigned long seed) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     int idy = blockIdx.y * blockDim.y + threadIdx.y;
@@ -80,7 +76,6 @@ __global__ void init_curand(curandState* states, unsigned long seed) {
     curand_init(seed, site, 0, &states[site]);
 }
 
-// 計算初始能量和磁化
 __global__ void calculate_initial_observables(int* spins, int* energy, int* magnetization) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     int idy = blockIdx.y * blockDim.y + threadIdx.y;
@@ -89,7 +84,6 @@ __global__ void calculate_initial_observables(int* spins, int* energy, int* magn
 
     int site = idy * L + idx;
 
-    // 計算能量貢獻 (避免重複計算)
     if (idx < L-1) {
         int right = idy * L + idx + 1;
         atomicAdd(energy, -spins[site] * spins[right]);
@@ -98,7 +92,6 @@ __global__ void calculate_initial_observables(int* spins, int* energy, int* magn
         int down = (idy + 1) * L + idx;
         atomicAdd(energy, -spins[site] * spins[down]);
     }
-    // 邊界條件
     if (idx == L-1) {
         int right = idy * L;
         atomicAdd(energy, -spins[site] * spins[right]);
@@ -108,11 +101,9 @@ __global__ void calculate_initial_observables(int* spins, int* energy, int* magn
         atomicAdd(energy, -spins[site] * spins[down]);
     }
 
-    // 計算磁化
     atomicAdd(magnetization, spins[site]);
 }
 
-// CPU 版本的伊辛模型 (用於比較)
 class IsingCPU {
 private:
     std::vector<int> spins;
@@ -121,7 +112,7 @@ private:
 
 public:
     IsingCPU(unsigned seed = 12345) : spins(N), rng(seed), dist(0.0f, 1.0f) {
-        // 隨機初始化自旋
+
         for (int i = 0; i < N; ++i) {
             spins[i] = (rng() % 2) * 2 - 1;
         }
@@ -165,7 +156,6 @@ public:
     }
 };
 
-// GPU 伊辛模型類別
 class IsingGPU {
 private:
     int* d_spins;
@@ -180,13 +170,11 @@ public:
         grid_size = dim3((L + block_size.x - 1) / block_size.x,
                         (L + block_size.y - 1) / block_size.y);
 
-        // 分配 GPU 記憶體
         CUDA_CHECK(cudaMalloc(&d_spins, N * sizeof(int)));
         CUDA_CHECK(cudaMalloc(&d_states, N * sizeof(curandState)));
         CUDA_CHECK(cudaMalloc(&d_energy_sum, sizeof(int)));
         CUDA_CHECK(cudaMalloc(&d_mag_sum, sizeof(int)));
 
-        // 初始化自旋 (隨機)
         std::vector<int> h_spins(N);
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -195,7 +183,6 @@ public:
         }
         CUDA_CHECK(cudaMemcpy(d_spins, h_spins.data(), N * sizeof(int), cudaMemcpyHostToDevice));
 
-        // 初始化隨機數生成器
         init_curand<<<grid_size, block_size>>>(d_states, time(nullptr));
         CUDA_CHECK(cudaDeviceSynchronize());
     }
@@ -208,11 +195,9 @@ public:
     }
 
     void metropolis_step(float beta) {
-        // 重置觀測量
         CUDA_CHECK(cudaMemset(d_energy_sum, 0, sizeof(int)));
         CUDA_CHECK(cudaMemset(d_mag_sum, 0, sizeof(int)));
 
-        // 棋盤算法：兩個子格
         ising_metropolis_kernel<<<grid_size, block_size>>>(d_spins, d_states, beta, 0, d_energy_sum, d_mag_sum);
         CUDA_CHECK(cudaDeviceSynchronize());
 
@@ -247,7 +232,6 @@ public:
     }
 };
 
-// 多 GPU 伊辛模型類別
 class MultiGPUIsingModel {
 private:
     std::vector<IsingGPU*> gpus;
@@ -306,7 +290,6 @@ public:
     }
 };
 
-// 統計分析函數
 struct Statistics {
     double mean, error;
 };
@@ -327,7 +310,6 @@ Statistics calculate_statistics(const std::vector<double>& data) {
     return {mean, error};
 }
 
-// 問題 1: 尋找最佳 block size
 void find_optimal_block_size() {
     std::cout << "=== Problem 1: Finding Optimal Block Size ===\n";
 
@@ -335,7 +317,7 @@ void find_optimal_block_size() {
         {8, 8}, {16, 16}, {32, 32}, {8, 16}, {16, 8}, {32, 8}, {8, 32}
     };
 
-    float beta = 1.0f / 2.269f; // 臨界溫度附近
+    float beta = 1.0f / 2.269f;
 
     std::cout << "Block Size\t\tTime (s)\t\tPerformance (steps/s)\n";
     std::cout << std::string(60, '-') << "\n";
@@ -366,12 +348,11 @@ void find_optimal_block_size() {
     std::cout << "Best performance: " << best_performance << " steps/s\n\n";
 }
 
-// 問題 1 & 3: 溫度掃描
 void temperature_scan(bool use_multi_gpu = false) {
     std::cout << "=== Temperature Scan (" << (use_multi_gpu ? "Multi-GPU" : "Single GPU") << ") ===\n";
 
     std::vector<double> temperatures = {2.0, 2.1, 2.2, 2.3, 2.4, 2.5};
-    dim3 optimal_block_size(16, 16); // 使用找到的最佳 block size
+    dim3 optimal_block_size(16, 16);
 
     std::ofstream file(use_multi_gpu ? "multi_gpu_results.txt" : "single_gpu_results.txt");
     file << "T\t<E>\tδ<E>\t<M>\tδ<M>\n";
@@ -388,12 +369,11 @@ void temperature_scan(bool use_multi_gpu = false) {
             int num_gpus = 2;
             MultiGPUIsingModel ising(num_gpus, optimal_block_size);
 
-            // 熱化
+
             for (int i = 0; i < WARMUP_STEPS; ++i) {
                 ising.metropolis_step(beta);
             }
 
-            // 測量
             for (int i = 0; i < MC_STEPS; i += MEASURE_INTERVAL) {
                 for (int j = 0; j < MEASURE_INTERVAL; ++j) {
                     ising.metropolis_step(beta);
@@ -407,12 +387,10 @@ void temperature_scan(bool use_multi_gpu = false) {
         } else {
             IsingGPU ising(optimal_block_size);
 
-            // 熱化
             for (int i = 0; i < WARMUP_STEPS; ++i) {
                 ising.metropolis_step(beta);
             }
 
-            // 測量
             for (int i = 0; i < MC_STEPS; i += MEASURE_INTERVAL) {
                 for (int j = 0; j < MEASURE_INTERVAL; ++j) {
                     ising.metropolis_step(beta);
@@ -442,15 +420,14 @@ void temperature_scan(bool use_multi_gpu = false) {
     std::cout << "\n";
 }
 
-// 問題 2: GPU vs CPU 比較
+
 void compare_gpu_cpu() {
     std::cout << "=== Problem 2: GPU vs CPU Comparison ===\n";
 
-    double T = 2.269; // 臨界溫度
+    double T = 2.269;
     float beta = 1.0f / T;
     int test_steps = 1000;
 
-    // CPU 測試
     std::cout << "Running CPU simulation...\n";
     IsingCPU cpu_ising;
     auto start = std::chrono::high_resolution_clock::now();
@@ -463,7 +440,7 @@ void compare_gpu_cpu() {
     double cpu_energy = cpu_result.first;
     double cpu_mag = cpu_result.second;
 
-    // 單 GPU 測試
+
     std::cout << "Running single GPU simulation...\n";
     IsingGPU single_gpu(dim3(16, 16));
     double single_gpu_time = single_gpu.benchmark_performance(beta, test_steps);
@@ -471,7 +448,6 @@ void compare_gpu_cpu() {
     double single_energy = single_result.first;
     double single_mag = single_result.second;
 
-    // 雙 GPU 測試
     std::cout << "Running dual GPU simulation...\n";
     MultiGPUIsingModel dual_gpu(2, dim3(16, 16));
     double dual_gpu_time = dual_gpu.benchmark_performance(beta, test_steps);
@@ -479,7 +455,7 @@ void compare_gpu_cpu() {
     double dual_energy = dual_result.first;
     double dual_mag = dual_result.second;
 
-    // 結果比較
+
     std::cout << "\nPerformance Comparison:\n";
     std::cout << std::string(60, '-') << "\n";
     std::cout << "Method\t\tTime (s)\tSpeedup\t\t<E>\t\t<M>\n";
@@ -499,7 +475,6 @@ int main() {
     std::cout << std::string(70, '=') << "\n\n";
 
     try {
-        // 檢查 GPU 數量
         int device_count;
         CUDA_CHECK(cudaGetDeviceCount(&device_count));
         std::cout << "Available GPUs: " << device_count << "\n\n";
